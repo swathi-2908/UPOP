@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UPOP Status Tracker</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F5F4F0;
+      --surface:   #FFFFFF;
+      --surface2:  #F9F8F6;
+      --border:    #E2DFD8;
+      --border2:   #C8C4BB;
+      --accent:    #1B4332;
+      --accent-lt: #D8EAE0;
+      --accent2:   #2D6A4F;
+      --gold:      #B5883A;
+      --gold-lt:   #FDF3DC;
+      --danger:    #C0392B;
+      --danger-lt: #FDECEA;
+      --warn:      #B5883A;
+      --warn-lt:   #FDF3DC;
+      --success:   #1B4332;
+      --success-lt:#D8EAE0;
+      --text:      #1A1A1A;
+      --text2:     #4A4A4A;
+      --muted:     #8A8880;
+      --font-head: 'Playfair Display', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --radius:    10px;
+      --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 80px;
+    }
+
+    .topbar {
+      width: 100%; max-width: 860px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: var(--accent); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-family: var(--font-head);
+      font-size: 16px; font-weight: 700;
+    }
+
+    .logo-text {
+      font-family: var(--font-head); font-size: 17px;
+      font-weight: 600; color: var(--text); letter-spacing: -0.01em;
+    }
+
+    .topbar-badge {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 20px;
+    }
+
+    .main { width: 100%; max-width: 860px; }
+
+    .page-header { margin-bottom: 32px; }
+
+    .page-header h1 {
+      font-family: var(--font-head);
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.15; color: var(--text); margin-bottom: 10px;
+    }
+
+    .page-header p { font-size: 14px; color: var(--text2); line-height: 1.65; max-width: 580px; }
+
+    .info-banner {
+      display: flex; gap: 14px;
+      background: var(--accent-lt);
+      border: 1px solid #A8D5BE; border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 14px 18px;
+      margin-bottom: 32px; font-size: 13px; color: var(--accent); line-height: 1.6;
+    }
+
+    .info-banner .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .info-banner strong { font-weight: 600; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .card.is-done { border-color: #A8D5BE; }
+
+    .card-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .step-badge {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--surface); border: 1.5px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      flex-shrink: 0; transition: all 0.25s;
+    }
+
+    .card.is-done .step-badge { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .card-title { font-weight: 600; font-size: 14px; color: var(--text); flex: 1; }
+
+    .card-pill {
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+    }
+
+    .card.is-done .card-pill {
+      background: var(--success-lt); border-color: #A8D5BE; color: var(--success);
+    }
+
+    .card-body { padding: 22px; }
+
+    .dropzone {
+      position: relative;
+      border: 1.5px dashed var(--border2); border-radius: 8px;
+      padding: 30px 24px; text-align: center; cursor: pointer;
+      transition: all 0.2s; background: var(--surface2);
+    }
+
+    .dropzone:hover, .dropzone.drag-over {
+      border-color: var(--accent2); background: var(--accent-lt);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0;
+      cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .dz-icon {
+      width: 44px; height: 44px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin: 0 auto 12px; box-shadow: var(--shadow);
+    }
+
+    .dz-title { font-weight: 600; font-size: 13px; color: var(--text); margin-bottom: 4px; }
+    .dz-sub   { font-size: 12px; color: var(--muted); }
+    .dz-sub span { color: var(--accent2); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+    .file-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--success-lt); border: 1px solid #A8D5BE;
+      border-radius: 8px; padding: 12px 16px; margin-top: 12px;
+    }
+
+    .file-pill-icon {
+      width: 32px; height: 32px; background: var(--accent);
+      border-radius: 7px; display: flex; align-items: center;
+      justify-content: center; font-size: 15px; flex-shrink: 0;
+    }
+
+    .file-pill-name {
+      font-weight: 600; font-size: 13px; color: var(--accent);
+      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .file-pill-meta { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    .sheet-hint {
+      margin-top: 10px; padding: 10px 14px;
+      background: var(--gold-lt); border: 1px solid #E8D09A;
+      border-radius: 6px; font-size: 12px; color: var(--warn);
+    }
+
+    .sheet-hint strong { font-weight: 600; }
+
+    .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+
+    .field-label { font-size: 12px; font-weight: 600; color: var(--text2); }
+    .field-label span { font-weight: 400; color: var(--muted); font-size: 11px; margin-left: 4px; }
+
+    .field-input {
+      height: 38px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 0 12px; font-family: var(--font-body);
+      font-size: 13px; color: var(--text); outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s; width: 100%;
+    }
+
+    .field-input:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(27,67,50,0.08); }
+
+    .config-note {
+      font-size: 12px; color: var(--muted);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 7px; padding: 10px 14px; margin-bottom: 18px; line-height: 1.6;
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    .btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 0 24px; height: 44px; border-radius: 8px;
+      border: none; cursor: pointer; font-family: var(--font-body);
+      font-weight: 600; font-size: 14px; transition: all 0.15s; width: 100%;
+    }
+
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent2);
+      box-shadow: 0 4px 14px rgba(27,67,50,0.25); transform: translateY(-1px);
+    }
+    .btn-primary:disabled { background: var(--border2); color: var(--muted); cursor: not-allowed; }
+
+    .btn-download { background: var(--gold); color: #fff; }
+    .btn-download:hover { background: #9A7230; box-shadow: 0 4px 14px rgba(181,136,58,0.3); transform: translateY(-1px); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+
+    .stat {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px 12px; text-align: center;
+    }
+
+    .stat-num {
+      display: block; font-family: var(--font-head);
+      font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 6px;
+    }
+
+    .stat-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+    .stat.s-sub  { border-color: #A8D5BE; background: var(--success-lt); }
+    .stat.s-sub  .stat-num { color: var(--success); }
+    .stat.s-new  { border-color: #A8D5BE; background: #EAF4EF; }
+    .stat.s-new  .stat-num { color: var(--accent2); }
+    .stat.s-pend { border-color: #E8D09A; background: var(--gold-lt); }
+    .stat.s-pend .stat-num { color: var(--warn); }
+    .stat.s-miss { border-color: #E8A09A; background: var(--danger-lt); }
+    .stat.s-miss .stat-num { color: var(--danger); }
+
+    .log {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 16px;
+      font-size: 12px; line-height: 2;
+      max-height: 200px; overflow-y: auto;
+      margin-bottom: 20px;
+      font-family: 'Menlo', 'Consolas', monospace;
+    }
+
+    .log-ok   { color: #1B6B3A; }
+    .log-warn { color: #8A6520; }
+    .log-err  { color: var(--danger); }
+    .log-info { color: var(--text2); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeUp 0.35s ease forwards; }
+
+    footer {
+      margin-top: 48px; text-align: center;
+      font-size: 12px; color: var(--muted); line-height: 1.8;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+    @media (max-width: 600px) {
+      .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+      .config-grid { grid-template-columns: 1fr; }
+      .topbar-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="logo-mark">U</div>
+    <span class="logo-text">UPOP Tracker</span>
+  </div>
+  <div class="topbar-badge">SUTD · Internal Tool</div>
+</div>
+
+<div class="main">
+
+  <div class="page-header">
+    <h1>Student Status Tracker</h1>
+    <p>Upload your intake list and VMOCK assessment report. Students are matched by <strong>Student ID</strong> and their submission status is updated automatically.</p>
+  </div>
+
+  <div class="info-banner">
+    <span class="icon">ℹ</span>
+    <div>
+      <strong>First time?</strong> The intake list is your base. A Status column will be created and filled from the VMOCK report. Students not found in the report are marked <em>Not Found</em>.<br/>
+      <strong>Subsequent runs:</strong> <em>Submitted is permanent</em> — only new Submitted entries from the VMOCK report will overwrite other statuses. Everything else stays as-is.
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="section-label">Step 1 — Intake List</div>
+  <div class="card" id="card1">
+    <div class="card-header">
+      <div class="step-badge" id="badge1">1</div>
+      <div class="card-title">Upload 2024 Intake Excel File</div>
+      <div class="card-pill" id="pill1">Waiting</div>
+    </div>
+    <div class="card-body">
+      <div class="dropzone" id="dz1">
+        <input type="file" id="file1" accept=".xlsx,.xls"/>
+        <div class="dz-icon">📋</div>
+        <div class="dz-title">Drop your intake list here</div>
+        <div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div>
+      </div>
+      <div id="file1-info"></div>
+      <div id="sheet-hint" style="display:none" class="sheet-hint"></div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="section-label">Step 2 — VMOCK Report</div>
+  <div class="card" id="card2">
+    <div class="card-header">
+      <div class="step-badge" id="badge2">2</div>
+      <div class="card-title">Upload VMOCK Assessment Report</div>
+      <div class="card-pill" id="pill2">Waiting</div>
+    </div>
+    <div class="card-body">
+      <div class="dropzone" id="dz2">
+        <input type="file" id="file2" accept=".xlsx,.xls,.csv"/>
+        <div class="dz-icon">📊</div>
+        <div class="dz-title">Drop your VMOCK report here</div>
+        <div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div>
+      </div>
+      <div id="file2-info"></div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="section-label">Step 3 — Column Configuration</div>
+  <div class="card" id="card3">
+    <div class="card-header">
+      <div class="step-badge" id="badge3">3</div>
+      <div class="card-title">Configure Columns</div>
+      <div class="card-pill" id="pill3">Required</div>
+    </div>
+    <div class="card-body">
+
+      <div class="config-note">
+        Column letters refer to your <strong>Intake Excel</strong> (A = first column, B = second, etc.).
+        The VMOCK fields use the exact header names from row 1 of the report.
+        The <em>ID Prefix</em> field is used if your VMOCK Tags column stores IDs like <code>Student ID - 1234567</code> — enter the prefix text exactly as it appears.
+      </div>
+
+      <div class="config-grid">
+        <div class="field-group">
+          <label class="field-label" for="cfg-sheet">Intake Sheet Name</label>
+          <input class="field-input" id="cfg-sheet" type="text" value="2024 Intake students" placeholder="e.g. 2024 Intake students"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cfg-id-col">Student ID Column <span>(in Intake)</span></label>
+          <input class="field-input" id="cfg-id-col" type="text" value="A" placeholder="e.g. A" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cfg-status-col">Status Column <span>(in Intake, if exists)</span></label>
+          <input class="field-input" id="cfg-status-col" type="text" value="J" placeholder="e.g. J" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cfg-vmock-id">Student ID Field <span>(VMOCK header name)</span></label>
+          <input class="field-input" id="cfg-vmock-id" type="text" value="Tags" placeholder="e.g. Tags"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cfg-vmock-status">Status Field <span>(VMOCK header name)</span></label>
+          <input class="field-input" id="cfg-vmock-status" type="text" value="Status" placeholder="e.g. Status"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cfg-id-prefix">ID Prefix in VMOCK <span>(leave blank if direct ID)</span></label>
+          <input class="field-input" id="cfg-id-prefix" type="text" value="Student ID - " placeholder='e.g. "Student ID - "'/>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <button class="btn btn-primary" id="run-btn" onclick="runUpdate()" disabled>
+        ⚡&nbsp; Match Students &amp; Update Statuses
+      </button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="results-section" style="display:none">
+    <div class="section-label">Results</div>
+    <div class="card animate-in">
+      <div class="card-header">
+        <div class="step-badge" style="background:var(--accent);border-color:var(--accent);color:#fff;">✓</div>
+        <div class="card-title">Update Complete</div>
+        <div id="mode-pill" class="card-pill"></div>
+      </div>
+      <div class="card-body">
+        <div class="stats-grid">
+          <div class="stat s-sub">
+            <span class="stat-num" id="s-submitted">0</span>
+            <span class="stat-lbl">Submitted</span>
+          </div>
+          <div class="stat s-new">
+            <span class="stat-num" id="s-new">0</span>
+            <span class="stat-lbl">Newly Updated</span>
+          </div>
+          <div class="stat s-pend">
+            <span class="stat-num" id="s-pending">0</span>
+            <span class="stat-lbl">Yet to Submit</span>
+          </div>
+          <div class="stat s-miss">
+            <span class="stat-num" id="s-missing">0</span>
+            <span class="stat-lbl">Not Found</span>
+          </div>
+        </div>
+        <div class="log" id="log-box"></div>
+        <button class="btn btn-download" onclick="downloadResult()">
+          ⬇&nbsp; Download Updated Intake List
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  UPOP Student Status Tracker &nbsp;·&nbsp; SUTD Internal Use<br/>
+  All processing happens entirely in your browser — no data is sent anywhere.
+</footer>
+
+<script>
+  var wb1 = null, wb2 = null, resultWb = null;
+
+  function colIdx(letter) {
+    var l = letter.trim().toUpperCase();
+    if (l.length === 1) return l.charCodeAt(0) - 65;
+    return (l.charCodeAt(0) - 64) * 26 + (l.charCodeAt(1) - 65);
+  }
+
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+
+  function cellVal(ws, r, c) {
+    var cell = ws[XLSX.utils.encode_cell({r:r, c:c})];
+    return cell ? String(cell.v).trim() : '';
+  }
+
+  function writeCell(ws, r, c, val) {
+    ws[XLSX.utils.encode_cell({r:r, c:c})] = {v:val, t:'s', w:val};
+  }
+
+  function addLog(msg, type) {
+    var box = document.getElementById('log-box');
+    var el = document.createElement('div');
+    el.className = 'log-' + (type||'info');
+    el.textContent = msg;
+    box.appendChild(el);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function readWb(file, cb) {
+    var r = new FileReader();
+    r.onload = function(e) { cb(XLSX.read(new Uint8Array(e.target.result), {type:'array'})); };
+    r.readAsArrayBuffer(file);
+  }
+
+  function showPill(infoId, file) {
+    document.getElementById(infoId).innerHTML =
+      '<div class="file-pill">' +
+        '<div class="file-pill-icon">📄</div>' +
+        '<span class="file-pill-name">' + file.name + '</span>' +
+        '<span class="file-pill-meta">' + file.name.split('.').pop().toUpperCase() + ' &nbsp;·&nbsp; ' + fmtSize(file.size) + '</span>' +
+      '</div>';
+  }
+
+  function markDone(n) {
+    document.getElementById('card'+n).classList.add('is-done');
+    document.getElementById('badge'+n).textContent = '✓';
+    document.getElementById('pill'+n).textContent = 'Ready';
+  }
+
+  function checkReady() {
+    document.getElementById('run-btn').disabled = !(wb1 && wb2);
+  }
+
+  // Extract student ID from a Tags-style field
+  // e.g. "Student ID - 1234567, UGRD" with prefix "Student ID - " → "1234567"
+  function extractId(raw, prefix) {
+    var s = String(raw||'').trim();
+    if (!prefix) return s;
+    var parts = s.split(/[,\n]/);
+    for (var i=0; i<parts.length; i++) {
+      var p = parts[i].trim();
+      if (p.indexOf(prefix) === 0) return p.slice(prefix.length).trim();
+    }
+    return '';
+  }
+
+  // ── File inputs ──────────────────────────────────────────
+  document.getElementById('file1').addEventListener('change', function() {
+    var f = this.files[0]; if (!f) return;
+    readWb(f, function(wb) {
+      wb1 = wb;
+      showPill('file1-info', f);
+      markDone(1);
+      var hint = document.getElementById('sheet-hint');
+      hint.style.display = 'block';
+      hint.innerHTML = '<strong>Sheets found:</strong> ' + wb.SheetNames.join(', ');
+      checkReady();
+    });
+  });
+
+  document.getElementById('file2').addEventListener('change', function() {
+    var f = this.files[0]; if (!f) return;
+    readWb(f, function(wb) {
+      wb2 = wb;
+      showPill('file2-info', f);
+      markDone(2);
+      checkReady();
+    });
+  });
+
+  // ── Drag & drop ──────────────────────────────────────────
+  ['dz1','dz2'].forEach(function(id) {
+    var zone = document.getElementById(id);
+    zone.addEventListener('dragover',  function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function()  { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      var f = e.dataTransfer.files[0]; if (!f) return;
+      var inp = document.getElementById(id==='dz1'?'file1':'file2');
+      var dt = new DataTransfer(); dt.items.add(f); inp.files = dt.files;
+      inp.dispatchEvent(new Event('change'));
+    });
+  });
+
+  // ── Main update logic ────────────────────────────────────
+  function runUpdate() {
+    var sheetName   = document.getElementById('cfg-sheet').value.trim();
+    var idCol       = colIdx(document.getElementById('cfg-id-col').value || 'A');
+    var statusCol   = colIdx(document.getElementById('cfg-status-col').value || 'J');
+    var vmockIdHdr  = document.getElementById('cfg-vmock-id').value.trim();
+    var vmockStHdr  = document.getElementById('cfg-vmock-status').value.trim();
+    var idPrefix    = document.getElementById('cfg-id-prefix').value; // exact, spaces matter
+
+    document.getElementById('log-box').innerHTML = '';
+    document.getElementById('results-section').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('results-section').scrollIntoView({behavior:'smooth', block:'start'});
+    }, 100);
+
+    // Load intake sheet
+    var ws = wb1.Sheets[sheetName];
+    if (!ws) {
+      addLog('❌ Sheet "' + sheetName + '" not found.', 'err');
+      addLog('   Available: ' + wb1.SheetNames.join(', '), 'err');
+      return;
+    }
+    addLog('📋 Intake sheet loaded: "' + sheetName + '"', 'info');
+
+    // Load VMOCK
+    var vmockWs   = wb2.Sheets[wb2.SheetNames[0]];
+    var vmockRows = XLSX.utils.sheet_to_json(vmockWs, {defval:''});
+    addLog('📊 VMOCK rows: ' + vmockRows.length, 'info');
+
+    // Build ID → status map
+    var vmockMap = {}, skipped = 0;
+    vmockRows.forEach(function(row) {
+      var id     = extractId(row[vmockIdHdr], idPrefix);
+      var status = String(row[vmockStHdr]||'').trim();
+      if (id) vmockMap[id] = status;
+      else skipped++;
+    });
+    addLog('🔑 VMOCK IDs parsed: ' + Object.keys(vmockMap).length + (skipped?' ('+skipped+' skipped — no ID found)':''), skipped?'warn':'info');
+
+    // Detect first-time vs update
+    var range      = XLSX.utils.decode_range(ws['!ref']);
+    var headerRow  = range.s.r;
+    var existingHdr = cellVal(ws, headerRow, statusCol);
+    var isFirst    = !existingHdr.toLowerCase().includes('status');
+
+    var actualStatusCol = statusCol;
+    if (isFirst) {
+      actualStatusCol = range.e.c + 1;
+      writeCell(ws, headerRow, actualStatusCol, 'Status');
+      range.e.c = actualStatusCol;
+      ws['!ref'] = XLSX.utils.encode_range(range);
+      addLog('🆕 No Status column found — creating one (First-time mode)', 'warn');
+    } else {
+      addLog('🔄 Status column found at col "' + document.getElementById('cfg-status-col').value.trim().toUpperCase() + '" — Update mode', 'info');
+    }
+    addLog('', 'info');
+
+    // Process rows
+    var cntSub=0, cntNew=0, cntPend=0, cntMiss=0, cntKept=0;
+
+    for (var R = headerRow + 1; R <= range.e.r; R++) {
+      var intakeId  = cellVal(ws, R, idCol).replace(/\s/g,'');
+      if (!intakeId) continue;
+
+      var oldStatus  = cellVal(ws, R, actualStatusCol);
+      var newStatus  = vmockMap[intakeId] || '';
+
+      if (isFirst) {
+        if (newStatus) {
+          writeCell(ws, R, actualStatusCol, newStatus);
+          if (newStatus === 'Submitted') cntSub++; else cntPend++;
+          cntNew++;
+        } else {
+          writeCell(ws, R, actualStatusCol, 'Not Found');
+          cntMiss++;
+        }
+      } else {
+        if (oldStatus === 'Submitted') {
+          cntSub++; cntKept++;
+        } else if (newStatus === 'Submitted') {
+          writeCell(ws, R, actualStatusCol, 'Submitted');
+          cntSub++; cntNew++;
+        } else {
+          if (!oldStatus || oldStatus === 'Not Found') cntMiss++;
+          else cntPend++;
+        }
+      }
+    }
+
+    // Render stats
+    document.getElementById('s-submitted').textContent = cntSub;
+    document.getElementById('s-new').textContent       = cntNew;
+    document.getElementById('s-pending').textContent   = cntPend;
+    document.getElementById('s-missing').textContent   = cntMiss;
+
+    var pill = document.getElementById('mode-pill');
+    if (isFirst) {
+      pill.textContent = '🆕 First-time Setup';
+      pill.style.cssText = 'background:var(--gold-lt);color:var(--warn);border:1px solid #E8D09A;';
+    } else {
+      pill.textContent = '🔄 Status Update';
+      pill.style.cssText = 'background:var(--success-lt);color:var(--success);border:1px solid #A8D5BE;';
+    }
+
+    if (isFirst) {
+      addLog('✅ ' + cntNew + ' students filled from VMOCK report', 'ok');
+      addLog('❓ ' + cntMiss + ' students not found in VMOCK → marked "Not Found"', 'warn');
+    } else {
+      addLog('✅ ' + cntNew + ' students newly updated to Submitted', 'ok');
+      addLog('🔒 ' + cntKept + ' students already Submitted — preserved', 'ok');
+      addLog('⏳ ' + cntPend + ' students unchanged', 'info');
+      addLog('❓ ' + cntMiss + ' students still Not Found in VMOCK', 'warn');
+    }
+    addLog('', 'info');
+    addLog('📁 Ready to download.', 'ok');
+
+    resultWb = wb1;
+  }
+
+  function downloadResult() {
+    if (!resultWb) return;
+    XLSX.writeFile(resultWb, 'UPOP_Intake_Updated_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  }
+</script>
+</body>
+</html>
