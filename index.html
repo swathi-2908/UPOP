@@ -18,6 +18,7 @@
       --success:#1B4332;--success-lt:#D8EAE0;
       --info:#1A5276;--info-lt:#D6EAF8;
       --purple:#6C3483;--purple-lt:#E8DAEF;
+      --teal:#0E6655;--teal-lt:#D0ECE7;
       --text:#1A1A1A;--text2:#4A4A4A;--muted:#8A8880;
       --font-head:'Playfair Display',Georgia,serif;
       --font-body:'Plus Jakarta Sans',sans-serif;
@@ -25,12 +26,14 @@
     }
     body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 20px 80px}
 
+    /* ── Topbar ── */
     .topbar{width:100%;max-width:980px;display:flex;align-items:center;justify-content:space-between;padding:22px 0 0}
     .topbar-logo{display:flex;align-items:center;gap:10px}
     .logo-mark{width:34px;height:34px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-head);font-size:16px;font-weight:700}
     .logo-text{font-family:var(--font-head);font-size:17px;font-weight:600;color:var(--text);letter-spacing:-.01em}
     .topbar-badge{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
 
+    /* ── Shared intake bar ── */
     .shared-intake-bar{width:100%;max-width:980px;margin:18px 0 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
     .shared-intake-head{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;user-select:none;transition:background .15s}
     .shared-intake-head:hover{background:var(--surface2)}
@@ -44,15 +47,18 @@
     .clear-btn{font-size:11px;font-weight:600;color:var(--danger);background:none;border:1px solid #E8A09A;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--font-body);transition:all .15s}
     .clear-btn:hover{background:var(--danger-lt)}
 
+    /* ── Tabs ── */
     .tab-nav{width:100%;max-width:980px;display:flex;border-bottom:2px solid var(--border);margin:20px 0 32px}
     .tab-btn{padding:10px 20px;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:7px;position:relative}
     .tab-btn:hover{color:var(--text2)}
     .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
     .tab-btn.t-forms.active{color:var(--info);border-bottom-color:var(--info)}
     .tab-btn.t-assign.active{color:var(--purple);border-bottom-color:var(--purple)}
+    .tab-btn.t-summary.active{color:var(--teal);border-bottom-color:var(--teal)}
     .tab-done-dot{width:6px;height:6px;border-radius:50%;background:#4CAF50;position:absolute;top:8px;right:8px;display:none}
     .tab-done-dot.show{display:block}
 
+    /* ── Progress bar ── */
     .progress-bar{display:flex;align-items:center;gap:0;margin-bottom:28px;width:100%}
     .prog-step{display:flex;align-items:center;gap:8px;flex:1;position:relative}
     .prog-step:last-child{flex:none}
@@ -65,35 +71,39 @@
     .prog-line{flex:1;height:2px;background:var(--border);margin:0 4px;transition:background .25s}
     .prog-line.done{background:#4CAF50}
 
+    /* ── Pages ── */
     .page{display:none;width:100%;max-width:980px}
     .page.active{display:block}
-
     .page-header{margin-bottom:28px}
     .page-header h1{font-family:var(--font-head);font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--text);margin-bottom:8px}
     .page-header p{font-size:13px;color:var(--text2);line-height:1.65;max-width:580px}
 
+    /* ── Banners ── */
     .info-banner{display:flex;gap:14px;border-radius:var(--radius);padding:13px 16px;margin-bottom:24px;font-size:12px;line-height:1.65}
     .info-banner.green{background:var(--accent-lt);border:1px solid #A8D5BE;border-left:3px solid var(--accent);color:var(--accent)}
     .info-banner.blue{background:var(--info-lt);border:1px solid #A9CCE3;border-left:3px solid var(--info);color:var(--info)}
     .info-banner.purple{background:var(--purple-lt);border:1px solid #C39BD3;border-left:3px solid var(--purple);color:var(--purple)}
+    .info-banner.teal{background:var(--teal-lt);border:1px solid #A2D9CE;border-left:3px solid var(--teal);color:var(--teal)}
     .info-banner .icon{font-size:14px;flex-shrink:0;margin-top:1px}
     .info-banner strong{font-weight:600}
 
+    /* ── Section label ── */
     .section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
+    /* ── Cards ── */
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;transition:border-color .2s}
     .card.is-done{border-color:#A8D5BE}
     .card.is-error{border-color:#E8A09A}
     .card-header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface2)}
     .step-badge{width:24px;height:24px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;transition:all .25s}
     .card.is-done .step-badge{background:#4CAF50;border-color:#4CAF50;color:#fff}
-    .card.is-error .step-badge{background:var(--danger);border-color:var(--danger);color:#fff}
     .card-title{font-weight:600;font-size:13px;color:var(--text);flex:1}
     .card-pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
     .card.is-done .card-pill{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
     .card-body{padding:20px}
 
+    /* ── Dropzone ── */
     .dropzone{position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
     .dropzone:hover,.dropzone.drag-over{border-color:var(--accent2);background:var(--accent-lt)}
     .dropzone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -102,22 +112,26 @@
     .dz-sub{font-size:12px;color:var(--muted)}
     .dz-sub span{color:var(--accent2);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 
+    /* ── File pill ── */
     .file-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:11px 14px;margin-top:10px}
     .file-pill-icon{width:30px;height:30px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
     .file-pill-name{font-weight:600;font-size:13px;color:var(--accent);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .file-pill-meta{font-size:11px;color:var(--muted);white-space:nowrap}
 
+    /* ── Shared notice ── */
     .shared-notice{display:flex;align-items:center;gap:10px;background:var(--accent-lt);border:1px solid #A8D5BE;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--accent);font-weight:500}
     .shared-notice .sn-icon{font-size:14px;flex-shrink:0}
     .shared-notice .sn-change{margin-left:auto;font-size:11px;font-weight:600;background:none;border:1px solid #A8D5BE;border-radius:5px;padding:3px 8px;cursor:pointer;font-family:var(--font-body);color:var(--accent);transition:all .15s}
     .shared-notice .sn-change:hover{background:var(--surface)}
 
+    /* ── Sheet chips ── */
     .sheet-hint{margin-top:10px;padding:9px 13px;background:var(--gold-lt);border:1px solid #E8D09A;border-radius:6px;font-size:12px;color:var(--warn)}
     .sheet-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
     .sheet-chip{font-size:12px;font-weight:600;padding:4px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
     .sheet-chip:hover{border-color:var(--accent2);color:var(--accent2)}
     .sheet-chip.active{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
 
+    /* ── Config ── */
     .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
     .field-group{display:flex;flex-direction:column;gap:5px}
     .field-label{font-size:12px;font-weight:600;color:var(--text2)}
@@ -127,6 +141,7 @@
     .field-input.auto-detected{border-color:#A8D5BE;background:var(--success-lt);color:var(--success);font-weight:600}
     .auto-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 6px;border-radius:10px;background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success);margin-left:5px;vertical-align:middle}
 
+    /* ── Mapping ── */
     .mapping-summary{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:18px}
     .mapping-summary-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .mapping-summary-title{font-size:12px;font-weight:600;color:var(--text2)}
@@ -149,7 +164,7 @@
     .advanced-panel.open{display:block}
     .config-note{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:9px 13px;margin-bottom:13px;line-height:1.6}
 
-    /* Priority legend */
+    /* ── Priority legend ── */
     .priority-legend{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding:10px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:8px}
     .priority-legend-title{font-size:11px;font-weight:600;color:var(--muted);margin-right:4px;white-space:nowrap}
     .pl-item{display:flex;align-items:center;gap:5px;font-size:11px}
@@ -159,6 +174,7 @@
     .pl-num.p3{background:var(--muted)}
     .pl-arrow{color:var(--border2);font-size:10px;margin:0 2px}
 
+    /* ── Validation ── */
     .validation-box{display:none;border-radius:8px;padding:11px 14px;margin-bottom:16px;font-size:12px;line-height:1.8}
     .validation-box.show{display:block}
     .validation-box.warn{background:var(--warn-lt);border:1px solid #E8D09A;color:#6B4C10}
@@ -171,18 +187,21 @@
     .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:0 22px;height:42px;border-radius:8px;border:none;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:13px;transition:all .15s;flex:1}
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover:not(:disabled){background:var(--accent2);box-shadow:0 4px 14px rgba(27,67,50,.25);transform:translateY(-1px)}
-    .btn-primary:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+    .btn-primary:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none}
     .btn-blue{background:var(--info);color:#fff}
     .btn-blue:hover:not(:disabled){background:#154360;box-shadow:0 4px 14px rgba(26,82,118,.25);transform:translateY(-1px)}
     .btn-blue:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none}
     .btn-purple{background:var(--purple);color:#fff}
-    .btn-purple:hover:not(:disabled){background:#5B2C6F;box-shadow:0 4px 14px rgba(108,52,131,.25);transform:translateY(-1px)}
+    .btn-purple:hover:not(:disabled){background:#5B2C6F;transform:translateY(-1px)}
     .btn-purple:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none}
     .btn-download{background:var(--gold);color:#fff}
-    .btn-download:hover{background:#9A7230;box-shadow:0 4px 14px rgba(181,136,58,.3);transform:translateY(-1px)}
+    .btn-download:hover{background:#9A7230;transform:translateY(-1px)}
     .btn-ghost{background:var(--surface);color:var(--text2);border:1px solid var(--border)}
     .btn-ghost:hover{background:var(--surface2);border-color:var(--border2)}
+    .btn-teal{background:var(--teal);color:#fff}
+    .btn-teal:hover{background:#0B5547;transform:translateY(-1px)}
 
+    /* ── Stats ── */
     .stats-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:18px}
     .stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}
     .stats-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
@@ -198,7 +217,9 @@
     .stat.s-noresp{border-color:#E8D09A;background:var(--gold-lt)}.stat.s-noresp .stat-num{color:var(--warn)}
     .stat.s-total{border-color:var(--border2)}.stat.s-total .stat-num{color:var(--text)}
     .stat.s-purple{border-color:#C39BD3;background:var(--purple-lt)}.stat.s-purple .stat-num{color:var(--purple)}
+    .stat.s-teal{border-color:#A2D9CE;background:var(--teal-lt)}.stat.s-teal .stat-num{color:var(--teal)}
 
+    /* ── Log ── */
     .flog{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;font-size:12px;line-height:1.9;max-height:180px;overflow-y:auto;margin-bottom:18px}
     .flog-entry{display:flex;align-items:flex-start;gap:8px;padding:2px 0}
     .flog-icon{font-size:13px;flex-shrink:0;margin-top:1px}
@@ -211,6 +232,7 @@
     .result-meta{font-size:11px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:6px}
     .result-meta strong{color:var(--text2);font-weight:600}
 
+    /* ── Detect card ── */
     .detect-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:18px}
     .detect-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .detect-card-title{font-size:12px;font-weight:600;color:var(--text2)}
@@ -221,17 +243,91 @@
     .detect-col-chip.found .chip-val{color:var(--success);font-family:'Menlo','Consolas',monospace;font-size:11px}
     .detect-col-chip.missing .chip-val{color:var(--warn);font-size:11px}
 
-    .pillar-sections{display:flex;flex-direction:column;gap:10px}
-    .pillar-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
-    .pillar-section.has-warn{border-color:#E8D09A}
-    .pillar-section-head{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid var(--border);background:var(--surface)}
-    .pillar-section-name{font-weight:600;font-size:13px;flex:1}
-    .pillar-count{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
-    .pillar-section-body{padding:13px 15px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
-    .del-pillar-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all .15s;flex-shrink:0;align-self:flex-end}
-    .del-pillar-btn:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
-    .add-pillar-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:8px;border:1.5px dashed var(--border2);background:none;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--muted);transition:all .15s;width:100%;margin-top:4px}
-    .add-pillar-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-lt)}
+    /* ══════════════════════════════════════
+       IMPROVED PILLAR SECTION
+    ══════════════════════════════════════ */
+    .pillars-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .pillars-toolbar-left{display:flex;flex-direction:column;gap:3px}
+    .pillars-toolbar-title{font-size:13px;font-weight:600;color:var(--text)}
+    .pillars-toolbar-sub{font-size:12px;color:var(--muted)}
+    .reset-pillars-btn{font-size:11px;font-weight:600;color:var(--accent2);background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--font-body);transition:all .15s;white-space:nowrap}
+    .reset-pillars-btn:hover{background:var(--accent-lt);border-color:#A8D5BE}
+
+    .pillar-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+    .pillar-row{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s,background .2s}
+    .pillar-row.enabled{border-color:#C39BD3;background:var(--surface)}
+    .pillar-row.warn{border-color:#E8D09A}
+    .pillar-row-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+    .pillar-checkbox{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border2);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .15s;flex-shrink:0}
+    .pillar-checkbox.on{background:var(--purple);border-color:var(--purple);color:#fff}
+    .pillar-name-chip{font-size:12px;font-weight:700;padding:3px 11px;border-radius:20px;background:var(--surface);border:1px solid #C39BD3;color:var(--purple);letter-spacing:.05em;min-width:46px;text-align:center;transition:all .2s}
+    .pillar-row.enabled .pillar-name-chip{background:var(--purple);color:#fff;border-color:var(--purple)}
+    .pillar-row-summary{flex:1;font-size:12px;color:var(--muted);padding-left:4px}
+    .pillar-row-summary strong{color:var(--text2);font-weight:600}
+    .pillar-student-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
+    .pillar-student-badge.nomatch{background:var(--warn-lt);border-color:#E8D09A;color:var(--warn)}
+    .pillar-expand-arrow{font-size:11px;color:var(--muted);transition:transform .2s;margin-left:4px}
+    .pillar-row-body{display:none;padding:0 14px 13px;border-top:1px solid var(--border)}
+    .pillar-row.expanded .pillar-row-body{display:block}
+    .pillar-row.expanded .pillar-expand-arrow{transform:rotate(90deg)}
+    .pillar-body-grid{display:grid;grid-template-columns:100px 1fr 1fr;gap:10px;margin-top:11px}
+    .pillar-room-preview{margin-top:8px;padding:6px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--muted);font-family:'Menlo','Consolas',monospace}
+    .pillar-room-preview span{color:var(--purple);font-weight:600}
+    .pillar-file-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;display:none}
+    .pillar-file-badge.found{display:inline-flex;background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success)}
+    .pillar-file-badge.notfound{display:inline-flex;background:var(--warn-lt);border:1px solid #E8D09A;color:var(--warn)}
+
+    /* ══════════════════════════════════════
+       SUMMARY / DASHBOARD TAB
+    ══════════════════════════════════════ */
+    .summary-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+    .summary-empty .se-icon{font-size:44px;margin-bottom:14px}
+    .summary-empty p{font-size:14px;line-height:1.7;max-width:400px;margin:0 auto}
+
+    .summary-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .summary-timestamp{font-size:12px;color:var(--muted)}
+
+    .summary-module{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+    .summary-module-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface2)}
+    .summary-module-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+    .summary-module-icon.green{background:var(--accent-lt)}
+    .summary-module-icon.blue{background:var(--info-lt)}
+    .summary-module-icon.purple{background:var(--purple-lt)}
+    .summary-module-title{font-weight:600;font-size:13px;flex:1}
+    .summary-module-time{font-size:11px;color:var(--muted)}
+    .summary-module-body{padding:18px 20px}
+
+    .summary-stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .summary-stat{text-align:center;padding:12px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);min-width:80px;flex:1}
+    .summary-stat-num{display:block;font-family:var(--font-head);font-size:24px;font-weight:700;line-height:1;margin-bottom:4px}
+    .summary-stat-lbl{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+    .summary-stat.s-sub .summary-stat-num{color:var(--success)}
+    .summary-stat.s-sub{border-color:#A8D5BE;background:var(--success-lt)}
+    .summary-stat.s-att .summary-stat-num{color:var(--gold)}
+    .summary-stat.s-att{border-color:#E8D09A;background:var(--gold-lt)}
+    .summary-stat.s-pend .summary-stat-num{color:var(--text2)}
+    .summary-stat.s-miss .summary-stat-num{color:var(--danger)}
+    .summary-stat.s-miss{border-color:#E8A09A;background:var(--danger-lt)}
+    .summary-stat.s-resp .summary-stat-num{color:var(--info)}
+    .summary-stat.s-resp{border-color:#A9CCE3;background:var(--info-lt)}
+    .summary-stat.s-noresp .summary-stat-num{color:var(--warn)}
+    .summary-stat.s-noresp{border-color:#E8D09A;background:var(--gold-lt)}
+    .summary-stat.s-total .summary-stat-num{color:var(--text)}
+    .summary-stat.s-purple .summary-stat-num{color:var(--purple)}
+    .summary-stat.s-purple{border-color:#C39BD3;background:var(--purple-lt)}
+
+    /* progress bar inside summary */
+    .summary-prog-bar{height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-bottom:6px}
+    .summary-prog-fill{height:100%;border-radius:4px;transition:width .5s ease}
+    .summary-prog-label{font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+
+    /* pillar breakdown table */
+    .summary-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+    .summary-table th{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 10px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+    .summary-table td{border-bottom:1px solid var(--border);padding:7px 10px;color:var(--text)}
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:var(--surface2)}
+    .room-badge{display:inline-flex;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
 
     .preview-wrap{overflow-x:auto;margin-bottom:18px;border-radius:8px;border:1px solid var(--border)}
     .preview-table{width:100%;border-collapse:collapse;font-size:12px}
@@ -239,7 +335,6 @@
     .preview-table td{border-bottom:1px solid var(--border);padding:7px 11px;color:var(--text)}
     .preview-table tr:last-child td{border-bottom:none}
     .preview-table tr:nth-child(even) td{background:var(--surface2)}
-    .room-badge{display:inline-flex;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     .animate-in{animation:fadeUp .3s ease forwards}
@@ -251,11 +346,10 @@
       .stats-grid-3,.stats-grid-4,.stats-grid-5{grid-template-columns:repeat(2,1fr)}
       .config-grid{grid-template-columns:1fr}
       .topbar-badge,.tab-btn span{display:none}
-      .pillar-section-body{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
-      .del-pillar-btn{grid-column:2;justify-self:end}
-      .btn-row{flex-direction:column}
-      .result-actions{flex-direction:column}
-      .priority-legend{gap:4px}
+      .pillar-body-grid{grid-template-columns:1fr 1fr}
+      .btn-row,.result-actions{flex-direction:column}
+      .summary-stat-row{gap:8px}
+      .pillars-toolbar{flex-direction:column;align-items:flex-start;gap:8px}
     }
   </style>
 </head>
@@ -282,7 +376,7 @@
     <span style="font-size:11px;color:var(--muted);margin-left:8px" id="shared-toggle-lbl">Upload ↓</span>
   </div>
   <div class="shared-intake-body" id="shared-intake-body">
-    <div style="position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:var(--surface2);transition:all .2s" id="shared-dz">
+    <div style="position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:var(--surface2);transition:all .2s;margin-top:12px" id="shared-dz">
       <input type="file" id="shared-file" accept=".xlsx,.xls" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%"/>
       <div style="font-size:18px;margin-bottom:6px">📋</div>
       <div style="font-weight:600;font-size:13px;margin-bottom:3px">Drop your intake Excel here</div>
@@ -298,21 +392,21 @@
 
 <!-- TABS -->
 <div class="tab-nav">
-  <button class="tab-btn active"  id="tab-vmock"  onclick="switchTab('vmock')">📊 &nbsp;<span>VMOCK Assessment</span><div class="tab-done-dot" id="tdot-vmock"></div></button>
-  <button class="tab-btn t-forms" id="tab-forms"  onclick="switchTab('forms')">📝 &nbsp;<span>Microsoft Forms</span><div class="tab-done-dot" id="tdot-forms"></div></button>
-  <button class="tab-btn t-assign"id="tab-assign" onclick="switchTab('assign')">🏫 &nbsp;<span>Class Assignment</span><div class="tab-done-dot" id="tdot-assign"></div></button>
+  <button class="tab-btn active"   id="tab-vmock"   onclick="switchTab('vmock')">📊 &nbsp;<span>VMOCK Assessment</span><div class="tab-done-dot" id="tdot-vmock"></div></button>
+  <button class="tab-btn t-forms"  id="tab-forms"   onclick="switchTab('forms')">📝 &nbsp;<span>Microsoft Forms</span><div class="tab-done-dot" id="tdot-forms"></div></button>
+  <button class="tab-btn t-assign" id="tab-assign"  onclick="switchTab('assign')">🏫 &nbsp;<span>Class Assignment</span><div class="tab-done-dot" id="tdot-assign"></div></button>
+  <button class="tab-btn t-summary"id="tab-summary" onclick="switchTab('summary')">📈 &nbsp;<span>Summary</span><div class="tab-done-dot" id="tdot-summary"></div></button>
 </div>
 
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      PAGE 1 — VMOCK
-════════════════════════════════════════ -->
+══════════════════════════════════════════════ -->
 <div class="page active" id="page-vmock">
   <div class="page-header">
     <h1>VMOCK Assessment Tracker</h1>
     <p>Match students by Student ID (from their email) and update submission status from the VMOCK report.</p>
   </div>
-
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="v-pd1" style="color:var(--accent)">1</div><span class="prog-label active" id="v-pl1">Intake File</span></div>
     <div class="prog-line" id="v-line1"></div>
@@ -322,21 +416,15 @@
     <div class="prog-line" id="v-line3"></div>
     <div class="prog-step"><div class="prog-dot" id="v-pd4">4</div><span class="prog-label" id="v-pl4">Results</span></div>
   </div>
-
   <div class="info-banner green">
     <span class="icon">ℹ</span>
-    <div>
-      <strong>First time?</strong> A Status column is created and filled. Not found → marked <em>Not Found</em>.<br/>
-      <strong>Re-runs:</strong> Status priority: <strong>Submitted</strong> (highest) → <strong>Attempted</strong> → <strong>Yet to Attempt</strong> (lowest). A higher-ranked status always overwrites a lower one. Submitted is never overwritten.
-    </div>
+    <div><strong>First time?</strong> A Status column is created and filled. Not found → marked <em>Not Found</em>.<br/><strong>Re-runs:</strong> Priority: <strong>Submitted</strong> › <strong>Attempted</strong> › <strong>Yet to Attempt</strong>. A higher-ranked status always wins.</div>
   </div>
-
   <div class="section-label">Step 1 — Intake List</div>
   <div class="card" id="v-card1">
     <div class="card-header"><div class="step-badge" id="v-badge1">1</div><div class="card-title">Intake Excel File</div><div class="card-pill" id="v-pill1">Waiting</div></div>
     <div class="card-body" id="v-intake-body"></div>
   </div>
-
   <div class="section-label">Step 2 — VMOCK Report</div>
   <div class="card" id="v-card2">
     <div class="card-header"><div class="step-badge" id="v-badge2">2</div><div class="card-title">Upload VMOCK Assessment Report</div><div class="card-pill" id="v-pill2">Waiting</div></div>
@@ -347,7 +435,6 @@
       <div id="v-file2-info"></div>
     </div>
   </div>
-
   <div class="section-label">Step 3 — Configuration</div>
   <div class="card" id="v-card3">
     <div class="card-header"><div class="step-badge" id="v-badge3">3</div><div class="card-title">Column Settings</div><div class="card-pill" id="v-pill3">Required</div></div>
@@ -358,17 +445,9 @@
         <div id="v-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
       <div class="config-grid" style="margin-bottom:16px">
-        <div class="field-group">
-          <label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
-          <input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/>
-        </div>
-        <div class="field-group">
-          <label class="field-label">Status Column <span>(if exists)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
-          <input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/>
-        </div>
+        <div class="field-group"><label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/></div>
+        <div class="field-group"><label class="field-label">Status Column <span>(if exists)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/></div>
       </div>
-
-      <!-- Priority legend -->
       <div class="priority-legend">
         <span class="priority-legend-title">Override priority:</span>
         <div class="pl-item"><div class="pl-num p1">1</div><span style="font-size:11px;font-weight:600;color:var(--accent)">Submitted</span></div>
@@ -378,7 +457,6 @@
         <div class="pl-item"><div class="pl-num p3">3</div><span style="font-size:11px;font-weight:600;color:var(--muted)">Yet to Attempt</span></div>
         <span style="font-size:11px;color:var(--muted);margin-left:6px">— higher always wins</span>
       </div>
-
       <div class="mapping-summary">
         <div class="mapping-summary-head"><span class="mapping-summary-title">VMOCK — how IDs are extracted</span><button class="override-btn" onclick="toggleAdv('v-adv-panel',this)">Override ↓</button></div>
         <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value">Email column</span><span class="map-badge badge-ok">fixed</span></div>
@@ -403,15 +481,10 @@
       <button class="btn btn-primary" id="v-run-btn" onclick="runVmock()" disabled>⚡&nbsp; Match Students &amp; Update Statuses</button>
     </div>
   </div>
-
   <div id="v-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header">
-        <div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div>
-        <div class="card-title">Update Complete</div>
-        <div id="v-mode-pill" class="card-pill"></div>
-      </div>
+      <div class="card-header"><div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div><div class="card-title">Update Complete</div><div id="v-mode-pill" class="card-pill"></div></div>
       <div class="card-body">
         <div class="stats-grid-5">
           <div class="stat s-sub"><span class="stat-num" id="v-s-sub">0</span><span class="stat-lbl">Submitted</span></div>
@@ -432,15 +505,14 @@
 </div>
 
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      PAGE 2 — FORMS
-════════════════════════════════════════ -->
+══════════════════════════════════════════════ -->
 <div class="page" id="page-forms">
   <div class="page-header">
     <h1>Microsoft Forms Tracker</h1>
     <p>Every student in the Forms export is marked <strong>Responded</strong>. Everyone else gets <strong>Not Responded</strong>, appended as a new column.</p>
   </div>
-
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="f-pd1" style="color:var(--info)">1</div><span class="prog-label active" id="f-pl1">Intake File</span></div>
     <div class="prog-line" id="f-line1"></div>
@@ -450,18 +522,15 @@
     <div class="prog-line" id="f-line3"></div>
     <div class="prog-step"><div class="prog-dot" id="f-pd4">4</div><span class="prog-label" id="f-pl4">Results</span></div>
   </div>
-
   <div class="info-banner blue">
     <span class="icon">ℹ</span>
     <div><strong>How it works:</strong> All Student IDs in the Forms export are collected (duplicates ignored). Each intake student gets <em>Responded</em> or <em>Not Responded</em> in a new column — existing columns untouched.</div>
   </div>
-
   <div class="section-label">Step 1 — Intake List</div>
   <div class="card" id="f-card1">
     <div class="card-header"><div class="step-badge" id="f-badge1">1</div><div class="card-title">Intake Excel File</div><div class="card-pill" id="f-pill1">Waiting</div></div>
     <div class="card-body" id="f-intake-body"></div>
   </div>
-
   <div class="section-label">Step 2 — Forms Export</div>
   <div class="card" id="f-card2">
     <div class="card-header"><div class="step-badge" id="f-badge2">2</div><div class="card-title">Upload Microsoft Forms Response Export</div><div class="card-pill" id="f-pill2">Waiting</div></div>
@@ -472,7 +541,6 @@
       <div id="f-file2-info"></div>
     </div>
   </div>
-
   <div class="section-label">Step 3 — Configuration</div>
   <div class="card" id="f-card3">
     <div class="card-header"><div class="step-badge" id="f-badge3">3</div><div class="card-title">Column Settings</div><div class="card-pill" id="f-pill3">Required</div></div>
@@ -483,14 +551,8 @@
         <div id="f-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
       <div class="config-grid" style="margin-bottom:16px">
-        <div class="field-group">
-          <label class="field-label">Student ID Column <span id="f-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
-          <input class="field-input" id="f-cfg-id-col" type="text" value="A" maxlength="3"/>
-        </div>
-        <div class="field-group">
-          <label class="field-label">New Column Header</label>
-          <input class="field-input" id="f-cfg-new-col-name" type="text" value="Forms Response"/>
-        </div>
+        <div class="field-group"><label class="field-label">Student ID Column <span id="f-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="f-cfg-id-col" type="text" value="A" maxlength="3"/></div>
+        <div class="field-group"><label class="field-label">New Column Header</label><input class="field-input" id="f-cfg-new-col-name" type="text" value="Forms Response"/></div>
       </div>
       <div class="mapping-summary">
         <div class="mapping-summary-head"><span class="mapping-summary-title">Forms export — column check</span><button class="override-btn" onclick="toggleAdv('f-adv-panel',this)">Override ↓</button></div>
@@ -505,24 +567,17 @@
       </div>
       <div class="advanced-panel" id="f-adv-panel">
         <div class="config-note">Override only if the Student ID column uses a different header name.</div>
-        <div class="config-grid">
-          <div class="field-group"><label class="field-label">Student ID Field</label><input class="field-input" id="f-cfg-forms-id" value="Student ID"/></div>
-        </div>
+        <div class="config-grid"><div class="field-group"><label class="field-label">Student ID Field</label><input class="field-input" id="f-cfg-forms-id" value="Student ID"/></div></div>
       </div>
       <div class="validation-box" id="f-validation"></div>
       <div class="divider"></div>
       <button class="btn btn-blue" id="f-run-btn" onclick="runForms()" disabled>⚡&nbsp; Match Students &amp; Mark Responses</button>
     </div>
   </div>
-
   <div id="f-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header">
-        <div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div>
-        <div class="card-title">Update Complete</div>
-        <div class="card-pill" style="background:var(--info-lt);border-color:#A9CCE3;color:var(--info)">📝 Forms Tracking</div>
-      </div>
+      <div class="card-header"><div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div><div class="card-title">Update Complete</div><div class="card-pill" style="background:var(--info-lt);border-color:#A9CCE3;color:var(--info)">📝 Forms Tracking</div></div>
       <div class="card-body">
         <div class="stats-grid-3">
           <div class="stat s-resp"><span class="stat-num" id="f-s-resp">0</span><span class="stat-lbl">Responded</span></div>
@@ -541,15 +596,14 @@
 </div>
 
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      PAGE 3 — CLASS ASSIGNMENT
-════════════════════════════════════════ -->
+══════════════════════════════════════════════ -->
 <div class="page" id="page-assign">
   <div class="page-header">
     <h1>Class Assignment</h1>
-    <p>Upload the student list, set rooms per pillar — students split alphabetically. Download one Excel sheet per room.</p>
+    <p>All 5 SUTD pillars are pre-loaded with this year's schedule. Toggle on/off, adjust rooms or dates — students split alphabetically per pillar.</p>
   </div>
-
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="a-pd1" style="color:var(--purple)">1</div><span class="prog-label active" id="a-pl1">Student List</span></div>
     <div class="prog-line" id="a-line1"></div>
@@ -557,10 +611,9 @@
     <div class="prog-line" id="a-line2"></div>
     <div class="prog-step"><div class="prog-dot" id="a-pd3">3</div><span class="prog-label" id="a-pl3">Results</span></div>
   </div>
-
   <div class="info-banner purple">
     <span class="icon">ℹ</span>
-    <div><strong>How it works:</strong> Columns auto-detected. Each pillar is its own group, sorted A–Z by name, split equally across rooms. Use <code>&amp;</code> to merge pillars (e.g. <code>CSD &amp; ASD</code>). Download = one Excel sheet per room.</div>
+    <div><strong>How it works:</strong> Each enabled pillar is its own group, sorted A–Z by name then split equally across rooms. Use <code>&amp;</code> to pool pillars (e.g. <code>CSD &amp; ASD</code>). Download = one Excel sheet per room. Badges show live student counts once a file is loaded.</div>
   </div>
 
   <div class="section-label">Step 1 — Student List</div>
@@ -579,7 +632,7 @@
         <div class="detect-card-head"><span class="detect-card-title">Detected columns</span><button class="override-btn" onclick="toggleAdv('a-adv-panel',this)">Edit manually ↓</button></div>
         <div class="detect-cols" id="a-detect-cols"></div>
         <div class="advanced-panel" id="a-adv-panel" style="margin-top:10px">
-          <div class="config-grid" style="margin-bottom:0">
+          <div class="config-grid" style="margin-bottom:0;grid-template-columns:1fr 1fr 1fr 1fr">
             <div class="field-group"><label class="field-label">Student ID Col</label><input class="field-input" id="a-cfg-id" value="A" maxlength="3"/></div>
             <div class="field-group"><label class="field-label">Name Col</label><input class="field-input" id="a-cfg-name" value="B" maxlength="3"/></div>
             <div class="field-group"><label class="field-label">Score Col</label><input class="field-input" id="a-cfg-score" value="C" maxlength="3"/></div>
@@ -590,13 +643,23 @@
     </div>
   </div>
 
-  <div class="section-label">Step 2 — Rooms per Pillar</div>
+  <div class="section-label">Step 2 — Pillar &amp; Room Configuration</div>
   <div class="card" id="a-card2">
-    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Set Number of Rooms for Each Pillar</div><div class="card-pill" id="a-pill2">Required</div></div>
+    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Configure Pillars and Rooms</div><div class="card-pill" id="a-pill2">Required</div></div>
     <div class="card-body">
-      <div class="config-note" style="margin-bottom:14px">Pillar value must match your data exactly (e.g. <code>EPD</code>). Use <code>&amp;</code> to pool pillars together. Room counts default to this year's schedule — adjust as needed.</div>
-      <div class="pillar-sections" id="pillar-sections"></div>
-      <button class="add-pillar-btn" onclick="addPillarRow()">＋ &nbsp;Add pillar</button>
+
+      <div class="pillars-toolbar">
+        <div class="pillars-toolbar-left">
+          <span class="pillars-toolbar-title">All 5 SUTD pillars · pre-loaded from schedule</span>
+          <span class="pillars-toolbar-sub">Toggle on/off · click any pillar to edit rooms, date and room-name format</span>
+        </div>
+        <button class="reset-pillars-btn" onclick="resetPillars()">↺ Reset to defaults</button>
+      </div>
+
+      <div class="pillar-grid" id="pillar-grid">
+        <!-- rendered by JS -->
+      </div>
+
       <div class="validation-box" id="a-validation"></div>
       <div class="divider"></div>
       <button class="btn btn-purple" id="a-run-btn" onclick="runAssign()" disabled>⚡&nbsp; Assign Students to Classes</button>
@@ -606,11 +669,7 @@
   <div id="a-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header">
-        <div class="step-badge" style="background:var(--purple);border-color:var(--purple);color:#fff">✓</div>
-        <div class="card-title">Assignment Complete</div>
-        <div class="card-pill" style="background:var(--purple-lt);border-color:#C39BD3;color:var(--purple)">🏫 Class Assignment</div>
-      </div>
+      <div class="card-header"><div class="step-badge" style="background:var(--purple);border-color:var(--purple);color:#fff">✓</div><div class="card-title">Assignment Complete</div><div class="card-pill" style="background:var(--purple-lt);border-color:#C39BD3;color:var(--purple)">🏫 Class Assignment</div></div>
       <div class="card-body">
         <div class="stats-grid-3">
           <div class="stat s-purple"><span class="stat-num" id="a-s-students">0</span><span class="stat-lbl">Students Assigned</span></div>
@@ -629,12 +688,88 @@
   </div>
 </div>
 
+
+<!-- ══════════════════════════════════════════════
+     PAGE 4 — SUMMARY DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="page" id="page-summary">
+  <div class="page-header">
+    <h1>Summary Dashboard</h1>
+    <p>A consolidated view of all runs this session — VMOCK status, Forms response rate, and class assignment breakdown.</p>
+  </div>
+  <div id="summary-empty" class="summary-empty">
+    <div class="se-icon">📈</div>
+    <p>No data yet. Run VMOCK, Microsoft Forms, or Class Assignment and the results will appear here automatically.</p>
+  </div>
+  <div id="summary-content" style="display:none">
+    <div class="summary-header-row">
+      <div style="font-size:13px;font-weight:600;color:var(--text2)">Session snapshot</div>
+      <div class="summary-timestamp" id="summary-timestamp"></div>
+    </div>
+
+    <!-- VMOCK module -->
+    <div class="summary-module" id="sum-vmock-module" style="display:none">
+      <div class="summary-module-head">
+        <div class="summary-module-icon green">📊</div>
+        <div style="flex:1"><div class="summary-module-title">VMOCK Assessment</div><div style="font-size:11px;color:var(--muted)" id="sum-vmock-file"></div></div>
+        <div class="summary-module-time" id="sum-vmock-time"></div>
+        <button class="btn-ghost" style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-family:var(--font-body);background:var(--surface);margin-left:12px" onclick="switchTab('vmock')">View →</button>
+      </div>
+      <div class="summary-module-body">
+        <div class="summary-stat-row" id="sum-vmock-stats"></div>
+        <!-- Progress bar: submitted out of total -->
+        <div style="margin-top:4px">
+          <div class="summary-prog-bar"><div class="summary-prog-fill" id="sum-vmock-bar" style="background:var(--accent)"></div></div>
+          <div class="summary-prog-label"><span id="sum-vmock-bar-label"></span><span id="sum-vmock-bar-pct"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms module -->
+    <div class="summary-module" id="sum-forms-module" style="display:none">
+      <div class="summary-module-head">
+        <div class="summary-module-icon blue">📝</div>
+        <div style="flex:1"><div class="summary-module-title" id="sum-forms-title">Microsoft Forms</div><div style="font-size:11px;color:var(--muted)" id="sum-forms-file"></div></div>
+        <div class="summary-module-time" id="sum-forms-time"></div>
+        <button class="btn-ghost" style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-family:var(--font-body);background:var(--surface);margin-left:12px" onclick="switchTab('forms')">View →</button>
+      </div>
+      <div class="summary-module-body">
+        <div class="summary-stat-row" id="sum-forms-stats"></div>
+        <div style="margin-top:4px">
+          <div class="summary-prog-bar"><div class="summary-prog-fill" id="sum-forms-bar" style="background:var(--info)"></div></div>
+          <div class="summary-prog-label"><span id="sum-forms-bar-label"></span><span id="sum-forms-bar-pct"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignment module -->
+    <div class="summary-module" id="sum-assign-module" style="display:none">
+      <div class="summary-module-head">
+        <div class="summary-module-icon purple">🏫</div>
+        <div style="flex:1"><div class="summary-module-title">Class Assignment</div><div style="font-size:11px;color:var(--muted)" id="sum-assign-file"></div></div>
+        <div class="summary-module-time" id="sum-assign-time"></div>
+        <button class="btn-ghost" style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-family:var(--font-body);background:var(--surface);margin-left:12px" onclick="switchTab('assign')">View →</button>
+      </div>
+      <div class="summary-module-body">
+        <div class="summary-stat-row" id="sum-assign-stats"></div>
+        <div id="sum-assign-table-wrap"></div>
+      </div>
+    </div>
+
+    <!-- Export all button -->
+    <div style="margin-top:8px">
+      <button class="btn btn-teal" onclick="exportSummaryReport()" style="max-width:320px">⬇&nbsp; Export Summary Report (.xlsx)</button>
+    </div>
+  </div>
+</div>
+
+
 <footer>UPOP Student Status Tracker &nbsp;·&nbsp; SUTD Internal Use<br/>All processing happens entirely in your browser — no data is sent anywhere.</footer>
 
 <script>
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 var sharedWb=null, sharedSheet='';
 var S={
   v:{wb2:null,resultWb:null,sheet:''},
@@ -643,11 +778,32 @@ var S={
 };
 var aCols={id:-1,name:-1,score:-1,pillar:-1};
 var assignmentData=null;
-var pillarIdCounter=0;
 
-// ════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════
+// Summary snapshots
+var summaryData={
+  vmock:null,   // {sub,att,yta,miss,updated,total,file,time,mode}
+  forms:null,   // {resp,noresp,total,colName,file,time}
+  assign:null   // {students,rooms,pillars,roomList,file,time}
+};
+
+// ══════════════════════════════════════════════
+// FIXED SUTD PILLARS
+// Dates from schedule: CSD+ASD=20-May-26 (4 rooms each),
+// EPD=22-May-26 (2 rooms), ESD+DAI=3-Jun-26 (4 rooms each)
+// ══════════════════════════════════════════════
+var PILLAR_DEFAULTS = [
+  {pillar:'CSD', rooms:4, date:'20-May-26', fmt:'{p}-R{n}', enabled:true},
+  {pillar:'ASD', rooms:4, date:'20-May-26', fmt:'{p}-R{n}', enabled:true},
+  {pillar:'EPD', rooms:2, date:'22-May-26', fmt:'{p}-R{n}', enabled:true},
+  {pillar:'ESD', rooms:4, date:'3-Jun-26',  fmt:'{p}-R{n}', enabled:true},
+  {pillar:'DAI', rooms:4, date:'3-Jun-26',  fmt:'{p}-R{n}', enabled:true}
+];
+// Deep copy for reset
+var PILLAR_FACTORY = JSON.parse(JSON.stringify(PILLAR_DEFAULTS));
+
+// ══════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════
 function colIdx(l){l=(l||'').trim().toUpperCase();if(!l)return -1;return l.length===1?l.charCodeAt(0)-65:(l.charCodeAt(0)-64)*26+(l.charCodeAt(1)-65);}
 function colLetter(i){if(i<0)return '?';return i<26?String.fromCharCode(65+i):String.fromCharCode(64+Math.floor(i/26))+String.fromCharCode(65+(i%26));}
 function fmtSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';}
@@ -655,37 +811,19 @@ function cellVal(ws,r,c){if(c<0)return '';var cell=ws[XLSX.utils.encode_cell({r:
 function writeCell(ws,r,c,val){ws[XLSX.utils.encode_cell({r:r,c:c})]={v:val,t:'s',w:val};}
 function readWb(file,cb){var fr=new FileReader();fr.onload=function(e){cb(XLSX.read(new Uint8Array(e.target.result),{type:'array'}));};fr.readAsArrayBuffer(file);}
 function fmtDate(){return new Date().toISOString().slice(0,10);}
+function fmtTs(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+function fmtRoomName(fmt,pillar,n){return (fmt||'{p}-R{n}').replace('{p}',pillar).replace('{n}',n);}
 
-function showFilePill(containerId,file){
-  document.getElementById(containerId).innerHTML=
-    '<div class="file-pill"><div class="file-pill-icon">📄</div>'+
-    '<span class="file-pill-name">'+file.name+'</span>'+
-    '<span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span></div>';
-}
-
-function flog(boxId,msg,type){
-  var box=document.getElementById(boxId);
-  var icons={ok:'✅',warn:'⚠️',err:'❌',info:'ℹ️'};
-  var el=document.createElement('div');el.className='flog-entry';
-  el.innerHTML='<span class="flog-icon">'+(icons[type]||'ℹ️')+'</span><span class="flog-msg '+(type||'info')+'">'+msg+'</span>';
-  box.appendChild(el);box.scrollTop=box.scrollHeight;
-}
-
+function showFilePill(cid,file){document.getElementById(cid).innerHTML='<div class="file-pill"><div class="file-pill-icon">📄</div><span class="file-pill-name">'+file.name+'</span><span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span></div>';}
+function flog(boxId,msg,type){var box=document.getElementById(boxId);var icons={ok:'✅',warn:'⚠️',err:'❌',info:'ℹ️'};var el=document.createElement('div');el.className='flog-entry';el.innerHTML='<span class="flog-icon">'+(icons[type]||'ℹ️')+'</span><span class="flog-msg '+(type||'info')+'">'+msg+'</span>';box.appendChild(el);box.scrollTop=box.scrollHeight;}
 function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Override ↓';}
-
-function markDone(p,n){
-  document.getElementById(p+'-card'+n).classList.add('is-done');
-  document.getElementById(p+'-badge'+n).textContent='✓';
-  document.getElementById(p+'-pill'+n).textContent='Ready';
-}
+function markDone(p,n){document.getElementById(p+'-card'+n).classList.add('is-done');document.getElementById(p+'-badge'+n).textContent='✓';document.getElementById(p+'-pill'+n).textContent='Ready';}
+function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:var(--font-body);z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .35s';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},350);},2200);}
 
 function setProgStep(p,step){
   var total=p==='a'?3:4;
   for(var i=1;i<=total;i++){
-    var dot=document.getElementById(p+'-pd'+i);
-    var lbl=document.getElementById(p+'-pl'+i);
-    var line=document.getElementById(p+'-line'+i);
-    if(!dot)continue;
+    var dot=document.getElementById(p+'-pd'+i),lbl=document.getElementById(p+'-pl'+i),line=document.getElementById(p+'-line'+i);if(!dot)continue;
     if(i<step){dot.classList.add('done');dot.classList.remove('active');dot.textContent='✓';if(lbl){lbl.classList.add('done');lbl.classList.remove('active');}}
     else if(i===step){dot.classList.remove('done');dot.classList.add('active');if(lbl){lbl.classList.add('active');lbl.classList.remove('done');}}
     else{dot.classList.remove('done','active');if(lbl){lbl.classList.remove('done','active');}}
@@ -693,129 +831,66 @@ function setProgStep(p,step){
   }
 }
 
-// ════════════════════════════════════════════
-// STATUS PRIORITY LOGIC
-// Priority: Submitted (3) > Attempted (2) > Yet to Attempt (1) > other (0)
-// A status only overwrites another if its rank is strictly higher.
-// ════════════════════════════════════════════
-function statusRank(s){
-  var v=(s||'').trim().toLowerCase();
-  if(v==='submitted')   return 3;
-  if(v==='attempted')   return 2;
-  if(v==='yet to attempt') return 1;
-  return 0;
-}
+function statusRank(s){var v=(s||'').trim().toLowerCase();if(v==='submitted')return 3;if(v==='attempted')return 2;if(v==='yet to attempt')return 1;return 0;}
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // TABS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function switchTab(t){
-  ['vmock','forms','assign'].forEach(function(x){
+  ['vmock','forms','assign','summary'].forEach(function(x){
     document.getElementById('page-'+x).classList.toggle('active',x===t);
     document.getElementById('tab-'+x).classList.toggle('active',x===t);
   });
+  if(t==='summary') refreshSummary();
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // SHARED INTAKE
-// ════════════════════════════════════════════
-function toggleSharedBar(){
-  var body=document.getElementById('shared-intake-body');
-  var lbl=document.getElementById('shared-toggle-lbl');
-  body.classList.toggle('open');
-  lbl.textContent=body.classList.contains('open')?'Close ↑':'Upload ↓';
-}
+// ══════════════════════════════════════════════
+function toggleSharedBar(){var body=document.getElementById('shared-intake-body');var lbl=document.getElementById('shared-toggle-lbl');body.classList.toggle('open');lbl.textContent=body.classList.contains('open')?'Close ↑':'Upload ↓';}
 
 document.getElementById('shared-file').addEventListener('change',function(){
   var f=this.files[0];if(!f)return;
   readWb(f,function(wb){
     sharedWb=wb;
-    document.getElementById('shared-file-info').innerHTML=
-      '<div class="file-pill"><div class="file-pill-icon">📄</div>'+
-      '<span class="file-pill-name">'+f.name+'</span>'+
-      '<span class="file-pill-meta">'+fmtSize(f.size)+'</span>'+
-      '<button class="clear-btn" onclick="clearSharedFile()">Remove</button></div>';
+    document.getElementById('shared-file-info').innerHTML='<div class="file-pill"><div class="file-pill-icon">📄</div><span class="file-pill-name">'+f.name+'</span><span class="file-pill-meta">'+fmtSize(f.size)+'</span><button class="clear-btn" onclick="clearSharedFile()">Remove</button></div>';
     var preferred=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake');})||wb.SheetNames[0];
     sharedSheet=preferred;
     var sc=document.getElementById('shared-sheet-chips');sc.innerHTML='';
-    wb.SheetNames.forEach(function(name){
-      var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;
-      chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');sharedSheet=name;onSharedIntakeReady();};
-      sc.appendChild(chip);
-    });
+    wb.SheetNames.forEach(function(name){var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');sharedSheet=name;onSharedIntakeReady();};sc.appendChild(chip);});
     document.getElementById('shared-sheet-area').style.display='block';
     document.getElementById('shared-status-dot').classList.add('ready');
     document.getElementById('shared-loaded-name').textContent='— '+f.name;
     document.getElementById('shared-toggle-lbl').textContent='Close ↑';
+    document.getElementById('shared-intake-body').classList.add('open');
     onSharedIntakeReady();
   });
 });
-
 var sdz=document.getElementById('shared-dz');
 sdz.addEventListener('dragover',function(e){e.preventDefault();sdz.style.borderColor='var(--accent2)';sdz.style.background='var(--accent-lt)';});
 sdz.addEventListener('dragleave',function(){sdz.style.borderColor='';sdz.style.background='';});
 sdz.addEventListener('drop',function(e){e.preventDefault();sdz.style.borderColor='';sdz.style.background='';var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);document.getElementById('shared-file').files=dt.files;document.getElementById('shared-file').dispatchEvent(new Event('change'));});
 
-function clearSharedFile(){
-  sharedWb=null;sharedSheet='';
-  document.getElementById('shared-file-info').innerHTML='';
-  document.getElementById('shared-sheet-area').style.display='none';
-  document.getElementById('shared-status-dot').classList.remove('ready');
-  document.getElementById('shared-loaded-name').textContent='';
-  renderIntakeStep('v');renderIntakeStep('f');
-  updateSheetChips('v');updateSheetChips('f');
-  checkReady('v');checkReady('f');
-}
+function clearSharedFile(){sharedWb=null;sharedSheet='';document.getElementById('shared-file-info').innerHTML='';document.getElementById('shared-sheet-area').style.display='none';document.getElementById('shared-status-dot').classList.remove('ready');document.getElementById('shared-loaded-name').textContent='';renderIntakeStep('v');renderIntakeStep('f');updateSheetChips('v');updateSheetChips('f');checkReady('v');checkReady('f');}
 
-function onSharedIntakeReady(){
-  renderIntakeStep('v');renderIntakeStep('f');
-  updateSheetChips('v');updateSheetChips('f');
-  autoDetectVF(sharedWb.Sheets[sharedSheet],'v');
-  autoDetectVF(sharedWb.Sheets[sharedSheet],'f');
-  checkReady('v');checkReady('f');
-  setProgStep('v',2);setProgStep('f',2);
-  markDone('v',1);markDone('f',1);
-}
+function onSharedIntakeReady(){renderIntakeStep('v');renderIntakeStep('f');updateSheetChips('v');updateSheetChips('f');autoDetectVF(sharedWb.Sheets[sharedSheet],'v');autoDetectVF(sharedWb.Sheets[sharedSheet],'f');checkReady('v');checkReady('f');setProgStep('v',2);setProgStep('f',2);markDone('v',1);markDone('f',1);refreshPillarFileBadges();}
 
 function renderIntakeStep(p){
   var body=document.getElementById(p+'-intake-body');
   if(!sharedWb){
-    body.innerHTML=
-      '<div class="dropzone" id="'+p+'-dz1"><input type="file" id="'+p+'-file1" accept=".xlsx,.xls"/>'+
-      '<div class="dz-icon">📋</div><div class="dz-title">Drop intake list here</div>'+
-      '<div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div></div>'+
-      '<div id="'+p+'-file1-info"></div>';
-    wireLocalIntake(p);
-    document.getElementById(p+'-card1').classList.remove('is-done');
-    document.getElementById(p+'-badge1').textContent='1';
-    document.getElementById(p+'-pill1').textContent='Waiting';
+    body.innerHTML='<div class="dropzone" id="'+p+'-dz1"><input type="file" id="'+p+'-file1" accept=".xlsx,.xls"/><div class="dz-icon">📋</div><div class="dz-title">Drop intake list here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div></div><div id="'+p+'-file1-info"></div>';
+    wireLocalIntake(p);document.getElementById(p+'-card1').classList.remove('is-done');document.getElementById(p+'-badge1').textContent='1';document.getElementById(p+'-pill1').textContent='Waiting';
   } else {
-    body.innerHTML=
-      '<div class="shared-notice">'+
-      '<span class="sn-icon">📋</span>'+
-      '<span>Using shared intake file: <strong>'+sharedSheet+'</strong></span>'+
-      '<button class="sn-change" onclick="toggleSharedBar()">Change file ↑</button>'+
-      '</div>';
+    body.innerHTML='<div class="shared-notice"><span class="sn-icon">📋</span><span>Using shared intake file: <strong>'+sharedSheet+'</strong></span><button class="sn-change" onclick="toggleSharedBar()">Change file ↑</button></div>';
     markDone(p,1);
   }
 }
 
 function wireLocalIntake(p){
   var inp=document.getElementById(p+'-file1');if(!inp)return;
-  inp.addEventListener('change',function(){
-    var f=this.files[0];if(!f)return;
-    readWb(f,function(wb){
-      if(p==='v')S.v._localWb=wb;else S.f._localWb=wb;
-      showFilePill(p+'-file1-info',f);markDone(p,1);
-      var localSheet=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake');})||wb.SheetNames[0];
-      if(p==='v')S.v._localSheet=localSheet;else S.f._localSheet=localSheet;
-      updateSheetChips(p);autoDetectVF(wb.Sheets[localSheet],p);checkReady(p);setProgStep(p,2);
-    });
-  });
+  inp.addEventListener('change',function(){var f=this.files[0];if(!f)return;readWb(f,function(wb){if(p==='v')S.v._localWb=wb;else S.f._localWb=wb;showFilePill(p+'-file1-info',f);markDone(p,1);var ls=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake');})||wb.SheetNames[0];if(p==='v')S.v._localSheet=ls;else S.f._localSheet=ls;updateSheetChips(p);autoDetectVF(wb.Sheets[ls],p);checkReady(p);setProgStep(p,2);});});
   var dz=document.getElementById(p+'-dz1');if(!dz)return;
-  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
-  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
-  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
 }
 
 function getIntakeWb(p){return sharedWb||(p==='v'?S.v._localWb:S.f._localWb)||null;}
@@ -826,112 +901,51 @@ function updateSheetChips(p){
   if(!wb){chips.innerHTML='';if(hint)hint.style.display='block';document.getElementById(p+'-sheet-auto-badge').style.display='none';return;}
   if(hint)hint.style.display='none';document.getElementById(p+'-sheet-auto-badge').style.display='inline-flex';chips.innerHTML='';
   var preferred=getIntakeSheet(p);
-  wb.SheetNames.forEach(function(name){
-    var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;
-    chip.onclick=function(){chips.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');if(sharedWb)sharedSheet=name;else if(p==='v')S.v._localSheet=name;else S.f._localSheet=name;autoDetectVF(wb.Sheets[name],p);checkReady(p);};
-    chips.appendChild(chip);
-  });
+  wb.SheetNames.forEach(function(name){var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;chip.onclick=function(){chips.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');if(sharedWb)sharedSheet=name;else if(p==='v')S.v._localSheet=name;else S.f._localSheet=name;autoDetectVF(wb.Sheets[name],p);checkReady(p);};chips.appendChild(chip);});
 }
 
-// ════════════════════════════════════════════
-// AUTO-DETECT COLUMNS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// AUTO-DETECT COLUMNS (v/f)
+// ══════════════════════════════════════════════
 function autoDetectVF(ws,p){
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,dId=-1,dSt=-1;
-  for(var c=range.s.c;c<=range.e.c;c++){
-    var h=cellVal(ws,hr,c).toLowerCase();
-    if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;
-    if(dSt<0&&h.includes('status'))dSt=c;
-  }
-  function set(inputId,badgeId,val){if(val<0)return;var inp=document.getElementById(inputId);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}var b=document.getElementById(badgeId);if(b)b.style.display='inline-flex';}
+  for(var c=range.s.c;c<=range.e.c;c++){var h=cellVal(ws,hr,c).toLowerCase();if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;if(dSt<0&&h.includes('status'))dSt=c;}
+  function set(iid,bid,val){if(val<0)return;var inp=document.getElementById(iid);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}var b=document.getElementById(bid);if(b)b.style.display='inline-flex';}
   if(p==='v'){set('v-cfg-id-col','v-id-col-badge',dId);set('v-cfg-status-col','v-status-col-badge',dSt);}
   if(p==='f'){set('f-cfg-id-col','f-id-col-badge',dId);}
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // READY CHECKS & VALIDATION
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function checkReady(p){
   if(p==='v'){var ok=!!(getIntakeWb('v')&&getIntakeSheet('v')&&S.v.wb2);document.getElementById('v-run-btn').disabled=!ok;if(ok){validateVmock();setProgStep('v',3);}}
   if(p==='f'){var ok=!!(getIntakeWb('f')&&getIntakeSheet('f')&&S.f.wb2);document.getElementById('f-run-btn').disabled=!ok;if(ok){validateForms();setProgStep('f',3);}}
 }
-
-function showValidation(boxId,issues,type){
-  var box=document.getElementById(boxId);
-  if(!issues.length){box.classList.remove('show');return;}
-  box.className='validation-box show '+(type||'warn');
-  box.innerHTML='<strong>'+(type==='error'?'❌ Please fix before running:':'⚠️ Heads-up before running:')+'</strong><ul>'+issues.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
-}
-
-function validateVmock(){
-  var issues=[];
-  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
-  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
-  if(S.v.wb2){var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});if(rows.length===0)issues.push('VMOCK report appears to be empty.');else{if(!(eH in rows[0]))issues.push('Email column "'+eH+'" not found in VMOCK report.');if(!(sH in rows[0]))issues.push('Status column "'+sH+'" not found in VMOCK report.');}}
-  showValidation('v-validation',issues,issues.length?'warn':'');
-}
-
-function validateForms(){
-  var issues=[];
-  var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
-  if(S.f.wb2){var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});if(rows.length===0)issues.push('Forms export appears to be empty.');else if(!(idH in rows[0]))issues.push('Student ID column "'+idH+'" not found in Forms export.');}
-  showValidation('f-validation',issues,issues.length?'warn':'');
-}
-
+function showValidation(boxId,issues,type){var box=document.getElementById(boxId);if(!issues.length){box.classList.remove('show');return;}box.className='validation-box show '+(type||'warn');box.innerHTML='<strong>'+(type==='error'?'❌ Please fix before running:':'⚠️ Heads-up before running:')+'</strong><ul>'+issues.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';}
+function validateVmock(){var issues=[];var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';if(S.v.wb2){var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});if(!rows.length)issues.push('VMOCK report appears empty.');else{if(!(eH in rows[0]))issues.push('Email column "'+eH+'" not found in VMOCK report.');if(!(sH in rows[0]))issues.push('Status column "'+sH+'" not found in VMOCK report.');}}showValidation('v-validation',issues,issues.length?'warn':'');}
+function validateForms(){var issues=[];var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';if(S.f.wb2){var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});if(!rows.length)issues.push('Forms export appears empty.');else if(!(idH in rows[0]))issues.push('Student ID column "'+idH+'" not found in Forms export.');}showValidation('f-validation',issues,issues.length?'warn':'');}
 function validateAssign(){
   var issues=[];if(!S.a.wb1)return;
-  var config=getPillarConfig();
-  if(config.length===0){issues.push('Add at least one pillar group.');showValidation('a-validation',issues,'error');return;}
-  var ws=S.a.wb1.Sheets[S.a.sheet];var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
-  var pillarSet={};for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC);if(p)pillarSet[p]=true;}
-  config.forEach(function(cfg){var parts=cfg.pillar.split(/[&,]/).map(function(x){return x.trim();});var anyMatch=parts.some(function(x){return pillarSet[x];});if(!anyMatch)issues.push('"'+cfg.pillar+'" — no students found. Check spelling.');});
-  showValidation('a-validation',issues,issues.length?'warn':'');
+  var enabled=getEnabledPillars();if(!enabled.length){issues.push('Enable at least one pillar.');showValidation('a-validation',issues,'error');return;}
+  showValidation('a-validation',issues,'');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // SCANS
-// ════════════════════════════════════════════
-function scanVmock(){
-  if(!S.v.wb2)return;
-  var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
-  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
-  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
-  var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});
-  if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}
-  var has=rows.length&&sH in rows[0];
-  document.getElementById('v-map-status-col').textContent=sH+' column';
-  var b=document.getElementById('v-map-status-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');
-  validateVmock();
-}
+// ══════════════════════════════════════════════
+function scanVmock(){if(!S.v.wb2)return;var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}var has=rows.length&&sH in rows[0];document.getElementById('v-map-status-col').textContent=sH+' column';var b=document.getElementById('v-map-status-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');validateVmock();}
+function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';var has=rows.length&&idH in rows[0];document.getElementById('f-map-id-col').textContent=idH+' column';var b=document.getElementById('f-map-id-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}validateForms();}
 
-function scanForms(){
-  if(!S.f.wb2)return;
-  var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});
-  var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
-  var has=rows.length&&idH in rows[0];
-  document.getElementById('f-map-id-col').textContent=idH+' column';
-  var b=document.getElementById('f-map-id-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');
-  if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}
-  validateForms();
-}
-
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // FILE WIRING
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function wireSecondary(inputId,p){
-  document.getElementById(inputId).addEventListener('change',function(){
-    var f=this.files[0];if(!f)return;
-    readWb(f,function(wb){S[p].wb2=wb;showFilePill(p+'-file2-info',f);markDone(p,2);if(p==='v')scanVmock();else scanForms();checkReady(p);setProgStep(p,3);});
-  });
+  document.getElementById(inputId).addEventListener('change',function(){var f=this.files[0];if(!f)return;readWb(f,function(wb){S[p].wb2=wb;showFilePill(p+'-file2-info',f);markDone(p,2);if(p==='v')scanVmock();else scanForms();checkReady(p);setProgStep(p,3);});});
   var dz=document.getElementById(p+'-dz2');if(!dz)return;
-  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
-  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
-  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById(inputId);var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById(inputId);var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
 }
-wireSecondary('v-file2','v');
-wireSecondary('f-file2','f');
-
+wireSecondary('v-file2','v');wireSecondary('f-file2','f');
 ['v-cfg-vmock-email','v-cfg-vmock-status'].forEach(function(id){document.getElementById(id).addEventListener('input',scanVmock);});
 document.getElementById('f-cfg-forms-id').addEventListener('input',scanForms);
 
@@ -944,239 +958,199 @@ document.getElementById('a-file1').addEventListener('change',function(){
     document.getElementById('a-sheet-picker').style.display='block';
     document.getElementById('a-sheet-auto-badge').style.display='inline-flex';
     var sc=document.getElementById('a-sheet-chips');sc.innerHTML='';
-    wb.SheetNames.forEach(function(name){
-      var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;
-      chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');S.a.sheet=name;autoDetectAssign(wb.Sheets[name]);checkAssignReady();};
-      sc.appendChild(chip);
-    });
+    wb.SheetNames.forEach(function(name){var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');S.a.sheet=name;autoDetectAssign(wb.Sheets[name]);checkAssignReady();};sc.appendChild(chip);});
     autoDetectAssign(wb.Sheets[preferred]);checkAssignReady();setProgStep('a',2);
   });
 });
 var adz=document.getElementById('a-dz1');
-adz.addEventListener('dragover',function(e){e.preventDefault();adz.classList.add('drag-over');});
-adz.addEventListener('dragleave',function(){adz.classList.remove('drag-over');});
-adz.addEventListener('drop',function(e){e.preventDefault();adz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById('a-file1');var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
-
+adz.addEventListener('dragover',function(e){e.preventDefault();adz.classList.add('drag-over');});adz.addEventListener('dragleave',function(){adz.classList.remove('drag-over');});adz.addEventListener('drop',function(e){e.preventDefault();adz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById('a-file1');var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
 ['a-cfg-id','a-cfg-name','a-cfg-score','a-cfg-pillar'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){var k=id.replace('a-cfg-','');aCols[k]=colIdx(this.value);checkAssignReady();});});
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // AUTO-DETECT — ASSIGNMENT
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function autoDetectAssign(ws){
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  aCols={id:-1,name:-1,score:-1,pillar:-1};
-  for(var c=range.s.c;c<=range.e.c;c++){
-    var h=cellVal(ws,hr,c).toLowerCase();
-    if(aCols.id<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))aCols.id=c;
-    if(aCols.name<0&&(h==='name'||h.includes('student name')||h.includes('full name')||h.includes('preferred')||h.includes('official')))aCols.name=c;
-    if(aCols.score<0&&(h.includes('score')||h.includes('mark')||h.includes('grade')||h.includes('result')))aCols.score=c;
-    if(aCols.pillar<0&&(h.includes('pillar')||h.includes('track')||h.includes('programme')||h.includes('major')||h.includes('acad plan')))aCols.pillar=c;
-  }
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;aCols={id:-1,name:-1,score:-1,pillar:-1};
+  for(var c=range.s.c;c<=range.e.c;c++){var h=cellVal(ws,hr,c).toLowerCase();if(aCols.id<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))aCols.id=c;if(aCols.name<0&&(h==='name'||h.includes('student name')||h.includes('full name')||h.includes('preferred')||h.includes('official')))aCols.name=c;if(aCols.score<0&&(h.includes('score')||h.includes('mark')||h.includes('grade')||h.includes('result')))aCols.score=c;if(aCols.pillar<0&&(h.includes('pillar')||h.includes('track')||h.includes('programme')||h.includes('major')||h.includes('acad plan')))aCols.pillar=c;}
   ['id','name','score','pillar'].forEach(function(k){var inp=document.getElementById('a-cfg-'+k);if(inp){inp.value=colLetter(aCols[k]);inp.classList.toggle('auto-detected',aCols[k]>=0);}});
   var wrap=document.getElementById('a-detect-cols');wrap.innerHTML='';
-  [{k:'id',l:'Student ID'},{k:'name',l:'Name'},{k:'score',l:'Score'},{k:'pillar',l:'Pillar'}].forEach(function(f){
-    var found=aCols[f.k]>=0;var chip=document.createElement('div');chip.className='detect-col-chip '+(found?'found':'missing');
-    chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';
-    wrap.appendChild(chip);
-  });
+  [{k:'id',l:'Student ID'},{k:'name',l:'Name'},{k:'score',l:'Score'},{k:'pillar',l:'Pillar'}].forEach(function(f){var found=aCols[f.k]>=0;var chip=document.createElement('div');chip.className='detect-col-chip '+(found?'found':'missing');chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';wrap.appendChild(chip);});
   document.getElementById('a-detect-card').style.display='block';
-  if(document.querySelectorAll('#pillar-sections .pillar-section').length===0&&aCols.pillar>=0)autoPopulatePillars(ws);
-  checkAssignReady();
+  refreshPillarFileBadges();checkAssignReady();
 }
 
-function autoPopulatePillars(ws){
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,seen={},order=[];
-  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,aCols.pillar);if(p&&!seen[p]){seen[p]=true;order.push(p);}}
-  var defaults={'CSD':4,'ASD':4,'EPD':2,'ESD':4,'DAI':4};
-  order.forEach(function(p){addPillarRow(p,defaults[p.toUpperCase()]||2,'');});
+// ══════════════════════════════════════════════
+// PILLAR GRID — NEW FIXED 5-PILLAR SYSTEM
+// ══════════════════════════════════════════════
+function renderPillarGrid(){
+  var grid=document.getElementById('pillar-grid');grid.innerHTML='';
+  PILLAR_DEFAULTS.forEach(function(def,i){
+    var row=document.createElement('div');
+    row.className='pillar-row'+(def.enabled?' enabled':'');
+    row.id='pr-'+i;
+    var rooms=def.rooms,fmt=def.fmt,pillar=def.pillar;
+    var previewHtml=buildRoomPreview(fmt,pillar,rooms);
+    row.innerHTML=
+      '<div class="pillar-row-head" onclick="togglePillarExpand('+i+')" style="cursor:pointer">'+
+        '<div class="pillar-checkbox '+(def.enabled?'on':'')+'" id="pchk-'+i+'" onclick="event.stopPropagation();togglePillarEnabled('+i+')" title="Toggle pillar">'+
+          (def.enabled?'✓':'')+
+        '</div>'+
+        '<span class="pillar-name-chip" id="pname-'+i+'">'+pillar+'</span>'+
+        '<span class="pillar-row-summary" id="psum-'+i+'">'+(def.enabled?'<strong>'+rooms+'</strong> room'+(rooms===1?'':'s')+(def.date?' · '+def.date:''):'<em style="color:var(--muted)">Disabled — click toggle to enable</em>')+'</span>'+
+        '<span class="pillar-student-badge" id="psbadge-'+i+'" style="display:none"></span>'+
+        '<span class="pillar-file-badge" id="pfbadge-'+i+'"></span>'+
+        '<span class="pillar-expand-arrow" id="parrow-'+i+'">›</span>'+
+      '</div>'+
+      '<div class="pillar-row-body" id="prbody-'+i+'">'+
+        '<div class="pillar-body-grid">'+
+          '<div class="field-group"><label class="field-label">Rooms</label><input class="field-input" id="prooms-'+i+'" type="number" min="1" value="'+rooms+'" oninput="onPillarChange('+i+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Session Date <span>optional</span></label><input class="field-input" id="pdate-'+i+'" type="text" value="'+def.date+'" placeholder="e.g. 20-May-26" oninput="onPillarChange('+i+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Room Name Format <span>{p}=pillar {n}=number</span></label><input class="field-input" id="pfmt-'+i+'" type="text" value="'+fmt+'" placeholder="{p}-R{n}" oninput="onPillarChange('+i+')"/></div>'+
+        '</div>'+
+        '<div class="pillar-room-preview" id="ppreview-'+i+'">'+previewHtml+'</div>'+
+      '</div>';
+    grid.appendChild(row);
+  });
 }
 
-// ════════════════════════════════════════════
-// PILLAR ROWS
-// ════════════════════════════════════════════
-function addPillarRow(pillar,rooms,date){
-  pillar=pillar||'';rooms=rooms||2;date=date||'';
-  var id='psec-'+(pillarIdCounter++);
-  var div=document.createElement('div');div.className='pillar-section';div.id=id;
-  div.innerHTML=
-    '<div class="pillar-section-head">'+
-      '<span class="pillar-section-name">'+(pillar||'New Pillar')+'</span>'+
-      '<span class="pillar-count" id="'+id+'-count">—</span>'+
-    '</div>'+
-    '<div class="pillar-section-body">'+
-      '<div class="field-group"><label class="field-label">Pillar <span>(exact match)</span></label>'+
-        '<input class="field-input" type="text" value="'+pillar+'" placeholder="e.g. EPD" oninput="updatePillarHead(\''+id+'\',this.value)"/></div>'+
-      '<div class="field-group"><label class="field-label">No. of Rooms</label>'+
-        '<input class="field-input" type="number" min="1" value="'+rooms+'"/></div>'+
-      '<div class="field-group"><label class="field-label">Session Date <span>(label)</span></label>'+
-        '<input class="field-input" type="text" value="'+date+'" placeholder="e.g. 20-May-26"/></div>'+
-      '<button class="del-pillar-btn" onclick="document.getElementById(\''+id+'\').remove();checkAssignReady()" title="Remove">✕</button>'+
-    '</div>';
-  document.getElementById('pillar-sections').appendChild(div);checkAssignReady();
+function buildRoomPreview(fmt,pillar,rooms){
+  var items=[];for(var n=1;n<=Math.min(rooms,4);n++)items.push('<span>'+fmtRoomName(fmt,pillar,n)+'</span>');if(rooms>4)items.push('<span style="color:var(--muted)">…+'+( rooms-4)+' more</span>');
+  return 'Rooms: '+items.join(', ');
 }
 
-function updatePillarHead(sId,val){
-  var el=document.getElementById(sId);if(el)el.querySelector('.pillar-section-name').textContent=val||'New Pillar';
-  if(S.a.wb1&&S.a.sheet&&aCols.pillar>=0)updatePillarCounts();
-  validateAssign();
+function togglePillarExpand(i){
+  // Close all others first
+  PILLAR_DEFAULTS.forEach(function(_,j){
+    if(j===i) return;
+    var row=document.getElementById('pr-'+j);var body=document.getElementById('prbody-'+j);var arrow=document.getElementById('parrow-'+j);
+    if(row) row.classList.remove('expanded');if(body) body.style.display='none';if(arrow) arrow.style.transform='';
+  });
+  var row=document.getElementById('pr-'+i);var body=document.getElementById('prbody-'+i);var arrow=document.getElementById('parrow-'+i);
+  if(!PILLAR_DEFAULTS[i].enabled) return; // don't expand disabled
+  var isOpen=body.style.display==='block';
+  body.style.display=isOpen?'none':'block';
+  if(row) row.classList.toggle('expanded',!isOpen);
+  if(arrow) arrow.style.transform=isOpen?'':'rotate(90deg)';
 }
 
-function updatePillarCounts(){
+function togglePillarEnabled(i){
+  PILLAR_DEFAULTS[i].enabled=!PILLAR_DEFAULTS[i].enabled;
+  var row=document.getElementById('pr-'+i);
+  var chk=document.getElementById('pchk-'+i);
+  var nm=document.getElementById('pname-'+i);
+  var sm=document.getElementById('psum-'+i);
+  var body=document.getElementById('prbody-'+i);
+  var arrow=document.getElementById('parrow-'+i);
+  var en=PILLAR_DEFAULTS[i].enabled;
+  row.classList.toggle('enabled',en);
+  chk.classList.toggle('on',en);chk.textContent=en?'✓':'';
+  if(nm) nm.className='pillar-name-chip';
+  if(!en){if(body){body.style.display='none';}if(row)row.classList.remove('expanded');if(arrow)arrow.style.transform='';}
+  updatePillarSummary(i);checkAssignReady();
+}
+
+function updatePillarSummary(i){
+  var def=PILLAR_DEFAULTS[i];var sm=document.getElementById('psum-'+i);if(!sm)return;
+  sm.innerHTML=def.enabled?'<strong>'+def.rooms+'</strong> room'+(def.rooms===1?'':'s')+(def.date?' · '+def.date:''):'<em style="color:var(--muted)">Disabled — click toggle to enable</em>';
+}
+
+function onPillarChange(i){
+  PILLAR_DEFAULTS[i].rooms=parseInt(document.getElementById('prooms-'+i).value)||1;
+  PILLAR_DEFAULTS[i].date=(document.getElementById('pdate-'+i).value||'').trim();
+  PILLAR_DEFAULTS[i].fmt=(document.getElementById('pfmt-'+i).value||'{p}-R{n}').trim();
+  document.getElementById('ppreview-'+i).innerHTML=buildRoomPreview(PILLAR_DEFAULTS[i].fmt,PILLAR_DEFAULTS[i].pillar,PILLAR_DEFAULTS[i].rooms);
+  updatePillarSummary(i);checkAssignReady();
+}
+
+function resetPillars(){
+  PILLAR_FACTORY.forEach(function(f,i){PILLAR_DEFAULTS[i].rooms=f.rooms;PILLAR_DEFAULTS[i].date=f.date;PILLAR_DEFAULTS[i].fmt=f.fmt;PILLAR_DEFAULTS[i].enabled=f.enabled;});
+  renderPillarGrid();refreshPillarFileBadges();checkAssignReady();showToast('↺ Pillar defaults restored');
+}
+
+function getEnabledPillars(){return PILLAR_DEFAULTS.filter(function(d){return d.enabled;});}
+
+function refreshPillarFileBadges(){
+  if(!S.a.wb1||!S.a.sheet){PILLAR_DEFAULTS.forEach(function(_,i){var b=document.getElementById('pfbadge-'+i);if(b){b.className='pillar-file-badge';}var sb=document.getElementById('psbadge-'+i);if(sb)sb.style.display='none';});return;}
   var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws)return;
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
+  var plC=aCols.pillar>=0?aCols.pillar:colIdx(document.getElementById('a-cfg-pillar').value||'D');
   var pc={};for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC).trim();if(p)pc[p]=(pc[p]||0)+1;}
-  document.querySelectorAll('#pillar-sections .pillar-section').forEach(function(sec){
-    var inp=sec.querySelectorAll('input')[0];var cnt=sec.querySelector('.pillar-count');if(!inp||!cnt)return;
-    var val=(inp.value||'').trim();
-    var total=val.split(/[&,]/).map(function(x){return x.trim();}).reduce(function(s,x){return s+(pc[x]||0);},0);
-    cnt.textContent=total>0?total+' students':'no match';
-    cnt.style.background=total>0?'':'var(--warn-lt)';cnt.style.borderColor=total>0?'#C39BD3':'#E8D09A';cnt.style.color=total>0?'var(--purple)':'var(--warn)';
-    sec.classList.toggle('has-warn',total===0);
+  PILLAR_DEFAULTS.forEach(function(def,i){
+    var pillars=def.pillar.split(/[&,]/).map(function(x){return x.trim();});
+    var total=pillars.reduce(function(s,x){return s+(pc[x]||0);},0);
+    var found=pillars.some(function(x){return pc[x]>0;});
+    var fb=document.getElementById('pfbadge-'+i);
+    if(fb){fb.className='pillar-file-badge '+(found?'found':'notfound');fb.textContent=found?'✓ in file':'not in file';}
+    var sb=document.getElementById('psbadge-'+i);
+    if(sb){if(found){sb.style.display='inline-flex';sb.className='pillar-student-badge';sb.textContent=total+' student'+(total===1?'':'s');}else{sb.style.display='inline-flex';sb.className='pillar-student-badge nomatch';sb.textContent='no match';}}
   });
-}
-
-function getPillarConfig(){
-  var rows=document.querySelectorAll('#pillar-sections .pillar-section'),config=[];
-  rows.forEach(function(row){var inputs=row.querySelectorAll('input');var pillar=(inputs[0].value||'').trim(),rooms=parseInt(inputs[1].value)||1,date=(inputs[2].value||'').trim();if(pillar)config.push({pillar:pillar,rooms:rooms,date:date});});
-  return config;
 }
 
 function checkAssignReady(){
-  var ok=S.a.wb1&&S.a.sheet&&getPillarConfig().length>0;
+  var ok=S.a.wb1&&S.a.sheet&&getEnabledPillars().length>0;
   document.getElementById('a-run-btn').disabled=!ok;
-  if(S.a.wb1&&aCols.pillar>=0){updatePillarCounts();validateAssign();}
+  refreshPillarFileBadges();validateAssign();
 }
 
-// ════════════════════════════════════════════
-// RUN VMOCK  —  Updated priority logic
-// Priority: Submitted (3) > Attempted (2) > Yet to Attempt (1)
-// A status is only written if the incoming rank is strictly higher than the existing rank.
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// RUN VMOCK
+// ══════════════════════════════════════════════
 function runVmock(){
   var wb=getIntakeWb('v'),sheet=getIntakeSheet('v');
   var idCol=colIdx(document.getElementById('v-cfg-id-col').value||'A');
   var stCol=colIdx(document.getElementById('v-cfg-status-col').value||'J');
   var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
   var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
-  document.getElementById('v-log').innerHTML='';
-  document.getElementById('v-results-section').style.display='block';
+  document.getElementById('v-log').innerHTML='';document.getElementById('v-results-section').style.display='block';
   setTimeout(function(){document.getElementById('v-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
   var ws=wb.Sheets[sheet];if(!ws){flog('v-log','Sheet "'+sheet+'" not found.','err');return;}
   flog('v-log','Intake sheet loaded: "'+sheet+'"','info');
   var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
   flog('v-log','VMOCK report: '+rows.length+' rows','info');
   var map={},skip=0;
-  rows.forEach(function(r){
-    var em=String(r[eH]||'').trim();
-    var id=em.includes('@')?em.split('@')[0].trim():'';
-    var st=String(r[sH]||'').trim();
-    if(id)map[id]=st;else skip++;
-  });
+  rows.forEach(function(r){var em=String(r[eH]||'').trim();var id=em.includes('@')?em.split('@')[0].trim():'';var st=String(r[sH]||'').trim();if(id)map[id]=st;else skip++;});
   flog('v-log','Parsed '+Object.keys(map).length+' student IDs from emails'+(skip?' ('+skip+' rows had no email)':''),'ok');
-
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
   var existHdr=cellVal(ws,hr,stCol),isFirst=!existHdr.toLowerCase().includes('status'),sCo=stCol;
-  if(isFirst){
-    sCo=range.e.c+1;writeCell(ws,hr,sCo,'Status');range.e.c=sCo;ws['!ref']=XLSX.utils.encode_range(range);
-    flog('v-log','No Status column found — creating one (first-time mode)','warn');
-  } else {
-    flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');
-  }
-
-  // Counters
-  var cSub=0, cAtt=0, cYta=0, cMiss=0, cUpdated=0, cKept=0;
-
+  if(isFirst){sCo=range.e.c+1;writeCell(ws,hr,sCo,'Status');range.e.c=sCo;ws['!ref']=XLSX.utils.encode_range(range);flog('v-log','No Status column found — creating one (first-time mode)','warn');}
+  else{flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');}
+  var cSub=0,cAtt=0,cYta=0,cMiss=0,cUpdated=0,cKept=0;
   for(var R=hr+1;R<=range.e.r;R++){
-    var iid=cellVal(ws,R,idCol).replace(/\s/g,'');
-    if(!iid) continue;
-
-    var oldStatus = cellVal(ws,R,sCo);
-    var newStatus = map[iid]||'';
-
-    if(isFirst){
-      // ── FIRST TIME: just fill from VMOCK, or mark Not Found ──
-      if(newStatus){
-        writeCell(ws,R,sCo,newStatus);
-        cUpdated++;
-      } else {
-        writeCell(ws,R,sCo,'Not Found');
-        cMiss++;
-      }
-    } else {
-      // ── UPDATE MODE: apply priority rule ──
-      // Only overwrite if incoming rank is STRICTLY HIGHER than existing rank
-      if(!newStatus){
-        // Student not in VMOCK report at all — leave old status untouched
-        if(!oldStatus||oldStatus==='Not Found') cMiss++;
-      } else {
-        var oldRank=statusRank(oldStatus);
-        var newRank=statusRank(newStatus);
-        if(newRank > oldRank){
-          // New status outranks old — overwrite
-          writeCell(ws,R,sCo,newStatus);
-          cUpdated++;
-        } else {
-          // Old status is equal or higher — keep it
-          cKept++;
-        }
-      }
-    }
-
-    // Count final statuses for display
-    var finalStatus=cellVal(ws,R,sCo);
-    if(finalStatus==='Submitted')        cSub++;
-    else if(finalStatus==='Attempted')   cAtt++;
-    else if(finalStatus==='Yet to Attempt') cYta++;
-    else if(finalStatus==='Not Found'||!finalStatus) cMiss++;
+    var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;
+    var oldStatus=cellVal(ws,R,sCo),newStatus=map[iid]||'';
+    if(isFirst){if(newStatus){writeCell(ws,R,sCo,newStatus);cUpdated++;}else{writeCell(ws,R,sCo,'Not Found');cMiss++;}}
+    else{if(!newStatus){if(!oldStatus||oldStatus==='Not Found')cMiss++;}else{var oldR=statusRank(oldStatus),newR=statusRank(newStatus);if(newR>oldR){writeCell(ws,R,sCo,newStatus);cUpdated++;}else{cKept++;}}}
   }
-
-  // Re-count cMiss accurately (avoid double counting)
-  cMiss=0;
-  for(var R2=hr+1;R2<=range.e.r;R2++){
-    var fs=cellVal(ws,R2,sCo);
-    if(fs==='Not Found'||(!fs&&cellVal(ws,R2,idCol).replace(/\s/g,'')))cMiss++;
-  }
-
-  document.getElementById('v-s-sub').textContent=cSub;
-  document.getElementById('v-s-att').textContent=cAtt;
-  document.getElementById('v-s-new').textContent=cUpdated;
-  document.getElementById('v-s-pend').textContent=cYta;
-  document.getElementById('v-s-miss').textContent=cMiss;
-
+  // recount finals
+  cSub=0;cAtt=0;cYta=0;cMiss=0;
+  for(var R2=hr+1;R2<=range.e.r;R2++){var fs=cellVal(ws,R2,sCo);if(fs==='Submitted')cSub++;else if(fs==='Attempted')cAtt++;else if(fs==='Yet to Attempt')cYta++;else if(fs==='Not Found'||(!fs&&cellVal(ws,R2,idCol).replace(/\s/g,'')))cMiss++;}
+  document.getElementById('v-s-sub').textContent=cSub;document.getElementById('v-s-att').textContent=cAtt;document.getElementById('v-s-new').textContent=cUpdated;document.getElementById('v-s-pend').textContent=cYta;document.getElementById('v-s-miss').textContent=cMiss;
   var pill=document.getElementById('v-mode-pill');
   if(isFirst){pill.textContent='🆕 First-time Setup';pill.style.cssText='background:var(--gold-lt);color:var(--warn);border:1px solid #E8D09A;';}
   else{pill.textContent='🔄 Update Run';pill.style.cssText='background:var(--success-lt);color:var(--success);border:1px solid #A8D5BE;';}
-
-  if(isFirst){
-    flog('v-log',cUpdated+' students filled from VMOCK report','ok');
-    flog('v-log',cMiss+' not found — marked "Not Found"','warn');
-  } else {
-    flog('v-log',cUpdated+' students updated (higher-ranked status applied)','ok');
-    flog('v-log',cKept+' students unchanged (existing status was equal or higher)','ok');
-    flog('v-log','Final: '+cSub+' Submitted · '+cAtt+' Attempted · '+cYta+' Yet to Attempt · '+cMiss+' Not Found','info');
-  }
-
-  var ts=new Date().toLocaleTimeString();
-  document.getElementById('v-result-meta').innerHTML=
-    '<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+(cSub+cAtt+cYta+cMiss)+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
+  if(isFirst){flog('v-log',cUpdated+' students filled from VMOCK report','ok');flog('v-log',cMiss+' not found — marked "Not Found"','warn');}
+  else{flog('v-log',cUpdated+' students updated (higher-ranked status applied)','ok');flog('v-log',cKept+' students unchanged (existing status was equal or higher)','ok');flog('v-log','Final: '+cSub+' Submitted · '+cAtt+' Attempted · '+cYta+' Yet to Attempt · '+cMiss+' Not Found','info');}
+  var ts=fmtTs();var total=cSub+cAtt+cYta+cMiss;
+  document.getElementById('v-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+total+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
   flog('v-log','File ready to download','ok');
   S.v.resultWb=wb;setProgStep('v',4);document.getElementById('tdot-vmock').classList.add('show');
+  // Save to summary
+  summaryData.vmock={sub:cSub,att:cAtt,yta:cYta,miss:cMiss,updated:cUpdated,total:total,file:sheet,time:ts,mode:isFirst?'First-time':'Update'};
+  document.getElementById('tdot-summary').classList.add('show');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // RUN FORMS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function runForms(){
   var wb=getIntakeWb('f'),sheet=getIntakeSheet('f');
   var idCol=colIdx(document.getElementById('f-cfg-id-col').value||'A');
   var fH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
   var colName=document.getElementById('f-cfg-new-col-name').value.trim()||'Forms Response';
-  document.getElementById('f-log').innerHTML='';
-  document.getElementById('f-results-section').style.display='block';
+  document.getElementById('f-log').innerHTML='';document.getElementById('f-results-section').style.display='block';
   setTimeout(function(){document.getElementById('f-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
   var ws=wb.Sheets[sheet];if(!ws){flog('f-log','Sheet "'+sheet+'" not found.','err');return;}
-  flog('f-log','Intake sheet loaded: "'+sheet+'"','info');
+  flog('f-log','Intake sheet: "'+sheet+'"','info');
   var formsRows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});
   flog('f-log','Forms export: '+formsRows.length+' responses','info');
   var responded={},skip=0;
@@ -1188,69 +1162,66 @@ function runForms(){
   var cR=0,cNo=0,cT=0;
   for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,'Responded');cR++;}else{writeCell(ws,R,newCol,'Not Responded');cNo++;}}
   document.getElementById('f-s-resp').textContent=cR;document.getElementById('f-s-noresp').textContent=cNo;document.getElementById('f-s-total').textContent=cT;
-  var ts=new Date().toLocaleTimeString();
+  var ts=fmtTs();
   document.getElementById('f-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+cT+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
   flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');flog('f-log','File ready to download','ok');
   S.f.resultWb=wb;setProgStep('f',4);document.getElementById('tdot-forms').classList.add('show');
+  // Save to summary
+  summaryData.forms={resp:cR,noresp:cNo,total:cT,colName:colName,file:sheet,time:ts};
+  document.getElementById('tdot-summary').classList.add('show');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // RUN ASSIGNMENT
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function runAssign(){
-  var idC=colIdx(document.getElementById('a-cfg-id').value)||0;
-  var nmC=colIdx(document.getElementById('a-cfg-name').value)||1;
-  var scC=colIdx(document.getElementById('a-cfg-score').value)||2;
-  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
+  var idC=aCols.id>=0?aCols.id:0,nmC=aCols.name>=0?aCols.name:1,scC=aCols.score>=0?aCols.score:2,plC=aCols.pillar>=0?aCols.pillar:3;
   var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){flog('a-log','Sheet not found.','err');return;}
-  document.getElementById('a-log').innerHTML='';
-  document.getElementById('a-results-section').style.display='block';
+  document.getElementById('a-log').innerHTML='';document.getElementById('a-results-section').style.display='block';
   setTimeout(function(){document.getElementById('a-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  flog('a-log','Sheet loaded: "'+S.a.sheet+'"','info');
+  flog('a-log','Sheet: "'+S.a.sheet+'"','info');
   var students=[];
   for(var R=hr+1;R<=range.e.r;R++){var id=cellVal(ws,R,idC).replace(/\s/g,'');if(!id)continue;students.push({id:id,name:cellVal(ws,R,nmC),score:cellVal(ws,R,scC),pillar:cellVal(ws,R,plC)});}
-  flog('a-log',students.length+' students read from file','info');
-  var config=getPillarConfig();flog('a-log',config.length+' pillar groups configured','info');
+  flog('a-log',students.length+' students read','info');
+  var enabledPillars=getEnabledPillars();
+  flog('a-log',enabledPillars.length+' pillar groups enabled: '+enabledPillars.map(function(p){return p.pillar;}).join(', '),'info');
   var rooms=[],totalAssigned=0,assignedIds={};
-  config.forEach(function(cfg){
+  enabledPillars.forEach(function(cfg){
     var pillars=cfg.pillar.split(/[&,]/).map(function(p){return p.trim().toLowerCase();});
     var matched=students.filter(function(s){return pillars.indexOf(s.pillar.trim().toLowerCase())>=0;});
     matched.sort(function(a,b){return a.name.localeCompare(b.name);});
-    if(matched.length===0){flog('a-log','No students matched "'+cfg.pillar+'" — check pillar spelling','warn');return;}
+    if(!matched.length){flog('a-log','No students matched "'+cfg.pillar+'" — check spelling','warn');return;}
     totalAssigned+=matched.length;matched.forEach(function(s){assignedIds[s.id]=true;});
     var perRoom=Math.floor(matched.length/cfg.rooms),remainder=matched.length%cfg.rooms,idx=0;
     for(var r=0;r<cfg.rooms;r++){
       var size=perRoom+(r<remainder?1:0),roomStudents=matched.slice(idx,idx+size);idx+=size;
-      var shortName=cfg.pillar.replace(/\s*&\s*/g,'+').replace(/\s/g,'');
-      var className=shortName+'-R'+(r+1);
-      roomStudents.forEach(function(s){s.assignedClass=className;});
-      rooms.push({name:cfg.pillar+' — Room '+(r+1),shortName:shortName+' Rm'+(r+1),date:cfg.date,students:roomStudents});
-      flog('a-log',cfg.pillar+' Room '+(r+1)+': '+size+' students'+(cfg.date?' ('+cfg.date+')':''),'ok');
+      var roomName=fmtRoomName(cfg.fmt,cfg.pillar,r+1);
+      roomStudents.forEach(function(s){s.assignedClass=roomName;});
+      rooms.push({name:roomName,shortName:cfg.pillar.replace(/\s*&\s*/g,'+').replace(/\s/g,'')+'-Rm'+(r+1),date:cfg.date,pillar:cfg.pillar,students:roomStudents});
+      flog('a-log',roomName+': '+size+' students'+(cfg.date?' ('+cfg.date+')':''),'ok');
     }
   });
   var unmatched=students.filter(function(s){return !assignedIds[s.id];});
   if(unmatched.length){flog('a-log',unmatched.length+' students not matched to any pillar','warn');unmatched.slice(0,3).forEach(function(s){flog('a-log','  ID '+s.id+' — pillar "'+s.pillar+'"','warn');});if(unmatched.length>3)flog('a-log','  …and '+(unmatched.length-3)+' more','warn');}
-  document.getElementById('a-s-students').textContent=totalAssigned;
-  document.getElementById('a-s-rooms').textContent=rooms.length;
-  document.getElementById('a-s-pillars').textContent=config.length;
-  var ts=new Date().toLocaleTimeString();
+  document.getElementById('a-s-students').textContent=totalAssigned;document.getElementById('a-s-rooms').textContent=rooms.length;document.getElementById('a-s-pillars').textContent=enabledPillars.length;
+  var ts=fmtTs();
   document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+totalAssigned+' students &nbsp;·&nbsp; '+rooms.length+' rooms';
-  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Date</th><th>#</th><th>Student ID</th><th>Name</th><th>Score</th><th>Class</th></tr></thead><tbody>';
-  rooms.forEach(function(rm){rm.students.forEach(function(s,i){html+='<tr>';if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+rm.name+'</span></td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';html+='<td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.score+'</td><td>'+s.assignedClass+'</td></tr>';});});
+  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Date</th><th>#</th><th>Student ID</th><th>Name</th><th>Pillar</th></tr></thead><tbody>';
+  rooms.forEach(function(rm){rm.students.forEach(function(s,i){html+='<tr>';if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+rm.name+'</span></td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';html+='<td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.pillar+'</td></tr>';});});
   html+='</tbody></table>';
   var pw=document.getElementById('a-preview-wrap');pw.innerHTML=html;pw.style.display='block';
   flog('a-log','File ready to download','ok');
   assignmentData=rooms;setProgStep('a',3);document.getElementById('tdot-assign').classList.add('show');
+  // Save to summary
+  summaryData.assign={students:totalAssigned,rooms:rooms.length,pillars:enabledPillars.length,roomList:rooms,file:S.a.sheet,time:ts,unmatched:unmatched.length};
+  document.getElementById('tdot-summary').classList.add('show');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // DOWNLOADS
-// ════════════════════════════════════════════
-function downloadResult(p){
-  var wb=S[p].resultWb;if(!wb)return;
-  XLSX.writeFile(wb,'UPOP_Intake_'+(p==='v'?'VMOCK':'Forms')+'_'+fmtDate()+'.xlsx');
-}
+// ══════════════════════════════════════════════
+function downloadResult(p){var wb=S[p].resultWb;if(!wb)return;XLSX.writeFile(wb,'UPOP_Intake_'+(p==='v'?'VMOCK':'Forms')+'_'+fmtDate()+'.xlsx');}
 
 function downloadAssignment(){
   if(!assignmentData||!assignmentData.length)return;
@@ -1264,21 +1235,134 @@ function downloadAssignment(){
   XLSX.writeFile(wb,'UPOP_ClassAssignment_'+fmtDate()+'.xlsx');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// SUMMARY DASHBOARD
+// ══════════════════════════════════════════════
+function refreshSummary(){
+  var hasAny=summaryData.vmock||summaryData.forms||summaryData.assign;
+  document.getElementById('summary-empty').style.display=hasAny?'none':'block';
+  document.getElementById('summary-content').style.display=hasAny?'block':'none';
+  if(!hasAny) return;
+
+  document.getElementById('summary-timestamp').textContent='Last updated '+fmtTs();
+
+  // VMOCK
+  var vm=summaryData.vmock;
+  document.getElementById('sum-vmock-module').style.display=vm?'block':'none';
+  if(vm){
+    document.getElementById('sum-vmock-file').textContent='Sheet: '+vm.file+' · '+vm.mode+' run';
+    document.getElementById('sum-vmock-time').textContent=vm.time;
+    var total=vm.total||1;
+    var pct=Math.round(vm.sub/total*100);
+    document.getElementById('sum-vmock-stats').innerHTML=
+      '<div class="summary-stat s-sub"><span class="summary-stat-num">'+vm.sub+'</span><span class="summary-stat-lbl">Submitted</span></div>'+
+      '<div class="summary-stat s-att"><span class="summary-stat-num">'+vm.att+'</span><span class="summary-stat-lbl">Attempted</span></div>'+
+      '<div class="summary-stat s-pend"><span class="summary-stat-num">'+vm.yta+'</span><span class="summary-stat-lbl">Yet to Attempt</span></div>'+
+      '<div class="summary-stat s-miss"><span class="summary-stat-num">'+vm.miss+'</span><span class="summary-stat-lbl">Not Found</span></div>'+
+      '<div class="summary-stat s-total"><span class="summary-stat-num">'+vm.total+'</span><span class="summary-stat-lbl">Total</span></div>';
+    document.getElementById('sum-vmock-bar').style.width=pct+'%';
+    document.getElementById('sum-vmock-bar-label').textContent=vm.sub+' of '+vm.total+' submitted';
+    document.getElementById('sum-vmock-bar-pct').textContent=pct+'%';
+  }
+
+  // Forms
+  var fm=summaryData.forms;
+  document.getElementById('sum-forms-module').style.display=fm?'block':'none';
+  if(fm){
+    document.getElementById('sum-forms-title').textContent='Microsoft Forms — '+fm.colName;
+    document.getElementById('sum-forms-file').textContent='Sheet: '+fm.file;
+    document.getElementById('sum-forms-time').textContent=fm.time;
+    var total2=fm.total||1;
+    var pct2=Math.round(fm.resp/total2*100);
+    document.getElementById('sum-forms-stats').innerHTML=
+      '<div class="summary-stat s-resp"><span class="summary-stat-num">'+fm.resp+'</span><span class="summary-stat-lbl">Responded</span></div>'+
+      '<div class="summary-stat s-noresp"><span class="summary-stat-num">'+fm.noresp+'</span><span class="summary-stat-lbl">Not Responded</span></div>'+
+      '<div class="summary-stat s-total"><span class="summary-stat-num">'+fm.total+'</span><span class="summary-stat-lbl">Total</span></div>';
+    document.getElementById('sum-forms-bar').style.width=pct2+'%';
+    document.getElementById('sum-forms-bar-label').textContent=fm.resp+' of '+fm.total+' responded';
+    document.getElementById('sum-forms-bar-pct').textContent=pct2+'%';
+  }
+
+  // Assignment
+  var am=summaryData.assign;
+  document.getElementById('sum-assign-module').style.display=am?'block':'none';
+  if(am){
+    document.getElementById('sum-assign-file').textContent='Sheet: '+am.file+(am.unmatched?' · ⚠ '+am.unmatched+' unassigned':'');
+    document.getElementById('sum-assign-time').textContent=am.time;
+    document.getElementById('sum-assign-stats').innerHTML=
+      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.students+'</span><span class="summary-stat-lbl">Assigned</span></div>'+
+      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.rooms+'</span><span class="summary-stat-lbl">Rooms</span></div>'+
+      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.pillars+'</span><span class="summary-stat-lbl">Pillars</span></div>'+
+      (am.unmatched?'<div class="summary-stat s-miss"><span class="summary-stat-num">'+am.unmatched+'</span><span class="summary-stat-lbl">Unassigned</span></div>':'');
+    // Pillar breakdown table
+    var byPillar={};
+    am.roomList.forEach(function(rm){if(!byPillar[rm.pillar])byPillar[rm.pillar]={rooms:0,students:0,date:rm.date};byPillar[rm.pillar].rooms++;byPillar[rm.pillar].students+=rm.students.length;});
+    var tbl='<table class="summary-table"><thead><tr><th>Pillar</th><th>Rooms</th><th>Students</th><th>Session Date</th></tr></thead><tbody>';
+    Object.keys(byPillar).forEach(function(p){var d=byPillar[p];tbl+='<tr><td><strong>'+p+'</strong></td><td>'+d.rooms+'</td><td>'+d.students+'</td><td>'+(d.date||'—')+'</td></tr>';});
+    tbl+='</tbody></table>';
+    document.getElementById('sum-assign-table-wrap').innerHTML=tbl;
+  }
+}
+
+function exportSummaryReport(){
+  var wb=XLSX.utils.book_new();
+  // Sheet 1: Overview
+  var overviewData=[['UPOP Session Summary — '+fmtDate()],[]];
+  var vm=summaryData.vmock;
+  if(vm){
+    overviewData.push(['VMOCK Assessment — '+vm.mode+' run']);
+    overviewData.push(['Submitted','Attempted','Yet to Attempt','Not Found','Total']);
+    overviewData.push([vm.sub,vm.att,vm.yta,vm.miss,vm.total]);
+    overviewData.push([]);
+  }
+  var fm=summaryData.forms;
+  if(fm){
+    overviewData.push(['Microsoft Forms — '+fm.colName]);
+    overviewData.push(['Responded','Not Responded','Total']);
+    overviewData.push([fm.resp,fm.noresp,fm.total]);
+    overviewData.push([]);
+  }
+  var am=summaryData.assign;
+  if(am){
+    overviewData.push(['Class Assignment']);
+    overviewData.push(['Students Assigned','Rooms','Pillars','Unassigned']);
+    overviewData.push([am.students,am.rooms,am.pillars,am.unmatched]);
+    overviewData.push([]);
+    overviewData.push(['Pillar','Rooms','Students','Session Date']);
+    var byPillar={};
+    am.roomList.forEach(function(rm){if(!byPillar[rm.pillar])byPillar[rm.pillar]={rooms:0,students:0,date:rm.date};byPillar[rm.pillar].rooms++;byPillar[rm.pillar].students+=rm.students.length;});
+    Object.keys(byPillar).forEach(function(p){var d=byPillar[p];overviewData.push([p,d.rooms,d.students,d.date||'']);});
+  }
+  var ows=XLSX.utils.aoa_to_sheet(overviewData);ows['!cols']=[{wch:28},{wch:12},{wch:12},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,ows,'Summary');
+  // Assignment sheets (one per room)
+  if(am&&am.roomList){
+    am.roomList.forEach(function(rm){
+      var data=[['Student ID','Name','Pillar','Class','Session Date']];
+      rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.assignedClass,rm.date||'']);});
+      var ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:28},{wch:10},{wch:14},{wch:16}];
+      XLSX.utils.book_append_sheet(wb,ws,rm.shortName.replace(/[:\\\/\?\*\[\]]/g,'').slice(0,31));
+    });
+  }
+  XLSX.writeFile(wb,'UPOP_SummaryReport_'+fmtDate()+'.xlsx');
+}
+
+// ══════════════════════════════════════════════
 // RESET
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function resetPage(p){
   if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2?3:S.v.wb2?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
   if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
-  if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';document.getElementById('a-preview-wrap').style.display='none';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;}
+  if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';var pw=document.getElementById('a-preview-wrap');if(pw)pw.style.display='none';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // INIT
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════
 renderIntakeStep('v');
 renderIntakeStep('f');
+renderPillarGrid();
 </script>
 </body>
 </html>
