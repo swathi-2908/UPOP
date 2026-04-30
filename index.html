@@ -1,16 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UPOP Tracker</title>
+  <title>UPOP Status Tracker</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#F5F4F0;--surface:#FFFFFF;--surface2:#F9F8F6;
+      --bg:#F5F4F0;--surface:#FFF;--surface2:#F9F8F6;
       --border:#E2DFD8;--border2:#C8C4BB;
       --accent:#1B4332;--accent-lt:#D8EAE0;--accent2:#2D6A4F;
       --gold:#B5883A;--gold-lt:#FDF3DC;
@@ -19,130 +18,188 @@
       --success:#1B4332;--success-lt:#D8EAE0;
       --info:#1A5276;--info-lt:#D6EAF8;
       --purple:#6C3483;--purple-lt:#E8DAEF;
-      --teal:#0E6655;--teal-lt:#D0ECE7;
       --text:#1A1A1A;--text2:#4A4A4A;--muted:#8A8880;
       --font-head:'Playfair Display',Georgia,serif;
       --font-body:'Plus Jakarta Sans',sans-serif;
       --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
     }
     body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 20px 80px}
-    .topbar{width:100%;max-width:960px;display:flex;align-items:center;justify-content:space-between;padding:22px 0 0}
+
+    /* ── Topbar ── */
+    .topbar{width:100%;max-width:980px;display:flex;align-items:center;justify-content:space-between;padding:22px 0 0}
     .topbar-logo{display:flex;align-items:center;gap:10px}
     .logo-mark{width:34px;height:34px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-head);font-size:16px;font-weight:700}
     .logo-text{font-family:var(--font-head);font-size:17px;font-weight:600;color:var(--text);letter-spacing:-.01em}
     .topbar-badge{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
-    .tab-nav{width:100%;max-width:960px;display:flex;border-bottom:2px solid var(--border);margin:20px 0 36px}
+
+    /* ── Shared intake banner ── */
+    .shared-intake-bar{width:100%;max-width:980px;margin:18px 0 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .shared-intake-head{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;user-select:none;transition:background .15s}
+    .shared-intake-head:hover{background:var(--surface2)}
+    .shared-intake-icon{width:32px;height:32px;background:var(--accent-lt);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .shared-intake-title{font-weight:600;font-size:13px;flex:1}
+    .shared-intake-sub{font-size:12px;color:var(--muted)}
+    .shared-status-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .2s}
+    .shared-status-dot.ready{background:#4CAF50}
+    .shared-intake-body{display:none;padding:0 20px 16px;border-top:1px solid var(--border)}
+    .shared-intake-body.open{display:block}
+    .shared-file-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+    .shared-file-info{flex:1;font-size:12px;color:var(--muted)}
+    .shared-file-info.loaded{color:var(--success);font-weight:600}
+    .clear-btn{font-size:11px;font-weight:600;color:var(--danger);background:none;border:1px solid #E8A09A;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--font-body);transition:all .15s}
+    .clear-btn:hover{background:var(--danger-lt)}
+
+    /* ── Tabs ── */
+    .tab-nav{width:100%;max-width:980px;display:flex;border-bottom:2px solid var(--border);margin:20px 0 32px}
     .tab-btn{padding:10px 20px;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:7px;position:relative}
     .tab-btn:hover{color:var(--text2)}
     .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
     .tab-btn.t-forms.active{color:var(--info);border-bottom-color:var(--info)}
     .tab-btn.t-assign.active{color:var(--purple);border-bottom-color:var(--purple)}
-    .tab-btn.t-history.active{color:var(--teal);border-bottom-color:var(--teal)}
-    .history-count{position:absolute;top:6px;right:8px;min-width:16px;height:16px;background:var(--teal);color:#fff;border-radius:8px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px}
-    .history-count.show{display:flex}
-    .page{display:none;width:100%;max-width:960px}
+    .tab-done-dot{width:6px;height:6px;border-radius:50%;background:#4CAF50;position:absolute;top:8px;right:8px;display:none}
+    .tab-done-dot.show{display:block}
+
+    /* ── Progress bar ── */
+    .progress-bar{display:flex;align-items:center;gap:0;margin-bottom:28px;width:100%}
+    .prog-step{display:flex;align-items:center;gap:8px;flex:1;position:relative}
+    .prog-step:last-child{flex:none}
+    .prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;transition:all .25s;z-index:1}
+    .prog-dot.active{border-color:currentColor;background:currentColor;color:#fff}
+    .prog-dot.done{border-color:#4CAF50;background:#4CAF50;color:#fff}
+    .prog-label{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;transition:color .2s}
+    .prog-label.active{color:var(--text)}
+    .prog-label.done{color:#4CAF50}
+    .prog-line{flex:1;height:2px;background:var(--border);margin:0 4px;transition:background .25s}
+    .prog-line.done{background:#4CAF50}
+
+    /* ── Pages ── */
+    .page{display:none;width:100%;max-width:980px}
     .page.active{display:block}
-    .page-header{margin-bottom:32px}
-    .page-header h1{font-family:var(--font-head);font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--text);margin-bottom:10px}
-    .page-header p{font-size:14px;color:var(--text2);line-height:1.65;max-width:580px}
-    .info-banner{display:flex;gap:14px;border-radius:var(--radius);padding:14px 18px;margin-bottom:32px;font-size:13px;line-height:1.6}
+
+    /* ── Page header ── */
+    .page-header{margin-bottom:28px}
+    .page-header h1{font-family:var(--font-head);font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--text);margin-bottom:8px}
+    .page-header p{font-size:13px;color:var(--text2);line-height:1.65;max-width:580px}
+
+    /* ── Info banner ── */
+    .info-banner{display:flex;gap:14px;border-radius:var(--radius);padding:13px 16px;margin-bottom:24px;font-size:12px;line-height:1.65}
     .info-banner.green{background:var(--accent-lt);border:1px solid #A8D5BE;border-left:3px solid var(--accent);color:var(--accent)}
     .info-banner.blue{background:var(--info-lt);border:1px solid #A9CCE3;border-left:3px solid var(--info);color:var(--info)}
     .info-banner.purple{background:var(--purple-lt);border:1px solid #C39BD3;border-left:3px solid var(--purple);color:var(--purple)}
-    .info-banner.teal{background:var(--teal-lt);border:1px solid #A2D9CE;border-left:3px solid var(--teal);color:var(--teal)}
-    .info-banner .icon{font-size:15px;flex-shrink:0;margin-top:1px}
+    .info-banner .icon{font-size:14px;flex-shrink:0;margin-top:1px}
     .info-banner strong{font-weight:600}
-    .section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+
+    /* ── Section label ── */
+    .section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;transition:border-color .2s}
+
+    /* ── Cards ── */
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;transition:border-color .2s}
     .card.is-done{border-color:#A8D5BE}
-    .card-header{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--border);background:var(--surface2)}
-    .step-badge{width:26px;height:26px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;transition:all .25s}
-    .card.is-done .step-badge{background:var(--accent);border-color:var(--accent);color:#fff}
-    .card-title{font-weight:600;font-size:14px;color:var(--text);flex:1}
-    .card-pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+    .card.is-error{border-color:#E8A09A}
+    .card-header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface2)}
+    .step-badge{width:24px;height:24px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;transition:all .25s}
+    .card.is-done .step-badge{background:#4CAF50;border-color:#4CAF50;color:#fff}
+    .card.is-error .step-badge{background:var(--danger);border-color:var(--danger);color:#fff}
+    .card-title{font-weight:600;font-size:13px;color:var(--text);flex:1}
+    .card-pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
     .card.is-done .card-pill{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
-    .card-body{padding:22px}
-    .dropzone{position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:30px 24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
+    .card-body{padding:20px}
+
+    /* ── Dropzone ── */
+    .dropzone{position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
     .dropzone:hover,.dropzone.drag-over{border-color:var(--accent2);background:var(--accent-lt)}
     .dropzone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-    .dz-icon{width:44px;height:44px;background:var(--surface);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 12px;box-shadow:var(--shadow)}
-    .dz-title{font-weight:600;font-size:13px;color:var(--text);margin-bottom:4px}
+    .dz-icon{width:40px;height:40px;background:var(--surface);border:1px solid var(--border);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 10px;box-shadow:var(--shadow)}
+    .dz-title{font-weight:600;font-size:13px;color:var(--text);margin-bottom:3px}
     .dz-sub{font-size:12px;color:var(--muted)}
     .dz-sub span{color:var(--accent2);font-weight:600;text-decoration:underline;text-underline-offset:2px}
-    .file-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:12px 16px;margin-top:12px}
-    .file-pill-icon{width:32px;height:32px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+
+    /* ── File pill ── */
+    .file-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:11px 14px;margin-top:10px}
+    .file-pill-icon{width:30px;height:30px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
     .file-pill-name{font-weight:600;font-size:13px;color:var(--accent);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .file-pill-meta{font-size:11px;color:var(--muted);white-space:nowrap}
-    .sheet-hint{margin-top:10px;padding:10px 14px;background:var(--gold-lt);border:1px solid #E8D09A;border-radius:6px;font-size:12px;color:var(--warn)}
-    .sheet-hint strong{font-weight:600}
-    .sheet-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-    .sheet-chip{font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
+    .file-pill-change{font-size:11px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:5px;padding:3px 8px;cursor:pointer;font-family:var(--font-body);transition:all .15s;white-space:nowrap;flex-shrink:0}
+    .file-pill-change:hover{border-color:var(--accent2);color:var(--accent2)}
+
+    /* ── Shared-file notice ── */
+    .shared-notice{display:flex;align-items:center;gap:10px;background:var(--accent-lt);border:1px solid #A8D5BE;border-radius:8px;padding:10px 14px;margin-top:0;font-size:12px;color:var(--accent);font-weight:500}
+    .shared-notice .sn-icon{font-size:14px;flex-shrink:0}
+    .shared-notice .sn-change{margin-left:auto;font-size:11px;font-weight:600;background:none;border:1px solid #A8D5BE;border-radius:5px;padding:3px 8px;cursor:pointer;font-family:var(--font-body);color:var(--accent);transition:all .15s}
+    .shared-notice .sn-change:hover{background:var(--surface)}
+
+    /* ── Sheet chips ── */
+    .sheet-hint{margin-top:10px;padding:9px 13px;background:var(--gold-lt);border:1px solid #E8D09A;border-radius:6px;font-size:12px;color:var(--warn)}
+    .sheet-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+    .sheet-chip{font-size:12px;font-weight:600;padding:4px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
     .sheet-chip:hover{border-color:var(--accent2);color:var(--accent2)}
     .sheet-chip.active{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
-    .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-    .config-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
-    .field-group{display:flex;flex-direction:column;gap:6px}
+
+    /* ── Inputs ── */
+    .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+    .field-group{display:flex;flex-direction:column;gap:5px}
     .field-label{font-size:12px;font-weight:600;color:var(--text2)}
     .field-label span{font-weight:400;color:var(--muted);font-size:11px;margin-left:4px}
-    .field-input{height:38px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:0 12px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;width:100%}
+    .field-input{height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:0 11px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;width:100%}
     .field-input:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(27,67,50,.08)}
     .field-input.auto-detected{border-color:#A8D5BE;background:var(--success-lt);color:var(--success);font-weight:600}
-    .auto-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success);margin-left:6px;vertical-align:middle}
-    .mapping-summary{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:20px}
-    .mapping-summary-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .auto-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 6px;border-radius:10px;background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success);margin-left:5px;vertical-align:middle}
+
+    /* ── Mapping summary ── */
+    .mapping-summary{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:18px}
+    .mapping-summary-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .mapping-summary-title{font-size:12px;font-weight:600;color:var(--text2)}
     .override-btn{font-size:11px;font-weight:600;color:var(--accent2);background:none;border:none;cursor:pointer;font-family:var(--font-body);padding:0}
     .override-btn:hover{text-decoration:underline}
-    .mapping-row{display:flex;align-items:center;gap:10px;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border)}
+    .mapping-row{display:flex;align-items:center;gap:9px;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border)}
     .mapping-row:last-child{border-bottom:none}
     .map-label{color:var(--muted);min-width:110px;font-weight:600}
-    .map-arrow{color:var(--border2);font-size:11px}
-    .map-value{font-family:'Menlo','Consolas',monospace;font-size:11px;padding:2px 8px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);flex:1}
-    .map-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+    .map-arrow{color:var(--border2);font-size:10px}
+    .map-value{font-family:'Menlo','Consolas',monospace;font-size:11px;padding:2px 7px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);flex:1}
+    .map-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;white-space:nowrap}
     .badge-ok{background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success)}
     .badge-warn{background:var(--warn-lt);border:1px solid #E8D09A;color:var(--warn)}
     .badge-blue{background:var(--info-lt);border:1px solid #A9CCE3;color:var(--info)}
-    .example-row{margin-top:10px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--muted);font-family:'Menlo','Consolas',monospace;line-height:1.9}
+    .example-row{margin-top:9px;padding:7px 11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--muted);font-family:'Menlo','Consolas',monospace;line-height:1.9}
     .hl-id{color:var(--success);font-weight:600}
     .hl-blue{color:var(--info);font-weight:600}
-    .advanced-panel{display:none;padding-top:14px;border-top:1px solid var(--border);margin-top:14px}
+    .advanced-panel{display:none;padding-top:13px;border-top:1px solid var(--border);margin-top:13px}
     .advanced-panel.open{display:block}
-    .config-note{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:14px;line-height:1.6}
-    .divider{height:1px;background:var(--border);margin:20px 0}
-    .col-preview{margin-top:14px;display:none}
-    .col-preview-head{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase}
-    .col-preview-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:7px}
-    .col-preview-table{width:100%;border-collapse:collapse;font-size:11px}
-    .col-preview-table th{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 10px;text-align:left;font-weight:600;color:var(--muted);white-space:nowrap}
-    .col-preview-table td{padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
-    .col-preview-table tr:last-child td{border-bottom:none}
-    .col-preview-table th.hl-col{background:var(--accent-lt);color:var(--accent)}
-    .col-preview-table td.hl-col{background:#F0F7F4;color:var(--accent);font-weight:600}
-    .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:0 24px;height:44px;border-radius:8px;border:none;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:14px;transition:all .15s;width:100%}
+    .config-note{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:9px 13px;margin-bottom:13px;line-height:1.6}
+
+    /* ── Validation alerts ── */
+    .validation-box{display:none;border-radius:8px;padding:11px 14px;margin-bottom:16px;font-size:12px;line-height:1.8}
+    .validation-box.show{display:block}
+    .validation-box.warn{background:var(--warn-lt);border:1px solid #E8D09A;color:#6B4C10}
+    .validation-box.error{background:var(--danger-lt);border:1px solid #E8A09A;color:var(--danger)}
+    .validation-box ul{padding-left:18px;margin-top:4px}
+    .validation-box strong{font-weight:600;display:block;margin-bottom:2px}
+
+    /* ── Buttons ── */
+    .divider{height:1px;background:var(--border);margin:18px 0}
+    .btn-row{display:flex;gap:10px}
+    .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:0 22px;height:42px;border-radius:8px;border:none;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:13px;transition:all .15s;flex:1}
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover:not(:disabled){background:var(--accent2);box-shadow:0 4px 14px rgba(27,67,50,.25);transform:translateY(-1px)}
-    .btn-primary:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed}
+    .btn-primary:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
     .btn-blue{background:var(--info);color:#fff}
     .btn-blue:hover:not(:disabled){background:#154360;box-shadow:0 4px 14px rgba(26,82,118,.25);transform:translateY(-1px)}
-    .btn-blue:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed}
+    .btn-blue:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none}
     .btn-purple{background:var(--purple);color:#fff}
-    .btn-purple:hover:not(:disabled){background:#5B2C6F;transform:translateY(-1px)}
-    .btn-purple:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed}
+    .btn-purple:hover:not(:disabled){background:#5B2C6F;box-shadow:0 4px 14px rgba(108,52,131,.25);transform:translateY(-1px)}
+    .btn-purple:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed;transform:none}
     .btn-download{background:var(--gold);color:#fff}
-    .btn-download:hover{background:#9A7230;transform:translateY(-1px)}
-    .btn-undo{background:var(--surface);color:var(--text2);border:1px solid var(--border)}
-    .btn-undo:hover:not(:disabled){background:var(--danger-lt);border-color:#E8A09A;color:var(--danger);transform:translateY(-1px)}
-    .btn-undo:disabled{opacity:.4;cursor:not-allowed}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;display:none}
-    .btn.loading .spinner{display:block}
-    .btn.loading .btn-label{opacity:.7}
-    .stats-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-    .stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-    .stat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px 12px;text-align:center}
-    .stat-num{display:block;font-family:var(--font-head);font-size:32px;font-weight:700;line-height:1;margin-bottom:6px}
-    .stat-lbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+    .btn-download:hover{background:#9A7230;box-shadow:0 4px 14px rgba(181,136,58,.3);transform:translateY(-1px)}
+    .btn-ghost{background:var(--surface);color:var(--text2);border:1px solid var(--border)}
+    .btn-ghost:hover{background:var(--surface2);border-color:var(--border2)}
+
+    /* ── Stats ── */
+    .stats-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:18px}
+    .stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}
+    .stat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center}
+    .stat-num{display:block;font-family:var(--font-head);font-size:30px;font-weight:700;line-height:1;margin-bottom:5px}
+    .stat-lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
     .stat.s-sub{border-color:#A8D5BE;background:var(--success-lt)}.stat.s-sub .stat-num{color:var(--success)}
     .stat.s-new{border-color:#A8D5BE;background:#EAF4EF}.stat.s-new .stat-num{color:var(--accent2)}
     .stat.s-pend{border-color:#E8D09A;background:var(--gold-lt)}.stat.s-pend .stat-num{color:var(--warn)}
@@ -151,74 +208,76 @@
     .stat.s-noresp{border-color:#E8D09A;background:var(--gold-lt)}.stat.s-noresp .stat-num{color:var(--warn)}
     .stat.s-total{border-color:var(--border2)}.stat.s-total .stat-num{color:var(--text)}
     .stat.s-purple{border-color:#C39BD3;background:var(--purple-lt)}.stat.s-purple .stat-num{color:var(--purple)}
-    .log{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:12px;line-height:2;max-height:200px;overflow-y:auto;margin-bottom:16px;font-family:'Menlo','Consolas',monospace}
-    .log-ok{color:#1B6B3A}.log-warn{color:#8A6520}.log-err{color:var(--danger)}.log-info{color:var(--text2)}
-    .action-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
-    .dl-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    /* History */
-    .history-empty{text-align:center;padding:60px 20px;color:var(--muted)}
-    .history-empty .he-icon{font-size:40px;margin-bottom:12px}
-    .history-empty p{font-size:14px;line-height:1.6}
-    .history-list{display:flex;flex-direction:column;gap:12px}
-    .history-entry{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-    .he-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2)}
-    .he-type-vmock{background:var(--accent-lt);color:var(--accent);border:1px solid #A8D5BE}
-    .he-type-forms{background:var(--info-lt);color:var(--info);border:1px solid #A9CCE3}
-    .he-type-assign{background:var(--purple-lt);color:var(--purple);border:1px solid #C39BD3}
-    .he-time{font-size:11px;color:var(--muted);flex:1}
-    .he-file{font-size:11px;color:var(--text2);font-weight:600;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .he-body{padding:14px 18px}
-    .he-stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-    .he-stat{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2)}
-    .he-notes{font-size:12px;color:var(--muted);line-height:1.6;font-family:'Menlo','Consolas',monospace;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;max-height:80px;overflow-y:auto}
-    .history-clear-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 18px;border-radius:7px;border:1px solid var(--border);background:none;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--muted);transition:all .15s;margin-bottom:16px}
-    .history-clear-btn:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
-    /* Improved pillar cards */
-    .pillars-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-    .pillars-title{font-size:13px;font-weight:600;color:var(--text)}
-    .pillars-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
-    .reset-dates-btn{font-size:11px;font-weight:600;color:var(--accent2);background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--font-body);transition:all .15s;white-space:nowrap}
-    .reset-dates-btn:hover{background:var(--accent-lt);border-color:#A8D5BE}
-    .pillar-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-    .pillar-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s}
-    .pillar-card.active-pillar{border-color:#C39BD3;background:var(--surface)}
-    .pillar-card-header{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;user-select:none}
-    .pillar-toggle{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border2);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;transition:all .15s;flex-shrink:0}
-    .pillar-toggle.checked{background:var(--purple);border-color:var(--purple);color:#fff}
-    .pillar-name-badge{font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);letter-spacing:.06em;min-width:50px;text-align:center}
-    .pillar-card.active-pillar .pillar-name-badge{background:var(--purple);color:#fff;border-color:var(--purple)}
-    .pillar-summary{flex:1;font-size:12px;color:var(--muted)}
-    .pillar-summary strong{color:var(--text2);font-weight:600}
-    .pillar-vbadge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;display:none}
-    .pillar-vbadge.found{display:inline-flex;background:var(--success-lt);border:1px solid #A8D5BE;color:var(--success)}
-    .pillar-vbadge.missing{display:inline-flex;background:var(--warn-lt);border:1px solid #E8D09A;color:var(--warn)}
-    .pillar-card-body{display:none;padding:0 16px 14px;border-top:1px solid var(--border)}
-    .pillar-card.active-pillar .pillar-card-body{display:block}
-    .pillar-fields{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;margin-top:12px}
-    .room-fmt-preview{margin-top:8px;padding:6px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--muted);font-family:'Menlo','Consolas',monospace}
-    .room-fmt-preview span{color:var(--purple);font-weight:600}
-    .warn-box{background:var(--warn-lt);border:1px solid #E8D09A;border-left:3px solid var(--warn);border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--warn);line-height:1.6;display:none}
-    .warn-box strong{font-weight:600}
-    .warn-box .warn-list{margin-top:8px;font-family:'Menlo','Consolas',monospace;font-size:11px;color:var(--text2);line-height:1.8}
-    .preview-wrap{overflow-x:auto;margin-bottom:16px}
+
+    /* ── Friendly log ── */
+    .flog{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;font-size:12px;line-height:1.9;max-height:180px;overflow-y:auto;margin-bottom:18px}
+    .flog-entry{display:flex;align-items:flex-start;gap:8px;padding:2px 0}
+    .flog-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+    .flog-msg{color:var(--text2)}
+    .flog-msg.ok{color:#1B6B3A;font-weight:500}
+    .flog-msg.warn{color:#8A6520}
+    .flog-msg.err{color:var(--danger);font-weight:500}
+
+    /* ── Result actions ── */
+    .result-actions{display:flex;gap:10px;margin-top:4px}
+    .result-meta{font-size:11px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+    .result-meta strong{color:var(--text2);font-weight:600}
+
+    /* ── Detect card ── */
+    .detect-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:18px}
+    .detect-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .detect-card-title{font-size:12px;font-weight:600;color:var(--text2)}
+    .detect-cols{display:flex;flex-wrap:wrap;gap:7px}
+    .detect-col-chip{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:12px;background:var(--surface);border:1px solid var(--border)}
+    .detect-col-chip.found{border-color:#A8D5BE;background:var(--success-lt)}
+    .detect-col-chip .chip-label{color:var(--muted);font-weight:600}
+    .detect-col-chip.found .chip-val{color:var(--success);font-family:'Menlo','Consolas',monospace;font-size:11px}
+    .detect-col-chip.missing .chip-val{color:var(--warn);font-size:11px}
+
+    /* ── Pillar sections ── */
+    .pillar-sections{display:flex;flex-direction:column;gap:10px}
+    .pillar-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
+    .pillar-section.has-warn{border-color:#E8D09A}
+    .pillar-section-head{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid var(--border);background:var(--surface)}
+    .pillar-section-name{font-weight:600;font-size:13px;flex:1}
+    .pillar-count{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
+    .pillar-section-body{padding:13px 15px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
+    .del-pillar-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all .15s;flex-shrink:0;align-self:flex-end}
+    .del-pillar-btn:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
+    .add-pillar-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:8px;border:1.5px dashed var(--border2);background:none;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--muted);transition:all .15s;width:100%;margin-top:4px}
+    .add-pillar-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-lt)}
+
+    /* ── Preview table ── */
+    .preview-wrap{overflow-x:auto;margin-bottom:18px;border-radius:8px;border:1px solid var(--border)}
     .preview-table{width:100%;border-collapse:collapse;font-size:12px}
-    .preview-table th{background:var(--surface2);border:1px solid var(--border);padding:8px 12px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-    .preview-table td{border:1px solid var(--border);padding:8px 12px;color:var(--text)}
+    .preview-table th{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 11px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+    .preview-table td{border-bottom:1px solid var(--border);padding:7px 11px;color:var(--text)}
+    .preview-table tr:last-child td{border-bottom:none}
     .preview-table tr:nth-child(even) td{background:var(--surface2)}
-    .room-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple)}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .animate-in{animation:fadeUp .35s ease forwards}
+    .room-badge{display:inline-flex;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .animate-in{animation:fadeUp .3s ease forwards}
+
     footer{margin-top:48px;text-align:center;font-size:12px;color:var(--muted);line-height:1.8}
-    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
     @media(max-width:640px){
       .stats-grid-3,.stats-grid-4{grid-template-columns:repeat(2,1fr)}
-      .config-grid,.config-grid-3,.dl-row,.action-row,.pillar-fields{grid-template-columns:1fr}
-      .topbar-badge{display:none}
+      .config-grid{grid-template-columns:1fr}
+      .topbar-badge,.tab-btn span{display:none}
+      .pillar-section-body{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+      .del-pillar-btn{grid-column:2;justify-self:end}
+      .btn-row{flex-direction:column}
+      .result-actions{flex-direction:column}
     }
   </style>
 </head>
 <body>
 
+<!-- ═══ TOPBAR ═══ -->
 <div class="topbar">
   <div class="topbar-logo">
     <div class="logo-mark">U</div>
@@ -227,535 +286,1007 @@
   <div class="topbar-badge">SUTD · Internal Tool</div>
 </div>
 
-<div class="tab-nav">
-  <button class="tab-btn active"    id="tab-vmock"   onclick="switchTab('vmock')">📊 &nbsp;VMOCK Assessment</button>
-  <button class="tab-btn t-forms"   id="tab-forms"   onclick="switchTab('forms')">📝 &nbsp;Microsoft Forms</button>
-  <button class="tab-btn t-assign"  id="tab-assign"  onclick="switchTab('assign')">🏫 &nbsp;Class Assignment</button>
-  <button class="tab-btn t-history" id="tab-history" onclick="switchTab('history')">
-    🕘 &nbsp;History
-    <span class="history-count" id="history-count">0</span>
-  </button>
+<!-- ═══ SHARED INTAKE FILE ═══ -->
+<div class="shared-intake-bar">
+  <div class="shared-intake-head" onclick="toggleSharedBar()">
+    <div class="shared-intake-icon">📋</div>
+    <div style="flex:1">
+      <div class="shared-intake-title">Shared Intake File <span id="shared-loaded-name" style="font-weight:400;color:var(--muted);font-size:12px"></span></div>
+      <div class="shared-intake-sub">Upload once — reused across all three tools automatically</div>
+    </div>
+    <div class="shared-status-dot" id="shared-status-dot"></div>
+    <span style="font-size:11px;color:var(--muted);margin-left:8px" id="shared-toggle-lbl">Upload ↓</span>
+  </div>
+  <div class="shared-intake-body" id="shared-intake-body">
+    <div style="position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:var(--surface2);transition:all .2s" id="shared-dz">
+      <input type="file" id="shared-file" accept=".xlsx,.xls" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%"/>
+      <div style="font-size:18px;margin-bottom:6px">📋</div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:3px">Drop your intake Excel here</div>
+      <div style="font-size:12px;color:var(--muted)"><span style="color:var(--accent2);font-weight:600;text-decoration:underline">Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div>
+    </div>
+    <div id="shared-file-info" style="margin-top:10px"></div>
+    <div id="shared-sheet-area" style="display:none;margin-top:12px">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">Select sheet:</div>
+      <div class="sheet-chips" id="shared-sheet-chips"></div>
+    </div>
+  </div>
 </div>
 
-<!-- PAGE 1 — VMOCK -->
+<!-- ═══ TABS ═══ -->
+<div class="tab-nav">
+  <button class="tab-btn active"  id="tab-vmock"  onclick="switchTab('vmock')">📊 &nbsp;<span>VMOCK Assessment</span><div class="tab-done-dot" id="tdot-vmock"></div></button>
+  <button class="tab-btn t-forms" id="tab-forms"  onclick="switchTab('forms')">📝 &nbsp;<span>Microsoft Forms</span><div class="tab-done-dot" id="tdot-forms"></div></button>
+  <button class="tab-btn t-assign"id="tab-assign" onclick="switchTab('assign')">🏫 &nbsp;<span>Class Assignment</span><div class="tab-done-dot" id="tdot-assign"></div></button>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 1 — VMOCK
+══════════════════════════════════════════ -->
 <div class="page active" id="page-vmock">
   <div class="page-header">
     <h1>VMOCK Assessment Tracker</h1>
-    <p>Match students by Student ID and update submission status from the VMOCK report. IDs are extracted from the email (text before @).</p>
+    <p>Match students by Student ID (from their email) and update submission status from the VMOCK report.</p>
   </div>
+
+  <!-- progress -->
+  <div class="progress-bar" id="v-progress">
+    <div class="prog-step"><div class="prog-dot active" id="v-pd1" style="color:var(--accent)">1</div><span class="prog-label active" id="v-pl1">Intake File</span></div>
+    <div class="prog-line" id="v-line1"></div>
+    <div class="prog-step"><div class="prog-dot" id="v-pd2">2</div><span class="prog-label" id="v-pl2">VMOCK Report</span></div>
+    <div class="prog-line" id="v-line2"></div>
+    <div class="prog-step"><div class="prog-dot" id="v-pd3">3</div><span class="prog-label" id="v-pl3">Configure</span></div>
+    <div class="prog-line" id="v-line3"></div>
+    <div class="prog-step"><div class="prog-dot" id="v-pd4">4</div><span class="prog-label" id="v-pl4">Results</span></div>
+  </div>
+
   <div class="info-banner green">
     <span class="icon">ℹ</span>
-    <div><strong>First time?</strong> A Status column is created and filled. Students not found are marked <em>Not Found</em>.<br/><strong>Subsequent runs:</strong> <em>Submitted is permanent</em> — only new Submitted entries overwrite other statuses.</div>
+    <div><strong>First time?</strong> A Status column is created and filled. Not found → marked <em>Not Found</em>. &nbsp;<strong>Re-runs:</strong> Submitted is permanent — only new Submitted entries overwrite.</div>
   </div>
+
+  <!-- Step 1: Intake -->
   <div class="section-label">Step 1 — Intake List</div>
   <div class="card" id="v-card1">
-    <div class="card-header"><div class="step-badge" id="v-badge1">1</div><div class="card-title">Upload Intake Excel File</div><div class="card-pill" id="v-pill1">Waiting</div></div>
-    <div class="card-body">
-      <div class="dropzone" id="v-dz1"><input type="file" id="v-file1" accept=".xlsx,.xls"/><div class="dz-icon">📋</div><div class="dz-title">Drop your intake list here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div></div>
-      <div id="v-file1-info"></div>
-      <div id="v-sheet-hint" style="display:none" class="sheet-hint"></div>
-      <div class="col-preview" id="v-preview1"><div class="col-preview-head">Preview — first 5 rows</div><div class="col-preview-wrap"><table class="col-preview-table" id="v-preview1-table"></table></div></div>
+    <div class="card-header"><div class="step-badge" id="v-badge1">1</div><div class="card-title">Intake Excel File</div><div class="card-pill" id="v-pill1">Waiting</div></div>
+    <div class="card-body" id="v-intake-body">
+      <!-- filled dynamically: shared notice OR dropzone -->
     </div>
   </div>
+
+  <!-- Step 2: VMOCK -->
   <div class="section-label">Step 2 — VMOCK Report</div>
   <div class="card" id="v-card2">
     <div class="card-header"><div class="step-badge" id="v-badge2">2</div><div class="card-title">Upload VMOCK Assessment Report</div><div class="card-pill" id="v-pill2">Waiting</div></div>
     <div class="card-body">
-      <div class="dropzone" id="v-dz2"><input type="file" id="v-file2" accept=".xlsx,.xls,.csv"/><div class="dz-icon">📊</div><div class="dz-title">Drop your VMOCK report here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div></div>
+      <div class="dropzone" id="v-dz2"><input type="file" id="v-file2" accept=".xlsx,.xls,.csv"/>
+        <div class="dz-icon">📊</div><div class="dz-title">Drop your VMOCK report here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div>
+      </div>
       <div id="v-file2-info"></div>
-      <div class="col-preview" id="v-preview2"><div class="col-preview-head">Preview — first 5 rows</div><div class="col-preview-wrap"><table class="col-preview-table" id="v-preview2-table"></table></div></div>
     </div>
   </div>
+
+  <!-- Step 3: Config -->
   <div class="section-label">Step 3 — Configuration</div>
   <div class="card" id="v-card3">
-    <div class="card-header"><div class="step-badge" id="v-badge3">3</div><div class="card-title">Configure Columns</div><div class="card-pill" id="v-pill3">Required</div></div>
+    <div class="card-header"><div class="step-badge" id="v-badge3">3</div><div class="card-title">Column Settings</div><div class="card-pill" id="v-pill3">Required</div></div>
     <div class="card-body">
-      <div style="margin-bottom:18px">
-        <div class="field-label" style="margin-bottom:8px">Intake Sheet <span id="v-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto-detected</span></div>
+      <div style="margin-bottom:16px">
+        <div class="field-label" style="margin-bottom:7px">Intake Sheet <span id="v-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto</span></div>
         <div class="sheet-chips" id="v-sheet-chips"></div>
-        <div id="v-no-file-hint" style="font-size:12px;color:var(--muted);margin-top:6px">Upload the intake file first to see available sheets.</div>
+        <div id="v-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
-      <div class="config-grid" style="margin-bottom:20px">
-        <div class="field-group"><label class="field-label" for="v-cfg-id-col">Student ID Column <span>(Intake)</span> <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/></div>
-        <div class="field-group"><label class="field-label" for="v-cfg-status-col">Status Column <span>(Intake, if exists)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/></div>
-      </div>
-      <div class="mapping-summary">
-        <div class="mapping-summary-head"><span class="mapping-summary-title">VMOCK — how IDs are read</span><button class="override-btn" onclick="toggleAdv('v-adv-panel',this)">Override ↓</button></div>
-        <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value">Email column</span><span class="map-badge badge-ok">always fixed</span></div>
-        <div class="mapping-row"><span class="map-label">How extracted</span><span class="map-arrow">→</span><span class="map-value">text before @ symbol</span><span class="map-badge badge-ok">automatic</span></div>
-        <div class="mapping-row"><span class="map-label">Status from</span><span class="map-arrow">→</span><span class="map-value" id="v-map-status-col">Status column</span><span class="map-badge" id="v-map-status-badge">—</span></div>
-        <div class="example-row" id="v-example-row" style="display:none"><div style="margin-bottom:2px;color:var(--muted);font-family:var(--font-body);font-size:11px">Example from your VMOCK file:</div><div>Email: <span class="hl-id" id="v-ex-email"></span></div><div>→ ID used for matching: <span class="hl-id" id="v-ex-id"></span></div></div>
-      </div>
-      <div class="advanced-panel" id="v-adv-panel">
-        <div class="config-note">Override only if your VMOCK file uses different column headers.</div>
-        <div class="config-grid">
-          <div class="field-group"><label class="field-label" for="v-cfg-vmock-email">Email Field <span>(VMOCK header)</span></label><input class="field-input" id="v-cfg-vmock-email" type="text" value="Email"/></div>
-          <div class="field-group"><label class="field-label" for="v-cfg-vmock-status">Status Field <span>(VMOCK header)</span></label><input class="field-input" id="v-cfg-vmock-status" type="text" value="Status"/></div>
+      <div class="config-grid" style="margin-bottom:16px">
+        <div class="field-group">
+          <label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Status Column <span>(if exists)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/>
         </div>
       </div>
+      <div class="mapping-summary">
+        <div class="mapping-summary-head"><span class="mapping-summary-title">VMOCK — how IDs are extracted</span><button class="override-btn" onclick="toggleAdv('v-adv-panel',this)">Override ↓</button></div>
+        <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value">Email column</span><span class="map-badge badge-ok">fixed</span></div>
+        <div class="mapping-row"><span class="map-label">Extracted as</span><span class="map-arrow">→</span><span class="map-value">text before @ symbol</span><span class="map-badge badge-ok">auto</span></div>
+        <div class="mapping-row"><span class="map-label">Status from</span><span class="map-arrow">→</span><span class="map-value" id="v-map-status-col">Status column</span><span class="map-badge" id="v-map-status-badge">—</span></div>
+        <div class="example-row" id="v-example-row" style="display:none">
+          <div style="color:var(--muted);font-family:var(--font-body);font-size:11px;margin-bottom:2px">Sample from your VMOCK file:</div>
+          <div>Email: <span class="hl-id" id="v-ex-email"></span></div>
+          <div>→ ID matched: <span class="hl-id" id="v-ex-id"></span></div>
+        </div>
+      </div>
+      <div class="advanced-panel" id="v-adv-panel">
+        <div class="config-note">Override only if VMOCK uses different column header names.</div>
+        <div class="config-grid">
+          <div class="field-group"><label class="field-label">Email Field</label><input class="field-input" id="v-cfg-vmock-email" value="Email"/></div>
+          <div class="field-group"><label class="field-label">Status Field</label><input class="field-input" id="v-cfg-vmock-status" value="Status"/></div>
+        </div>
+      </div>
+
+      <!-- Pre-run validation -->
+      <div class="validation-box" id="v-validation"></div>
       <div class="divider"></div>
-      <button class="btn btn-primary" id="v-run-btn" onclick="runVmock()" disabled><div class="spinner"></div><span class="btn-label">⚡&nbsp; Match Students &amp; Update Statuses</span></button>
+      <button class="btn btn-primary" id="v-run-btn" onclick="runVmock()" disabled>⚡&nbsp; Match Students &amp; Update Statuses</button>
     </div>
   </div>
+
+  <!-- Results -->
   <div id="v-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header"><div class="step-badge" style="background:var(--accent);border-color:var(--accent);color:#fff">✓</div><div class="card-title">Update Complete</div><div id="v-mode-pill" class="card-pill"></div></div>
+      <div class="card-header">
+        <div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div>
+        <div class="card-title">Update Complete</div>
+        <div id="v-mode-pill" class="card-pill"></div>
+      </div>
       <div class="card-body">
-        <div class="stats-grid-4"><div class="stat s-sub"><span class="stat-num" id="v-s-sub">0</span><span class="stat-lbl">Submitted</span></div><div class="stat s-new"><span class="stat-num" id="v-s-new">0</span><span class="stat-lbl">Newly Updated</span></div><div class="stat s-pend"><span class="stat-num" id="v-s-pend">0</span><span class="stat-lbl">Yet to Submit</span></div><div class="stat s-miss"><span class="stat-num" id="v-s-miss">0</span><span class="stat-lbl">Not Found</span></div></div>
-        <div class="log" id="v-log"></div>
-        <div class="action-row"><button class="btn btn-download" onclick="downloadResult('v')"><span class="btn-label">⬇&nbsp; Download Updated Intake List</span></button><button class="btn btn-undo" id="v-undo-btn" onclick="undoRun('v')" disabled style="width:auto;padding:0 18px">↩ Undo</button></div>
+        <div class="stats-grid-4">
+          <div class="stat s-sub"><span class="stat-num" id="v-s-sub">0</span><span class="stat-lbl">Submitted</span></div>
+          <div class="stat s-new"><span class="stat-num" id="v-s-new">0</span><span class="stat-lbl">Newly Updated</span></div>
+          <div class="stat s-pend"><span class="stat-num" id="v-s-pend">0</span><span class="stat-lbl">Yet to Submit</span></div>
+          <div class="stat s-miss"><span class="stat-num" id="v-s-miss">0</span><span class="stat-lbl">Not Found</span></div>
+        </div>
+        <div class="result-meta" id="v-result-meta"></div>
+        <div class="flog" id="v-log"></div>
+        <div class="result-actions">
+          <button class="btn btn-download" onclick="downloadResult('v')">⬇&nbsp; Download Updated Intake List</button>
+          <button class="btn btn-ghost" onclick="resetPage('v')" style="flex:0 0 auto;padding:0 18px">↩ Re-configure</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PAGE 2 — FORMS -->
+
+<!-- ══════════════════════════════════════════
+     PAGE 2 — FORMS
+══════════════════════════════════════════ -->
 <div class="page" id="page-forms">
   <div class="page-header">
     <h1>Microsoft Forms Tracker</h1>
-    <p>Students found in the Forms export are marked <strong>1</strong>. Everyone else gets <strong>0</strong>. A new column is appended — run once per form.</p>
+    <p>Every student in the Forms export is marked <strong>Responded</strong>. Everyone else gets <strong>Not Responded</strong>, appended as a new column.</p>
   </div>
+
+  <div class="progress-bar">
+    <div class="prog-step"><div class="prog-dot active" id="f-pd1" style="color:var(--info)">1</div><span class="prog-label active" id="f-pl1">Intake File</span></div>
+    <div class="prog-line" id="f-line1"></div>
+    <div class="prog-step"><div class="prog-dot" id="f-pd2">2</div><span class="prog-label" id="f-pl2">Forms Export</span></div>
+    <div class="prog-line" id="f-line2"></div>
+    <div class="prog-step"><div class="prog-dot" id="f-pd3">3</div><span class="prog-label" id="f-pl3">Configure</span></div>
+    <div class="prog-line" id="f-line3"></div>
+    <div class="prog-step"><div class="prog-dot" id="f-pd4">4</div><span class="prog-label" id="f-pl4">Results</span></div>
+  </div>
+
   <div class="info-banner blue">
     <span class="icon">ℹ</span>
-    <div><strong>How it works:</strong> All Student IDs in the Forms export are collected. Each intake student is marked <strong>1</strong> (completed) or <strong>0</strong> (not completed) in a new named column. Existing columns are untouched.</div>
+    <div><strong>How it works:</strong> All Student IDs in the Forms export are collected (duplicates ignored). Each intake student gets <em>Responded</em> or <em>Not Responded</em> in a new column — existing columns untouched.</div>
   </div>
+
   <div class="section-label">Step 1 — Intake List</div>
   <div class="card" id="f-card1">
-    <div class="card-header"><div class="step-badge" id="f-badge1">1</div><div class="card-title">Upload Intake Excel File</div><div class="card-pill" id="f-pill1">Waiting</div></div>
-    <div class="card-body">
-      <div class="dropzone" id="f-dz1"><input type="file" id="f-file1" accept=".xlsx,.xls"/><div class="dz-icon">📋</div><div class="dz-title">Drop your intake list here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div></div>
-      <div id="f-file1-info"></div>
-      <div id="f-sheet-hint" style="display:none" class="sheet-hint"></div>
-      <div class="col-preview" id="f-preview1"><div class="col-preview-head">Preview — first 5 rows</div><div class="col-preview-wrap"><table class="col-preview-table" id="f-preview1-table"></table></div></div>
-    </div>
+    <div class="card-header"><div class="step-badge" id="f-badge1">1</div><div class="card-title">Intake Excel File</div><div class="card-pill" id="f-pill1">Waiting</div></div>
+    <div class="card-body" id="f-intake-body"></div>
   </div>
+
   <div class="section-label">Step 2 — Forms Export</div>
   <div class="card" id="f-card2">
     <div class="card-header"><div class="step-badge" id="f-badge2">2</div><div class="card-title">Upload Microsoft Forms Response Export</div><div class="card-pill" id="f-pill2">Waiting</div></div>
     <div class="card-body">
-      <div class="dropzone" id="f-dz2"><input type="file" id="f-file2" accept=".xlsx,.xls,.csv"/><div class="dz-icon">📝</div><div class="dz-title">Drop your Forms export here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div></div>
+      <div class="dropzone" id="f-dz2"><input type="file" id="f-file2" accept=".xlsx,.xls,.csv"/>
+        <div class="dz-icon">📝</div><div class="dz-title">Drop your Forms export here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div>
+      </div>
       <div id="f-file2-info"></div>
-      <div class="col-preview" id="f-preview2"><div class="col-preview-head">Preview — first 5 rows</div><div class="col-preview-wrap"><table class="col-preview-table" id="f-preview2-table"></table></div></div>
     </div>
   </div>
+
   <div class="section-label">Step 3 — Configuration</div>
   <div class="card" id="f-card3">
-    <div class="card-header"><div class="step-badge" id="f-badge3">3</div><div class="card-title">Configure Columns</div><div class="card-pill" id="f-pill3">Required</div></div>
+    <div class="card-header"><div class="step-badge" id="f-badge3">3</div><div class="card-title">Column Settings</div><div class="card-pill" id="f-pill3">Required</div></div>
     <div class="card-body">
-      <div style="margin-bottom:18px">
-        <div class="field-label" style="margin-bottom:8px">Intake Sheet <span id="f-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto-detected</span></div>
+      <div style="margin-bottom:16px">
+        <div class="field-label" style="margin-bottom:7px">Intake Sheet <span id="f-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto</span></div>
         <div class="sheet-chips" id="f-sheet-chips"></div>
-        <div id="f-no-file-hint" style="font-size:12px;color:var(--muted);margin-top:6px">Upload the intake file first to see available sheets.</div>
+        <div id="f-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
-      <div class="config-grid" style="margin-bottom:20px">
-        <div class="field-group"><label class="field-label" for="f-cfg-id-col">Student ID Column <span>(Intake)</span> <span id="f-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="f-cfg-id-col" type="text" value="A" maxlength="3"/></div>
-        <div class="field-group"><label class="field-label" for="f-cfg-new-col-name">New Column Header <span>(name this form)</span></label><input class="field-input" id="f-cfg-new-col-name" type="text" placeholder="e.g. Pre-Programme Survey"/></div>
+      <div class="config-grid" style="margin-bottom:16px">
+        <div class="field-group">
+          <label class="field-label">Student ID Column <span id="f-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="f-cfg-id-col" type="text" value="A" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">New Column Header</label>
+          <input class="field-input" id="f-cfg-new-col-name" type="text" value="Forms Response"/>
+        </div>
       </div>
       <div class="mapping-summary">
-        <div class="mapping-summary-head"><span class="mapping-summary-title">Forms export — how IDs are read</span><button class="override-btn" onclick="toggleAdv('f-adv-panel',this)">Override ↓</button></div>
+        <div class="mapping-summary-head"><span class="mapping-summary-title">Forms export — column check</span><button class="override-btn" onclick="toggleAdv('f-adv-panel',this)">Override ↓</button></div>
         <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value" id="f-map-id-col">Student ID column</span><span class="map-badge" id="f-map-id-badge">upload file to check</span></div>
-        <div class="mapping-row"><span class="map-label">If in export</span><span class="map-arrow">→</span><span class="map-value">1</span><span class="map-badge badge-blue">written to new col</span></div>
-        <div class="mapping-row"><span class="map-label">If not found</span><span class="map-arrow">→</span><span class="map-value">0</span><span class="map-badge badge-blue">written to new col</span></div>
-        <div class="example-row" id="f-example-row" style="display:none"><div style="margin-bottom:2px;color:var(--muted);font-family:var(--font-body);font-size:11px">Sample IDs from your Forms export:</div><div class="hl-blue" id="f-ex-ids"></div><div style="color:var(--muted);margin-top:3px" id="f-ex-total"></div></div>
+        <div class="mapping-row"><span class="map-label">If in export</span><span class="map-arrow">→</span><span class="map-value">Responded</span><span class="map-badge badge-blue">new col</span></div>
+        <div class="mapping-row"><span class="map-label">If not found</span><span class="map-arrow">→</span><span class="map-value">Not Responded</span><span class="map-badge badge-blue">new col</span></div>
+        <div class="example-row" id="f-example-row" style="display:none">
+          <div style="color:var(--muted);font-family:var(--font-body);font-size:11px;margin-bottom:2px">Sample from your Forms export:</div>
+          <div class="hl-blue" id="f-ex-ids"></div>
+          <div style="color:var(--muted);margin-top:2px" id="f-ex-total"></div>
+        </div>
       </div>
       <div class="advanced-panel" id="f-adv-panel">
-        <div class="config-note">Override only if the Student ID column in your Forms export uses a different header name.</div>
-        <div class="config-grid"><div class="field-group"><label class="field-label" for="f-cfg-forms-id">Student ID Field <span>(Forms header)</span></label><input class="field-input" id="f-cfg-forms-id" type="text" value="Student ID"/></div></div>
+        <div class="config-note">Override only if the Student ID column uses a different header name.</div>
+        <div class="config-grid">
+          <div class="field-group"><label class="field-label">Student ID Field</label><input class="field-input" id="f-cfg-forms-id" value="Student ID"/></div>
+        </div>
       </div>
+      <div class="validation-box" id="f-validation"></div>
       <div class="divider"></div>
-      <button class="btn btn-blue" id="f-run-btn" onclick="runForms()" disabled><div class="spinner"></div><span class="btn-label">⚡&nbsp; Match Students &amp; Mark Responses</span></button>
+      <button class="btn btn-blue" id="f-run-btn" onclick="runForms()" disabled>⚡&nbsp; Match Students &amp; Mark Responses</button>
     </div>
   </div>
+
   <div id="f-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header"><div class="step-badge" style="background:var(--info);border-color:var(--info);color:#fff">✓</div><div class="card-title">Tracking Complete</div><div class="card-pill" id="f-col-pill" style="background:var(--info-lt);border-color:#A9CCE3;color:var(--info)">📝 Forms</div></div>
+      <div class="card-header">
+        <div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div>
+        <div class="card-title">Update Complete</div>
+        <div class="card-pill" style="background:var(--info-lt);border-color:#A9CCE3;color:var(--info)">📝 Forms Tracking</div>
+      </div>
       <div class="card-body">
-        <div class="stats-grid-3"><div class="stat s-resp"><span class="stat-num" id="f-s-resp">0</span><span class="stat-lbl">Completed (1)</span></div><div class="stat s-noresp"><span class="stat-num" id="f-s-noresp">0</span><span class="stat-lbl">Not Done (0)</span></div><div class="stat s-total"><span class="stat-num" id="f-s-total">0</span><span class="stat-lbl">Total Students</span></div></div>
-        <div class="log" id="f-log"></div>
-        <div class="action-row"><button class="btn btn-download" onclick="downloadResult('f')"><span class="btn-label">⬇&nbsp; Download Updated Intake List</span></button><button class="btn btn-undo" id="f-undo-btn" onclick="undoRun('f')" disabled style="width:auto;padding:0 18px">↩ Undo</button></div>
+        <div class="stats-grid-3">
+          <div class="stat s-resp"><span class="stat-num" id="f-s-resp">0</span><span class="stat-lbl">Responded</span></div>
+          <div class="stat s-noresp"><span class="stat-num" id="f-s-noresp">0</span><span class="stat-lbl">Not Responded</span></div>
+          <div class="stat s-total"><span class="stat-num" id="f-s-total">0</span><span class="stat-lbl">Total Students</span></div>
+        </div>
+        <div class="result-meta" id="f-result-meta"></div>
+        <div class="flog" id="f-log"></div>
+        <div class="result-actions">
+          <button class="btn btn-download" onclick="downloadResult('f')">⬇&nbsp; Download Updated Intake List</button>
+          <button class="btn btn-ghost" onclick="resetPage('f')" style="flex:0 0 auto;padding:0 18px">↩ Re-configure</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PAGE 3 — CLASS ASSIGNMENT -->
+
+<!-- ══════════════════════════════════════════
+     PAGE 3 — CLASS ASSIGNMENT
+══════════════════════════════════════════ -->
 <div class="page" id="page-assign">
   <div class="page-header">
     <h1>Class Assignment</h1>
-    <p>Upload the student list, configure rooms per pillar. Students are split alphabetically. Results written back to the intake list and exported as one sheet per room.</p>
+    <p>Upload the student list, set rooms per pillar — students split alphabetically. Download one Excel sheet per room.</p>
   </div>
+
+  <div class="progress-bar">
+    <div class="prog-step"><div class="prog-dot active" id="a-pd1" style="color:var(--purple)">1</div><span class="prog-label active" id="a-pl1">Student List</span></div>
+    <div class="prog-line" id="a-line1"></div>
+    <div class="prog-step"><div class="prog-dot" id="a-pd2">2</div><span class="prog-label" id="a-pl2">Rooms Setup</span></div>
+    <div class="prog-line" id="a-line2"></div>
+    <div class="prog-step"><div class="prog-dot" id="a-pd3">3</div><span class="prog-label" id="a-pl3">Results</span></div>
+  </div>
+
   <div class="info-banner purple">
     <span class="icon">ℹ</span>
-    <div><strong>How it works:</strong> All 5 SUTD pillars are pre-loaded with this year's dates and room counts. Toggle pillars on/off, adjust rooms or dates as needed. Students sorted alphabetically per pillar and divided equally across rooms.</div>
+    <div><strong>How it works:</strong> Columns auto-detected. Each pillar is its own group, sorted A–Z by name, split equally across rooms. Use <code>&amp;</code> to merge pillars (e.g. <code>CSD &amp; ASD</code>). Download = one Excel sheet per room.</div>
   </div>
+
   <div class="section-label">Step 1 — Student List</div>
   <div class="card" id="a-card1">
-    <div class="card-header"><div class="step-badge" id="a-badge1">1</div><div class="card-title">Upload Student List / Intake File</div><div class="card-pill" id="a-pill1">Waiting</div></div>
+    <div class="card-header"><div class="step-badge" id="a-badge1">1</div><div class="card-title">Upload Student List</div><div class="card-pill" id="a-pill1">Waiting</div></div>
     <div class="card-body">
-      <div class="dropzone" id="a-dz1"><input type="file" id="a-file1" accept=".xlsx,.xls,.csv"/><div class="dz-icon">👥</div><div class="dz-title">Drop your student list here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div></div>
+      <div class="dropzone" id="a-dz1"><input type="file" id="a-file1" accept=".xlsx,.xls,.csv"/>
+        <div class="dz-icon">👥</div><div class="dz-title">Drop your student list here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div>
+      </div>
       <div id="a-file1-info"></div>
-      <div id="a-sheet-hint" style="display:none" class="sheet-hint"></div>
-      <div class="col-preview" id="a-preview1"><div class="col-preview-head">Preview — first 5 rows</div><div class="col-preview-wrap"><table class="col-preview-table" id="a-preview1-table"></table></div></div>
-    </div>
-  </div>
-  <div class="section-label">Step 2 — Column Mapping</div>
-  <div class="card" id="a-card2">
-    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Map Columns</div><div class="card-pill" id="a-pill2">Required</div></div>
-    <div class="card-body">
-      <div style="margin-bottom:18px">
-        <div class="field-label" style="margin-bottom:8px">Sheet <span id="a-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto-detected</span></div>
+      <div id="a-sheet-picker" style="display:none;margin-top:12px">
+        <div class="field-label" style="margin-bottom:6px">Sheet <span id="a-sheet-auto-badge" style="display:none" class="auto-badge">✓ auto</span></div>
         <div class="sheet-chips" id="a-sheet-chips"></div>
-        <div id="a-no-file-hint" style="font-size:12px;color:var(--muted);margin-top:6px">Upload the student list first.</div>
       </div>
-      <div class="config-grid-3">
-        <div class="field-group"><label class="field-label" for="a-cfg-id">Student ID Column <span id="a-id-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="a-cfg-id" type="text" value="A" maxlength="3"/></div>
-        <div class="field-group"><label class="field-label" for="a-cfg-name">Name Column <span id="a-name-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="a-cfg-name" type="text" value="B" maxlength="3"/></div>
-        <div class="field-group"><label class="field-label" for="a-cfg-pillar">Pillar Column <span id="a-pillar-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="a-cfg-pillar" type="text" value="C" maxlength="3"/></div>
-      </div>
-      <div class="config-grid">
-        <div class="field-group"><label class="field-label" for="a-cfg-header-row">Header Row <span>(1 = first row)</span></label><input class="field-input" id="a-cfg-header-row" type="number" value="1" min="1"/></div>
-        <div class="field-group"><label class="field-label" for="a-cfg-class-col">Write-back Column Header</label><input class="field-input" id="a-cfg-class-col" type="text" value="Assigned Class"/></div>
-      </div>
-    </div>
-  </div>
-  <div class="section-label">Step 3 — Pillars &amp; Rooms</div>
-  <div class="card" id="a-card3">
-    <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Configure Pillars and Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
-    <div class="card-body">
-      <div class="warn-box" id="a-warn-box"><strong>⚠ Some students won't be assigned</strong> — their pillar value doesn't match any enabled pillar:<div class="warn-list" id="a-warn-list"></div></div>
-      <div class="pillars-header">
-        <div>
-          <div class="pillars-title">All 5 SUTD pillars · pre-loaded</div>
-          <div class="pillars-subtitle">Toggle to enable/disable · click a pillar to edit its rooms, date and name format</div>
+      <div id="a-detect-card" style="display:none;margin-top:12px" class="detect-card">
+        <div class="detect-card-head"><span class="detect-card-title">Detected columns</span><button class="override-btn" onclick="toggleAdv('a-adv-panel',this)">Edit manually ↓</button></div>
+        <div class="detect-cols" id="a-detect-cols"></div>
+        <div class="advanced-panel" id="a-adv-panel" style="margin-top:10px">
+          <div class="config-grid" style="margin-bottom:0">
+            <div class="field-group"><label class="field-label">Student ID Col</label><input class="field-input" id="a-cfg-id" value="A" maxlength="3"/></div>
+            <div class="field-group"><label class="field-label">Name Col</label><input class="field-input" id="a-cfg-name" value="B" maxlength="3"/></div>
+            <div class="field-group"><label class="field-label">Score Col</label><input class="field-input" id="a-cfg-score" value="C" maxlength="3"/></div>
+            <div class="field-group"><label class="field-label">Pillar Col</label><input class="field-input" id="a-cfg-pillar" value="D" maxlength="3"/></div>
+          </div>
         </div>
-        <button class="reset-dates-btn" onclick="resetPillarDefaults()">↺ Reset defaults</button>
       </div>
-      <div class="pillar-grid" id="pillar-grid"></div>
-      <div class="divider"></div>
-      <button class="btn btn-purple" id="a-run-btn" onclick="runAssign()" disabled><div class="spinner"></div><span class="btn-label">⚡&nbsp; Assign Students to Classes</span></button>
     </div>
   </div>
+
+  <div class="section-label">Step 2 — Rooms per Pillar</div>
+  <div class="card" id="a-card2">
+    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Set Number of Rooms for Each Pillar</div><div class="card-pill" id="a-pill2">Required</div></div>
+    <div class="card-body">
+      <div class="config-note" style="margin-bottom:14px">Pillar value must match your data exactly (e.g. <code>EPD</code>). Use <code>&amp;</code> to pool pillars together. Room counts default to this year's schedule — adjust as needed.</div>
+      <div class="pillar-sections" id="pillar-sections"></div>
+      <button class="add-pillar-btn" onclick="addPillarRow()">＋ &nbsp;Add pillar</button>
+      <div class="validation-box" id="a-validation"></div>
+      <div class="divider"></div>
+      <button class="btn btn-purple" id="a-run-btn" onclick="runAssign()" disabled>⚡&nbsp; Assign Students to Classes</button>
+    </div>
+  </div>
+
   <div id="a-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
-      <div class="card-header"><div class="step-badge" style="background:var(--purple);border-color:var(--purple);color:#fff">✓</div><div class="card-title">Assignment Complete</div><div class="card-pill" style="background:var(--purple-lt);border-color:#C39BD3;color:var(--purple)">🏫 Class Assignment</div></div>
+      <div class="card-header">
+        <div class="step-badge" style="background:var(--purple);border-color:var(--purple);color:#fff">✓</div>
+        <div class="card-title">Assignment Complete</div>
+        <div class="card-pill" style="background:var(--purple-lt);border-color:#C39BD3;color:var(--purple)">🏫 Class Assignment</div>
+      </div>
       <div class="card-body">
-        <div class="stats-grid-3"><div class="stat s-purple"><span class="stat-num" id="a-s-students">0</span><span class="stat-lbl">Students Assigned</span></div><div class="stat s-purple"><span class="stat-num" id="a-s-rooms">0</span><span class="stat-lbl">Rooms Created</span></div><div class="stat s-purple"><span class="stat-num" id="a-s-pillars">0</span><span class="stat-lbl">Pillar Groups</span></div></div>
-        <div class="log" id="a-log"></div>
-        <div class="preview-wrap" id="a-preview-wrap"></div>
-        <div class="dl-row" style="margin-bottom:10px">
-          <button class="btn btn-download" onclick="downloadIntakeWithAssignment()"><span class="btn-label">⬇&nbsp; Download Updated Intake</span></button>
-          <button class="btn btn-download" onclick="downloadRoomSheets()"><span class="btn-label">⬇&nbsp; Download Room Sheets</span></button>
+        <div class="stats-grid-3">
+          <div class="stat s-purple"><span class="stat-num" id="a-s-students">0</span><span class="stat-lbl">Students Assigned</span></div>
+          <div class="stat s-purple"><span class="stat-num" id="a-s-rooms">0</span><span class="stat-lbl">Rooms Created</span></div>
+          <div class="stat s-purple"><span class="stat-num" id="a-s-pillars">0</span><span class="stat-lbl">Pillar Groups</span></div>
         </div>
-        <button class="btn btn-undo" id="a-undo-btn" onclick="undoRun('a')" disabled>↩ Undo Last Assignment</button>
+        <div class="result-meta" id="a-result-meta"></div>
+        <div class="flog" id="a-log"></div>
+        <div class="preview-wrap" id="a-preview-wrap" style="display:none"></div>
+        <div class="result-actions">
+          <button class="btn btn-download" onclick="downloadAssignment()">⬇&nbsp; Download Class Assignment (one sheet per room)</button>
+          <button class="btn btn-ghost" onclick="resetPage('a')" style="flex:0 0 auto;padding:0 18px">↩ Re-configure</button>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- PAGE 4 — HISTORY -->
-<div class="page" id="page-history">
-  <div class="page-header">
-    <h1>Run History</h1>
-    <p>A log of every update run this session — what changed, when, and which file was used.</p>
-  </div>
-  <div class="info-banner teal">
-    <span class="icon">ℹ</span>
-    <div><strong>Session only:</strong> History is kept in memory while the tab is open. It resets when you close or refresh the page.</div>
-  </div>
-  <div id="history-content">
-    <div class="history-empty" id="history-empty"><div class="he-icon">🕘</div><p>No runs yet this session.<br/>Run VMOCK, Forms, or Class Assignment to see the history here.</p></div>
-    <div style="display:none;justify-content:flex-end" id="history-clear-wrap"><button class="history-clear-btn" onclick="clearHistory()">🗑 Clear History</button></div>
-    <div class="history-list" id="history-list"></div>
   </div>
 </div>
 
 <footer>UPOP Student Status Tracker &nbsp;·&nbsp; SUTD Internal Use<br/>All processing happens entirely in your browser — no data is sent anywhere.</footer>
 
 <script>
-var S={v:{wb1:null,wb2:null,resultWb:null,sheet:'',snapshot:null,file1Name:'',file2Name:''},f:{wb1:null,wb2:null,resultWb:null,sheet:'',snapshot:null,file1Name:'',file2Name:''},a:{wb1:null,resultWb:null,sheet:'',snapshot:null,file1Name:''}};
-var assignmentRooms=null;
-var historyLog=[];
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+var sharedWb=null, sharedSheet='';   // shared intake workbook
+var S={
+  v:{wb2:null,resultWb:null,sheet:''},
+  f:{wb2:null,resultWb:null,sheet:''},
+  a:{wb1:null,resultWb:null,sheet:''}
+};
+var aCols={id:-1,name:-1,score:-1,pillar:-1};
+var assignmentData=null;
+var pillarIdCounter=0;
 
-// Fixed SUTD pillars — pre-populated from schedule image
-// CSD+ASD: 20-May-26 (4 rooms each), EPD: 22-May-26 (2 rooms), ESD+DAI: 3-Jun-26 (4 rooms each)
-var PILLARS=[
-  {pillar:'CSD',rooms:4,date:'20-May-26',fmt:'{pillar}-R{n}',enabled:true},
-  {pillar:'ASD',rooms:4,date:'20-May-26',fmt:'{pillar}-R{n}',enabled:true},
-  {pillar:'EPD',rooms:2,date:'22-May-26',fmt:'{pillar}-R{n}',enabled:true},
-  {pillar:'ESD',rooms:4,date:'3-Jun-26', fmt:'{pillar}-R{n}',enabled:true},
-  {pillar:'DAI',rooms:4,date:'3-Jun-26', fmt:'{pillar}-R{n}',enabled:true}
-];
-var PILLAR_FACTORY=JSON.parse(JSON.stringify(PILLARS));
-
-// ── Utilities ──
-function colIdx(l){l=(l||'A').trim().toUpperCase();return l.length===1?l.charCodeAt(0)-65:(l.charCodeAt(0)-64)*26+(l.charCodeAt(1)-65);}
-function colLetter(i){return i<26?String.fromCharCode(65+i):String.fromCharCode(64+Math.floor(i/26))+String.fromCharCode(65+(i%26));}
+// ════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════
+function colIdx(l){l=(l||'').trim().toUpperCase();if(!l)return -1;return l.length===1?l.charCodeAt(0)-65:(l.charCodeAt(0)-64)*26+(l.charCodeAt(1)-65);}
+function colLetter(i){if(i<0)return '?';return i<26?String.fromCharCode(65+i):String.fromCharCode(64+Math.floor(i/26))+String.fromCharCode(65+(i%26));}
 function fmtSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';}
-function cellVal(ws,r,c){var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?String(cell.v).trim():'';}
-function writeCell(ws,r,c,val,t){ws[XLSX.utils.encode_cell({r:r,c:c})]={v:val,t:t||'s',w:String(val)};}
+function cellVal(ws,r,c){if(c<0)return '';var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?String(cell.v).trim():'';}
+function writeCell(ws,r,c,val){ws[XLSX.utils.encode_cell({r:r,c:c})]={v:val,t:'s',w:val};}
 function readWb(file,cb){var fr=new FileReader();fr.onload=function(e){cb(XLSX.read(new Uint8Array(e.target.result),{type:'array'}));};fr.readAsArrayBuffer(file);}
-function showFilePill(id,file){document.getElementById(id).innerHTML='<div class="file-pill"><div class="file-pill-icon">📄</div><span class="file-pill-name">'+file.name+'</span><span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span></div>';}
-function markDone(p,n){document.getElementById(p+'-card'+n).classList.add('is-done');document.getElementById(p+'-badge'+n).textContent='✓';document.getElementById(p+'-pill'+n).textContent='Ready';}
-function log(boxId,msg,type){var box=document.getElementById(boxId);var el=document.createElement('div');el.className='log-'+(type||'info');el.textContent=msg;box.appendChild(el);box.scrollTop=box.scrollHeight;}
-function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Override ↓';}
-function checkReady(p){document.getElementById(p+'-run-btn').disabled=!(S[p].wb1&&(p==='a'||S[p].wb2)&&S[p].sheet);}
-function fmtTime(d){return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' · '+d.toLocaleDateString([],{day:'2-digit',month:'short',year:'numeric'});}
-function btnLoading(id,on){var btn=document.getElementById(id);if(!btn)return;btn.classList.toggle('loading',on);btn.disabled=on;}
-function snapshotWb(wb){if(!wb)return null;var raw=XLSX.write(wb,{type:'array',bookType:'xlsx'});return XLSX.read(raw,{type:'array'});}
-function makeRoomName(fmt,pillar,n){return(fmt||'{pillar}-R{n}').replace('{pillar}',pillar).replace('{n}',n);}
+function fmtDate(){return new Date().toISOString().slice(0,10);}
 
-// ── Tabs ──
-function switchTab(tab){['vmock','forms','assign','history'].forEach(function(t){document.getElementById('page-'+t).classList.toggle('active',t===tab);document.getElementById('tab-'+t).classList.toggle('active',t===tab);});}
-
-// ── Column preview ──
-function buildColPreview(tableId,containerId,wb,sheetName,highlightCols){
-  var ws=wb.Sheets[sheetName||wb.SheetNames[0]];if(!ws)return;
-  var range=XLSX.utils.decode_range(ws['!ref']),maxCols=Math.min(range.e.c+1,12),maxRows=Math.min(range.e.r+1,6);
-  var hlSet={};(highlightCols||[]).forEach(function(c){hlSet[c]=true;});
-  var thead='<thead><tr>';
-  for(var c=range.s.c;c<maxCols;c++){thead+='<th class="'+(hlSet[c]?'hl-col')+'">'+(cellVal(ws,range.s.r,c)||colLetter(c))+'</th>';}
-  thead+='</tr></thead>';
-  var tbody='<tbody>';
-  for(var r=range.s.r+1;r<maxRows;r++){tbody+='<tr>';for(var cc=range.s.c;cc<maxCols;cc++){tbody+='<td class="'+(hlSet[cc]?'hl-col':'')+'">'+cellVal(ws,r,cc)+'</td>';}tbody+='</tr>';}
-  tbody+='</tbody>';
-  document.getElementById(tableId).innerHTML=thead+tbody;
-  document.getElementById(containerId).style.display='block';
+function showFilePill(containerId,file,onChangeFn){
+  document.getElementById(containerId).innerHTML=
+    '<div class="file-pill">'+
+    '<div class="file-pill-icon">📄</div>'+
+    '<span class="file-pill-name">'+file.name+'</span>'+
+    '<span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span>'+
+    (onChangeFn?'<button class="file-pill-change" onclick="'+onChangeFn+'">Change</button>':'')+
+    '</div>';
 }
 
-// ── History ──
-function addHistory(e){e.time=new Date();historyLog.unshift(e);renderHistory();var c=document.getElementById('history-count');c.textContent=historyLog.length;c.classList.add('show');}
-function renderHistory(){var empty=document.getElementById('history-empty'),cw=document.getElementById('history-clear-wrap'),list=document.getElementById('history-list');if(!historyLog.length){empty.style.display='block';cw.style.display='none';list.innerHTML='';return;}empty.style.display='none';cw.style.display='flex';list.innerHTML=historyLog.map(function(e){var cls=e.type==='vmock'?'he-type-vmock':e.type==='forms'?'he-type-forms':'he-type-assign';var lbl=e.type==='vmock'?'VMOCK':e.type==='forms'?'Forms':'Class Assignment';return '<div class="history-entry animate-in"><div class="he-header"><span class="map-badge '+cls+'">'+lbl+'</span><span class="he-time">'+fmtTime(e.time)+'</span><span class="he-file">'+e.file+'</span></div><div class="he-body"><div class="he-stats">'+e.stats.map(function(s){return '<span class="he-stat">'+s+'</span>';}).join('')+'</div><div class="he-notes">'+e.notes.join('\n')+'</div></div></div>';}).join('');}
-function clearHistory(){historyLog=[];document.getElementById('history-count').classList.remove('show');renderHistory();}
+function flog(boxId,msg,type){
+  var box=document.getElementById(boxId);
+  var icons={ok:'✅',warn:'⚠️',err:'❌',info:'ℹ️'};
+  var el=document.createElement('div');el.className='flog-entry';
+  el.innerHTML='<span class="flog-icon">'+(icons[type]||'ℹ️')+'</span><span class="flog-msg '+(type||'info')+'">'+msg+'</span>';
+  box.appendChild(el);box.scrollTop=box.scrollHeight;
+}
 
-// ── Undo ──
-function undoRun(p){if(!S[p].snapshot)return;S[p].wb1=S[p].snapshot;S[p].snapshot=null;S[p].resultWb=S[p].wb1;document.getElementById(p+'-undo-btn').disabled=true;showToast('↩ Undo successful — intake reverted');addHistory({type:p,file:S[p].file1Name||'intake',stats:['Undone'],notes:['Run was undone — intake reverted to previous state']});}
-function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;font-family:var(--font-body);z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:opacity .4s';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},2500);}
+function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Edit manually ↓';}
 
-// ── Auto-detect columns ──
-function autoDetectCols(ws,p){
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  var dId=-1,dSt=-1,dName=-1,dPillar=-1;
-  for(var c=range.s.c;c<=range.e.c;c++){var h=cellVal(ws,hr,c).toLowerCase();if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;if(dSt<0&&h.includes('status'))dSt=c;if(dName<0&&(h==='name'||h.includes('student name')||h.includes('full name')||h.includes('official name')))dName=c;if(dPillar<0&&(h.includes('pillar')||h.includes('track')||h.includes('programme')||h.includes('acad plan')))dPillar=c;}
-  function set(id,badge,val){if(val<0)return;var inp=document.getElementById(id);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}if(badge){var b=document.getElementById(badge);if(b)b.style.display='inline-flex';}}
+function markDone(p,n){
+  var prefix=p+'-card'+n;
+  document.getElementById(prefix).classList.add('is-done');
+  document.getElementById(p+'-badge'+n).textContent='✓';
+  document.getElementById(p+'-pill'+n).textContent='Ready';
+}
+
+function setProgStep(p,step){
+  // step = 1-based, marks all before as done, current as active
+  var total=p==='a'?3:4;
+  for(var i=1;i<=total;i++){
+    var dot=document.getElementById(p+'-pd'+i);
+    var lbl=document.getElementById(p+'-pl'+i);
+    var line=document.getElementById(p+'-line'+i);
+    if(!dot)continue;
+    if(i<step){dot.classList.add('done');dot.classList.remove('active');dot.textContent='✓';if(lbl){lbl.classList.add('done');lbl.classList.remove('active');}}
+    else if(i===step){dot.classList.remove('done');dot.classList.add('active');if(lbl){lbl.classList.add('active');lbl.classList.remove('done');}}
+    else{dot.classList.remove('done','active');if(lbl){lbl.classList.remove('done','active');}}
+    if(line)line.classList.toggle('done',i<step);
+  }
+}
+
+// ════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════
+function switchTab(t){
+  ['vmock','forms','assign'].forEach(function(x){
+    document.getElementById('page-'+x).classList.toggle('active',x===t);
+    document.getElementById('tab-'+x).classList.toggle('active',x===t);
+  });
+}
+
+// ════════════════════════════════════════════
+// SHARED INTAKE FILE
+// ════════════════════════════════════════════
+function toggleSharedBar(){
+  var body=document.getElementById('shared-intake-body');
+  var lbl=document.getElementById('shared-toggle-lbl');
+  body.classList.toggle('open');
+  lbl.textContent=body.classList.contains('open')?'Close ↑':'Upload ↓';
+}
+
+document.getElementById('shared-file').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;
+  readWb(f,function(wb){
+    sharedWb=wb;
+    // Show file info
+    document.getElementById('shared-file-info').innerHTML=
+      '<div class="file-pill"><div class="file-pill-icon">📄</div>'+
+      '<span class="file-pill-name">'+f.name+'</span>'+
+      '<span class="file-pill-meta">'+fmtSize(f.size)+'</span>'+
+      '<button class="clear-btn" onclick="clearSharedFile()">Remove</button></div>';
+    // Sheet chips
+    var preferred=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake');})||wb.SheetNames[0];
+    sharedSheet=preferred;
+    var sc=document.getElementById('shared-sheet-chips');sc.innerHTML='';
+    wb.SheetNames.forEach(function(name){
+      var chip=document.createElement('div');
+      chip.className='sheet-chip'+(name===preferred?' active':'');
+      chip.textContent=name;
+      chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');sharedSheet=name;onSharedIntakeReady();};
+      sc.appendChild(chip);
+    });
+    document.getElementById('shared-sheet-area').style.display='block';
+    document.getElementById('shared-status-dot').classList.add('ready');
+    document.getElementById('shared-loaded-name').textContent='— '+f.name;
+    document.getElementById('shared-toggle-lbl').textContent='Close ↑';
+    onSharedIntakeReady();
+  });
+});
+
+// Drag-drop for shared
+var sdz=document.getElementById('shared-dz');
+sdz.addEventListener('dragover',function(e){e.preventDefault();sdz.style.borderColor='var(--accent2)';sdz.style.background='var(--accent-lt)';});
+sdz.addEventListener('dragleave',function(){sdz.style.borderColor='';sdz.style.background='';});
+sdz.addEventListener('drop',function(e){e.preventDefault();sdz.style.borderColor='';sdz.style.background='';var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);document.getElementById('shared-file').files=dt.files;document.getElementById('shared-file').dispatchEvent(new Event('change'));});
+
+function clearSharedFile(){
+  sharedWb=null;sharedSheet='';
+  document.getElementById('shared-file-info').innerHTML='';
+  document.getElementById('shared-sheet-area').style.display='none';
+  document.getElementById('shared-status-dot').classList.remove('ready');
+  document.getElementById('shared-loaded-name').textContent='';
+  renderIntakeStep('v');renderIntakeStep('f');
+  updateSheetChips('v');updateSheetChips('f');
+  checkReady('v');checkReady('f');
+}
+
+function onSharedIntakeReady(){
+  // Propagate to VMOCK and Forms pages
+  renderIntakeStep('v');renderIntakeStep('f');
+  updateSheetChips('v');updateSheetChips('f');
+  autoDetectVF(sharedWb.Sheets[sharedSheet],'v');
+  autoDetectVF(sharedWb.Sheets[sharedSheet],'f');
+  checkReady('v');checkReady('f');
+  setProgStep('v',2);setProgStep('f',2);
+  markDone('v',1);markDone('f',1);
+}
+
+function renderIntakeStep(p){
+  var body=document.getElementById(p+'-intake-body');
+  if(!sharedWb){
+    // Show local uploader
+    body.innerHTML=
+      '<div class="dropzone" id="'+p+'-dz1"><input type="file" id="'+p+'-file1" accept=".xlsx,.xls"/>'+
+      '<div class="dz-icon">📋</div><div class="dz-title">Drop intake list here</div>'+
+      '<div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx or .xls</div></div>'+
+      '<div id="'+p+'-file1-info"></div>';
+    wireLocalIntake(p);
+    document.getElementById(p+'-card1').classList.remove('is-done');
+    document.getElementById(p+'-badge1').textContent='1';
+    document.getElementById(p+'-pill1').textContent='Waiting';
+  } else {
+    // Show shared file notice
+    body.innerHTML=
+      '<div class="shared-notice">'+
+      '<span class="sn-icon">📋</span>'+
+      '<span>Using shared intake file: <strong>'+sharedSheet+'</strong></span>'+
+      '<button class="sn-change" onclick="toggleSharedBar()">Change file ↑</button>'+
+      '</div>';
+    markDone(p,1);
+  }
+}
+
+function wireLocalIntake(p){
+  var inp=document.getElementById(p+'-file1');
+  if(!inp)return;
+  inp.addEventListener('change',function(){
+    var f=this.files[0];if(!f)return;
+    readWb(f,function(wb){
+      // treat as "local" wb for this tab only
+      if(p==='v')S.v._localWb=wb;
+      else S.f._localWb=wb;
+      showFilePill(p+'-file1-info',f,null);
+      markDone(p,1);
+      var localSheet=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake');})||wb.SheetNames[0];
+      if(p==='v')S.v._localSheet=localSheet;
+      else S.f._localSheet=localSheet;
+      updateSheetChips(p);
+      autoDetectVF(wb.Sheets[localSheet],p);
+      checkReady(p);
+      setProgStep(p,2);
+    });
+  });
+  // drag-drop
+  var dz=document.getElementById(p+'-dz1');
+  if(!dz)return;
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
+  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
+}
+
+function getIntakeWb(p){return sharedWb||(p==='v'?S.v._localWb:S.f._localWb)||null;}
+function getIntakeSheet(p){return sharedWb?sharedSheet:(p==='v'?S.v._localSheet:S.f._localSheet)||'';}
+
+function updateSheetChips(p){
+  var wb=getIntakeWb(p);
+  var chips=document.getElementById(p+'-sheet-chips');
+  var hint=document.getElementById(p+'-no-sheet-hint');
+  if(!wb){chips.innerHTML='';if(hint)hint.style.display='block';document.getElementById(p+'-sheet-auto-badge').style.display='none';return;}
+  if(hint)hint.style.display='none';
+  document.getElementById(p+'-sheet-auto-badge').style.display='inline-flex';
+  chips.innerHTML='';
+  var preferred=getIntakeSheet(p);
+  wb.SheetNames.forEach(function(name){
+    var chip=document.createElement('div');
+    chip.className='sheet-chip'+(name===preferred?' active':'');
+    chip.textContent=name;
+    chip.onclick=function(){
+      chips.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});
+      chip.classList.add('active');
+      if(sharedWb)sharedSheet=name;else if(p==='v')S.v._localSheet=name;else S.f._localSheet=name;
+      var ws=wb.Sheets[name];autoDetectVF(ws,p);checkReady(p);
+    };
+    chips.appendChild(chip);
+  });
+}
+
+// ════════════════════════════════════════════
+// AUTO-DETECT COLUMNS (VMOCK / FORMS)
+// ════════════════════════════════════════════
+function autoDetectVF(ws,p){
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,dId=-1,dSt=-1;
+  for(var c=range.s.c;c<=range.e.c;c++){
+    var h=cellVal(ws,hr,c).toLowerCase();
+    if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;
+    if(dSt<0&&h.includes('status'))dSt=c;
+  }
+  function set(inputId,badgeId,val){if(val<0)return;var inp=document.getElementById(inputId);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}var b=document.getElementById(badgeId);if(b)b.style.display='inline-flex';}
   if(p==='v'){set('v-cfg-id-col','v-id-col-badge',dId);set('v-cfg-status-col','v-status-col-badge',dSt);}
   if(p==='f'){set('f-cfg-id-col','f-id-col-badge',dId);}
-  if(p==='a'){set('a-cfg-id','a-id-badge',dId);set('a-cfg-name','a-name-badge',dName);set('a-cfg-pillar','a-pillar-badge',dPillar);}
 }
 
-// ── PILLAR CARDS ──
-function renderPillarCards(){
-  var grid=document.getElementById('pillar-grid');
-  grid.innerHTML='';
-  PILLARS.forEach(function(def,i){
-    var card=document.createElement('div');
-    card.className='pillar-card'+(def.enabled?' active-pillar':'');
-    card.id='pc-'+i;
-    var rooms=def.rooms,fmt=def.fmt,pillar=def.pillar;
-    var roomPrev=[];for(var n=1;n<=Math.min(rooms,3);n++)roomPrev.push('<span>'+makeRoomName(fmt,pillar,n)+'</span>');if(rooms>3)roomPrev.push('<span style="color:var(--muted)">…</span>');
-    card.innerHTML=
-      '<div class="pillar-card-header" onclick="togglePillarExpand('+i+')">'+
-        '<div class="pillar-toggle '+(def.enabled?'checked':'')+'" id="pt-'+i+'" onclick="event.stopPropagation();togglePillar('+i+')" title="Toggle">'+( def.enabled?'✓':'')+'</div>'+
-        '<span class="pillar-name-badge">'+pillar+'</span>'+
-        '<span class="pillar-summary" id="ps-'+i+'">'+(def.enabled?'<strong>'+rooms+'</strong> room'+(rooms===1?'':'s')+' &nbsp;·&nbsp; '+(def.date||'no date'):'<em>Disabled</em>')+'</span>'+
-        '<span class="pillar-vbadge" id="pv-'+i+'"></span>'+
-        '<span style="font-size:12px;color:var(--muted);margin-left:4px" id="pe-arrow-'+i+'">'+(def.enabled?'›':'')+'</span>'+
-      '</div>'+
-      '<div class="pillar-card-body" id="pb-'+i+'">'+
-        '<div class="pillar-fields">'+
-          '<div class="field-group"><label class="field-label">Rooms</label><input class="field-input" id="pr-'+i+'" type="number" min="1" value="'+rooms+'" oninput="onPillarChange('+i+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Session Date <span>optional</span></label><input class="field-input" id="pd-'+i+'" type="text" value="'+def.date+'" placeholder="e.g. 20-May-26" oninput="onPillarChange('+i+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Room Name Format</label><input class="field-input" id="pf-'+i+'" type="text" value="'+fmt+'" placeholder="{pillar}-R{n}" oninput="onPillarChange('+i+')"/></div>'+
-        '</div>'+
-        '<div class="room-fmt-preview" id="pp-'+i+'">Rooms: '+roomPrev.join(', ')+'</div>'+
-      '</div>';
-    grid.appendChild(card);
+// ════════════════════════════════════════════
+// READY CHECKS & VALIDATION
+// ════════════════════════════════════════════
+function checkReady(p){
+  if(p==='v'){
+    var ok=!!(getIntakeWb('v')&&getIntakeSheet('v')&&S.v.wb2);
+    document.getElementById('v-run-btn').disabled=!ok;
+    if(ok){validateVmock();setProgStep('v',3);}
+  }
+  if(p==='f'){
+    var ok=!!(getIntakeWb('f')&&getIntakeSheet('f')&&S.f.wb2);
+    document.getElementById('f-run-btn').disabled=!ok;
+    if(ok){validateForms();setProgStep('f',3);}
+  }
+}
+
+function showValidation(boxId,issues,type){
+  var box=document.getElementById(boxId);
+  if(!issues.length){box.classList.remove('show');return;}
+  box.className='validation-box show '+(type||'warn');
+  box.innerHTML='<strong>'+(type==='error'?'❌ Please fix before running:':'⚠️ Heads-up before running:')+'</strong><ul>'+issues.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
+}
+
+function validateVmock(){
+  var issues=[];
+  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  if(S.v.wb2){
+    var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
+    if(rows.length===0)issues.push('VMOCK report appears to be empty.');
+    else{
+      if(!(eH in rows[0]))issues.push('Email column "'+eH+'" not found in VMOCK report — check header name.');
+      if(!(sH in rows[0]))issues.push('Status column "'+sH+'" not found in VMOCK report — check header name.');
+    }
+  }
+  showValidation('v-validation',issues,issues.length?'warn':'');
+}
+
+function validateForms(){
+  var issues=[];
+  var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
+  if(S.f.wb2){
+    var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});
+    if(rows.length===0)issues.push('Forms export appears to be empty.');
+    else if(!(idH in rows[0]))issues.push('Student ID column "'+idH+'" not found in Forms export — check header name.');
+  }
+  showValidation('f-validation',issues,issues.length?'warn':'');
+}
+
+function validateAssign(){
+  var issues=[];
+  if(!S.a.wb1)return;
+  var config=getPillarConfig();
+  if(config.length===0){issues.push('Add at least one pillar group.');showValidation('a-validation',issues,'error');return;}
+  // Check for no-match pillars
+  var ws=S.a.wb1.Sheets[S.a.sheet];
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
+  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
+  var pillarSet={};
+  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC);if(p)pillarSet[p]=true;}
+  config.forEach(function(cfg){
+    var parts=cfg.pillar.split(/[&,]/).map(function(x){return x.trim();});
+    var anyMatch=parts.some(function(x){return pillarSet[x];});
+    if(!anyMatch)issues.push('"'+cfg.pillar+'" — no students found. Check spelling matches your data exactly.');
   });
-  checkAssignReady();
+  showValidation('a-validation',issues,issues.length?'warn':'');
 }
 
-function togglePillarExpand(i){
-  var body=document.getElementById('pb-'+i);
-  var currently=body.style.display==='block';
-  // Close all first
-  PILLARS.forEach(function(_,j){var b=document.getElementById('pb-'+j);if(b)b.style.display='none';var a=document.getElementById('pe-arrow-'+j);if(a&&PILLARS[j].enabled)a.textContent='›';});
-  if(!currently&&PILLARS[i].enabled){body.style.display='block';var a=document.getElementById('pe-arrow-'+i);if(a)a.textContent='↓';}
+// ════════════════════════════════════════════
+// SCANS (VMOCK + FORMS preview)
+// ════════════════════════════════════════════
+function scanVmock(){
+  if(!S.v.wb2)return;
+  var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
+  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});
+  if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}
+  var has=rows.length&&sH in rows[0];
+  document.getElementById('v-map-status-col').textContent=sH+' column';
+  var b=document.getElementById('v-map-status-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');
+  validateVmock();
 }
 
-function togglePillar(i){
-  PILLARS[i].enabled=!PILLARS[i].enabled;
-  var card=document.getElementById('pc-'+i);
-  var toggle=document.getElementById('pt-'+i);
-  var summary=document.getElementById('ps-'+i);
-  var arrow=document.getElementById('pe-arrow-'+i);
-  var body=document.getElementById('pb-'+i);
-  card.classList.toggle('active-pillar',PILLARS[i].enabled);
-  toggle.classList.toggle('checked',PILLARS[i].enabled);
-  toggle.textContent=PILLARS[i].enabled?'✓':'';
-  summary.innerHTML=PILLARS[i].enabled?'<strong>'+PILLARS[i].rooms+'</strong> room'+(PILLARS[i].rooms===1?'':'s')+' &nbsp;·&nbsp; '+(PILLARS[i].date||'no date'):'<em>Disabled</em>';
-  if(!PILLARS[i].enabled&&body)body.style.display='none';
-  if(arrow)arrow.textContent=PILLARS[i].enabled?'›':'';
-  checkAssignReady();
-  checkUnmatched();
+function scanForms(){
+  if(!S.f.wb2)return;
+  var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});
+  var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
+  var has=rows.length&&idH in rows[0];
+  document.getElementById('f-map-id-col').textContent=idH+' column';
+  var b=document.getElementById('f-map-id-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');
+  if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}
+  validateForms();
 }
 
-function onPillarChange(i){
-  PILLARS[i].rooms=parseInt(document.getElementById('pr-'+i).value)||1;
-  PILLARS[i].date=document.getElementById('pd-'+i).value||'';
-  PILLARS[i].fmt=document.getElementById('pf-'+i).value||'{pillar}-R{n}';
-  var rooms=PILLARS[i].rooms,fmt=PILLARS[i].fmt,pillar=PILLARS[i].pillar;
-  var roomPrev=[];for(var n=1;n<=Math.min(rooms,3);n++)roomPrev.push('<span>'+makeRoomName(fmt,pillar,n)+'</span>');if(rooms>3)roomPrev.push('<span style="color:var(--muted)">…</span>');
-  var pp=document.getElementById('pp-'+i);if(pp)pp.innerHTML='Rooms: '+roomPrev.join(', ');
-  var ps=document.getElementById('ps-'+i);if(ps&&PILLARS[i].enabled)ps.innerHTML='<strong>'+rooms+'</strong> room'+(rooms===1?'':'s')+' &nbsp;·&nbsp; '+(PILLARS[i].date||'no date');
-  checkAssignReady();
-}
-
-function resetPillarDefaults(){
-  PILLAR_FACTORY.forEach(function(f,i){PILLARS[i].rooms=f.rooms;PILLARS[i].date=f.date;PILLARS[i].fmt=f.fmt;PILLARS[i].enabled=f.enabled;});
-  renderPillarCards();
-  if(S.a.wb1&&S.a.sheet) validatePillarsAgainstFile();
-  showToast('↺ Pillar defaults restored');
-}
-
-function validatePillarsAgainstFile(){
-  if(!S.a.wb1||!S.a.sheet)return;
-  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws)return;
-  var hr=(parseInt(document.getElementById('a-cfg-header-row').value)||1)-1;
-  var pillarCol=colIdx(document.getElementById('a-cfg-pillar').value||'C');
-  var range=XLSX.utils.decode_range(ws['!ref']);
-  var inFile={};
-  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,pillarCol);if(p)inFile[p.toLowerCase()]=true;}
-  PILLARS.forEach(function(def,i){
-    var badge=document.getElementById('pv-'+i);if(!badge)return;
-    var found=inFile[def.pillar.toLowerCase()];
-    badge.className='pillar-vbadge '+(found?'found':'missing');
-    badge.textContent=found?'✓ in file':'not in file';
-  });
-}
-
-function getPillarConfig(){return PILLARS.filter(function(d){return d.enabled;});}
-
-function checkUnmatched(){
-  if(!S.a.wb1||!S.a.sheet)return;
-  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws)return;
-  var hr=(parseInt(document.getElementById('a-cfg-header-row').value)||1)-1;
-  var pillarCol=colIdx(document.getElementById('a-cfg-pillar').value||'C');
-  var range=XLSX.utils.decode_range(ws['!ref']);
-  var cfg={};getPillarConfig().forEach(function(c){cfg[c.pillar.toLowerCase()]=true;});
-  var unmatched={},list=[];
-  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,pillarCol);if(p&&!cfg[p.toLowerCase()]){if(!unmatched[p]){unmatched[p]=0;list.push(p);}unmatched[p]++;}}
-  var box=document.getElementById('a-warn-box');
-  if(list.length){box.style.display='block';document.getElementById('a-warn-list').innerHTML=list.map(function(p){return '• '+p+' ('+unmatched[p]+' student'+(unmatched[p]===1?'':'s')+')';}).join('<br/>');}
-  else{box.style.display='none';}
-}
-
-function checkAssignReady(){var ok=S.a.wb1&&S.a.sheet&&PILLARS.some(function(d){return d.enabled;});document.getElementById('a-run-btn').disabled=!ok;checkUnmatched();}
-
-// ── Scans ──
-function scanVmock(){if(!S.v.wb2)return;var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}var has=rows.length&&sH in rows[0];var b=document.getElementById('v-map-status-badge');document.getElementById('v-map-status-col').textContent=sH+' column';b.textContent=has?'found':'not found — check header name';b.className='map-badge '+(has?'badge-ok':'badge-warn');buildColPreview('v-preview2-table','v-preview2',S.v.wb2,S.v.wb2.SheetNames[0],[]);}
-function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';var has=rows.length&&idH in rows[0];var b=document.getElementById('f-map-id-badge');document.getElementById('f-map-id-col').textContent=idH+' column';b.textContent=has?'found':'not found — check header name';b.className='map-badge '+(has?'badge-ok':'badge-warn');if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}buildColPreview('f-preview2-table','f-preview2',S.f.wb2,S.f.wb2.SheetNames[0],[]);}
-
-// ── Sheet chips ──
-function buildChips(p,wb){
-  var cont=document.getElementById(p+'-sheet-chips');
-  document.getElementById(p+'-no-file-hint').style.display='none';cont.innerHTML='';
-  var preferred=wb.SheetNames.find(function(n){return n.toLowerCase().includes('intake')||n.toLowerCase().includes('student');})||wb.SheetNames[0];
-  S[p].sheet=preferred;
-  wb.SheetNames.forEach(function(name){
-    var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;
-    chip.onclick=function(){cont.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');S[p].sheet=name;autoDetectCols(wb.Sheets[name],p);if(p==='a'){validatePillarsAgainstFile();checkAssignReady();checkUnmatched();}else checkReady(p);buildColPreview(p+'-preview1-table',p+'-preview1',wb,name,[]);};
-    cont.appendChild(chip);
-  });
-  document.getElementById(p+'-sheet-auto-badge').style.display='inline-flex';
-  autoDetectCols(wb.Sheets[preferred],p);
-  if(p==='a'){validatePillarsAgainstFile();checkAssignReady();checkUnmatched();}else checkReady(p);
-  buildColPreview(p+'-preview1-table',p+'-preview1',wb,preferred,[]);
-}
-
-// ── File wiring ──
-function wireFile(inputId,p,slot){
+// ════════════════════════════════════════════
+// FILE WIRING — secondary files (VMOCK report, Forms export)
+// ════════════════════════════════════════════
+function wireSecondary(inputId,p){
   document.getElementById(inputId).addEventListener('change',function(){
     var f=this.files[0];if(!f)return;
     readWb(f,function(wb){
-      S[p]['wb'+slot]=wb;showFilePill(p+'-file'+slot+'-info',f);markDone(p,slot);
-      if(slot===1){S[p].file1Name=f.name;var hint=document.getElementById(p+'-sheet-hint');hint.style.display='block';hint.innerHTML='<strong>Sheets found:</strong> '+wb.SheetNames.join(', ');buildChips(p,wb);}
-      else{S[p].file2Name=f.name;if(p==='v')scanVmock();else scanForms();checkReady(p);}
+      S[p].wb2=wb;
+      showFilePill(p+'-file2-info',f,null);
+      markDone(p,2);
+      if(p==='v')scanVmock();else scanForms();
+      checkReady(p);
+      setProgStep(p,3);
     });
   });
+  // drag-drop
+  var dz=document.getElementById(p+'-dz2');
+  if(!dz)return;
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
+  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById(inputId);var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
 }
-wireFile('v-file1','v',1);wireFile('v-file2','v',2);wireFile('f-file1','f',1);wireFile('f-file2','f',2);wireFile('a-file1','a',1);
+wireSecondary('v-file2','v');
+wireSecondary('f-file2','f');
+
+// Override input listeners
 ['v-cfg-vmock-email','v-cfg-vmock-status'].forEach(function(id){document.getElementById(id).addEventListener('input',scanVmock);});
 document.getElementById('f-cfg-forms-id').addEventListener('input',scanForms);
-['v-dz1','v-dz2','f-dz1','f-dz2','a-dz1'].forEach(function(id){var zone=document.getElementById(id);zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(){zone.classList.remove('drag-over');});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById(id.replace('dz','file'));var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});});
-document.getElementById('a-cfg-pillar').addEventListener('change',function(){if(S.a.wb1&&S.a.sheet){validatePillarsAgainstFile();checkUnmatched();}});
-document.getElementById('a-cfg-header-row').addEventListener('change',function(){if(S.a.wb1&&S.a.sheet){validatePillarsAgainstFile();checkUnmatched();}});
 
-// ── Run VMOCK ──
-function runVmock(){var s=S.v;var idCol=colIdx(document.getElementById('v-cfg-id-col').value||'A');var stCol=colIdx(document.getElementById('v-cfg-status-col').value||'J');var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';btnLoading('v-run-btn',true);document.getElementById('v-log').innerHTML='';document.getElementById('v-results-section').style.display='block';setTimeout(function(){s.snapshot=snapshotWb(s.wb1);document.getElementById('v-undo-btn').disabled=false;var ws=s.wb1.Sheets[s.sheet];if(!ws){log('v-log','❌ Sheet not found.','err');btnLoading('v-run-btn',false);return;}log('v-log','📋 Intake: "'+s.sheet+'"','info');var rows=XLSX.utils.sheet_to_json(s.wb2.Sheets[s.wb2.SheetNames[0]],{defval:''});log('v-log','📊 VMOCK rows: '+rows.length,'info');var map={},skip=0;rows.forEach(function(r){var em=String(r[eH]||'').trim();var id=em.includes('@')?em.split('@')[0].trim():'';var st=String(r[sH]||'').trim();if(id)map[id]=st;else skip++;});log('v-log','🔑 IDs from email: '+Object.keys(map).length+(skip?' ('+skip+' skipped)':''),'ok');var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;var existHdr=cellVal(ws,hr,stCol),isFirst=!existHdr.toLowerCase().includes('status'),sCo=stCol;if(isFirst){sCo=range.e.c+1;writeCell(ws,hr,sCo,'Status');range.e.c=sCo;ws['!ref']=XLSX.utils.encode_range(range);log('v-log','🆕 Creating Status column — First-time mode','warn');}else{log('v-log','🔄 Status column found — Update mode','info');}log('v-log','','info');var cS=0,cN=0,cP=0,cM=0,cK=0;for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;var old=cellVal(ws,R,sCo),nw=map[iid]||'';if(isFirst){if(nw){writeCell(ws,R,sCo,nw);if(nw==='Submitted')cS++;else cP++;cN++;}else{writeCell(ws,R,sCo,'Not Found');cM++;}}else{if(old==='Submitted'){cS++;cK++;}else if(nw==='Submitted'){writeCell(ws,R,sCo,'Submitted');cS++;cN++;}else{if(!old||old==='Not Found')cM++;else cP++;}}}document.getElementById('v-s-sub').textContent=cS;document.getElementById('v-s-new').textContent=cN;document.getElementById('v-s-pend').textContent=cP;document.getElementById('v-s-miss').textContent=cM;var pill=document.getElementById('v-mode-pill');if(isFirst){pill.textContent='🆕 First-time Setup';pill.style.cssText='background:var(--gold-lt);color:var(--warn);border:1px solid #E8D09A;';}else{pill.textContent='🔄 Status Update';pill.style.cssText='background:var(--success-lt);color:var(--success);border:1px solid #A8D5BE;';}var notes=[];if(isFirst){log('v-log','✅ '+cN+' students filled','ok');notes.push('✅ '+cN+' filled');log('v-log','❓ '+cM+' not found → "Not Found"','warn');notes.push('❓ '+cM+' not found');}else{log('v-log','✅ '+cN+' newly Submitted','ok');notes.push('✅ '+cN+' newly Submitted');log('v-log','🔒 '+cK+' already Submitted — kept','ok');notes.push('🔒 '+cK+' kept');log('v-log','⏳ '+cP+' unchanged','info');log('v-log','❓ '+cM+' still Not Found','warn');notes.push('❓ '+cM+' not found');}log('v-log','📁 Ready to download.','ok');s.resultWb=s.wb1;btnLoading('v-run-btn',false);document.getElementById('v-results-section').scrollIntoView({behavior:'smooth',block:'start'});addHistory({type:'vmock',file:s.file1Name+' + '+s.file2Name,stats:['Submitted: '+cS,'Updated: '+cN,'Not Found: '+cM,'Yet to Submit: '+cP],notes:notes});},50);}
-
-// ── Run Forms ──
-function runForms(){var s=S.f;var idCol=colIdx(document.getElementById('f-cfg-id-col').value||'A');var fH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';var colName=document.getElementById('f-cfg-new-col-name').value.trim();if(!colName){alert('Please enter a column name for this form.');return;}btnLoading('f-run-btn',true);document.getElementById('f-log').innerHTML='';document.getElementById('f-results-section').style.display='block';setTimeout(function(){s.snapshot=snapshotWb(s.wb1);document.getElementById('f-undo-btn').disabled=false;var ws=s.wb1.Sheets[s.sheet];if(!ws){log('f-log','❌ Sheet not found.','err');btnLoading('f-run-btn',false);return;}log('f-log','📋 Intake: "'+s.sheet+'"','info');var formsRows=XLSX.utils.sheet_to_json(s.wb2.Sheets[s.wb2.SheetNames[0]],{defval:''});log('f-log','📝 Forms responses: '+formsRows.length,'info');var responded={},skip=0;formsRows.forEach(function(r){var id=String(r[fH]||'').trim();if(id)responded[id]=true;else skip++;});log('f-log','🔑 Unique IDs: '+Object.keys(responded).length+(skip?' ('+skip+' had no ID)':''),'ok');var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,newCol=range.e.c+1;writeCell(ws,hr,newCol,colName);range.e.c=newCol;ws['!ref']=XLSX.utils.encode_range(range);log('f-log','➕ New column "'+colName+'" added','info');log('f-log','','info');var cR=0,cNo=0,cT=0;for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,1,'n');cR++;}else{writeCell(ws,R,newCol,0,'n');cNo++;}}document.getElementById('f-s-resp').textContent=cR;document.getElementById('f-s-noresp').textContent=cNo;document.getElementById('f-s-total').textContent=cT;document.getElementById('f-col-pill').textContent='📝 '+colName;log('f-log','✅ '+cR+' marked 1 (completed)','ok');log('f-log','⏳ '+cNo+' marked 0 (not done)','warn');log('f-log','📁 Ready to download.','ok');s.resultWb=s.wb1;btnLoading('f-run-btn',false);document.getElementById('f-results-section').scrollIntoView({behavior:'smooth',block:'start'});addHistory({type:'forms',file:s.file1Name+' + '+s.file2Name,stats:['Form: '+colName,'Completed (1): '+cR,'Not done (0): '+cNo,'Total: '+cT],notes:['✅ '+cR+' completed','⏳ '+cNo+' not done','➕ Column "'+colName+'" added']});},50);}
-function downloadResult(p){var wb=S[p].resultWb;if(!wb)return;XLSX.writeFile(wb,'UPOP_Intake_'+(p==='v'?'VMOCK':'Forms')+'_'+new Date().toISOString().slice(0,10)+'.xlsx');}
-
-// ── Run Assignment ──
-function runAssign(){
-  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){log('a-log','❌ Sheet not found.','err');return;}
-  btnLoading('a-run-btn',true);document.getElementById('a-log').innerHTML='';document.getElementById('a-results-section').style.display='block';
-  setTimeout(function(){
-    S.a.snapshot=snapshotWb(S.a.wb1);document.getElementById('a-undo-btn').disabled=false;
-    var hr=(parseInt(document.getElementById('a-cfg-header-row').value)||1)-1;
-    var idCol=colIdx(document.getElementById('a-cfg-id').value||'A');
-    var nameCol=colIdx(document.getElementById('a-cfg-name').value||'B');
-    var pillarCol=colIdx(document.getElementById('a-cfg-pillar').value||'C');
-    var classColHeader=document.getElementById('a-cfg-class-col').value.trim()||'Assigned Class';
-    var range=XLSX.utils.decode_range(ws['!ref']);
-    log('a-log','📋 Sheet: "'+S.a.sheet+'"','info');
-    var students=[];
-    for(var R=hr+1;R<=range.e.r;R++){var id=cellVal(ws,R,idCol).replace(/\s/g,'');if(!id)continue;students.push({id:id,name:cellVal(ws,R,nameCol),pillar:cellVal(ws,R,pillarCol),row:R});}
-    log('a-log','👥 Students read: '+students.length,'info');
-    var config=getPillarConfig();
-    log('a-log','🏫 Pillars enabled: '+config.map(function(c){return c.pillar;}).join(', '),'info');log('a-log','','info');
-    var classCol=range.e.c+1;writeCell(ws,hr,classCol,classColHeader);range.e.c=classCol;ws['!ref']=XLSX.utils.encode_range(range);
-    var rooms=[],totalAssigned=0,assignedIds={};
-    config.forEach(function(cfg){
-      var matched=students.filter(function(s){return s.pillar.trim().toLowerCase()===cfg.pillar.trim().toLowerCase();});
-      matched.sort(function(a,b){return a.name.localeCompare(b.name);});
-      if(!matched.length){log('a-log','⚠️ No students for "'+cfg.pillar+'"','warn');return;}
-      totalAssigned+=matched.length;
-      var perRoom=Math.floor(matched.length/cfg.rooms),remainder=matched.length%cfg.rooms,idx=0;
-      for(var r=0;r<cfg.rooms;r++){
-        var size=perRoom+(r<remainder?1:0);
-        var roomStudents=matched.slice(idx,idx+size);idx+=size;
-        var roomName=makeRoomName(cfg.fmt,cfg.pillar,r+1);
-        roomStudents.forEach(function(s){s.assignedClass=roomName;assignedIds[s.id]=true;writeCell(ws,s.row,classCol,roomName);});
-        rooms.push({name:roomName,date:cfg.date,pillar:cfg.pillar,students:roomStudents});
-        log('a-log','✅ '+roomName+': '+size+' students'+(cfg.date?' — '+cfg.date:''),'ok');
-      }
+// Assignment file
+document.getElementById('a-file1').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;
+  readWb(f,function(wb){
+    S.a.wb1=wb;showFilePill('a-file1-info',f,null);markDone('a',1);
+    var preferred=wb.SheetNames.find(function(n){return n.toLowerCase().includes('student');})||wb.SheetNames[0];
+    S.a.sheet=preferred;
+    // Sheet chips
+    document.getElementById('a-sheet-picker').style.display='block';
+    document.getElementById('a-sheet-auto-badge').style.display='inline-flex';
+    var sc=document.getElementById('a-sheet-chips');sc.innerHTML='';
+    wb.SheetNames.forEach(function(name){
+      var chip=document.createElement('div');chip.className='sheet-chip'+(name===preferred?' active':'');chip.textContent=name;
+      chip.onclick=function(){sc.querySelectorAll('.sheet-chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');S.a.sheet=name;autoDetectAssign(wb.Sheets[name]);checkAssignReady();};
+      sc.appendChild(chip);
     });
-    students.forEach(function(s){if(!assignedIds[s.id])writeCell(ws,s.row,classCol,'');});
-    var unmatched=students.filter(function(s){return !assignedIds[s.id];});
-    if(unmatched.length){log('a-log','','info');log('a-log','⚠️ '+unmatched.length+' students not assigned:','warn');unmatched.slice(0,5).forEach(function(s){log('a-log','   '+s.id+' ('+s.pillar+')','warn');});if(unmatched.length>5)log('a-log','   …and '+(unmatched.length-5)+' more','warn');}
-    document.getElementById('a-s-students').textContent=totalAssigned;document.getElementById('a-s-rooms').textContent=rooms.length;document.getElementById('a-s-pillars').textContent=config.length;
-    var html='<table class="preview-table"><thead><tr><th>Room</th><th>Date</th><th>Count</th><th>Student ID</th><th>Name</th><th>Pillar</th></tr></thead><tbody>';
-    rooms.forEach(function(rm){rm.students.forEach(function(s,i){html+='<tr>';if(i===0){html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+rm.name+'</span></td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';}html+='<td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.pillar+'</td></tr>';});});
-    html+='</tbody></table>';
-    document.getElementById('a-preview-wrap').innerHTML=html;
-    log('a-log','','info');log('a-log','📁 Ready to download.','ok');
-    assignmentRooms=rooms;S.a.resultWb=S.a.wb1;btnLoading('a-run-btn',false);
-    document.getElementById('a-results-section').scrollIntoView({behavior:'smooth',block:'start'});
-    var notes=rooms.map(function(rm){return '🏫 '+rm.name+': '+rm.students.length+' students'+(rm.date?' ('+rm.date+')':'');});
-    if(unmatched.length)notes.push('⚠️ '+unmatched.length+' unassigned');
-    addHistory({type:'assign',file:S.a.file1Name,stats:['Assigned: '+totalAssigned,'Rooms: '+rooms.length,'Pillars: '+config.length,'Unassigned: '+unmatched.length],notes:notes});
-  },50);
+    autoDetectAssign(wb.Sheets[preferred]);
+    checkAssignReady();setProgStep('a',2);
+  });
+});
+var adz=document.getElementById('a-dz1');
+adz.addEventListener('dragover',function(e){e.preventDefault();adz.classList.add('drag-over');});
+adz.addEventListener('dragleave',function(){adz.classList.remove('drag-over');});
+adz.addEventListener('drop',function(e){e.preventDefault();adz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById('a-file1');var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
+
+['a-cfg-id','a-cfg-name','a-cfg-score','a-cfg-pillar'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',function(){var k=id.replace('a-cfg-','');aCols[k]=colIdx(this.value);checkAssignReady();});
+});
+
+// ════════════════════════════════════════════
+// AUTO-DETECT — ASSIGNMENT
+// ════════════════════════════════════════════
+function autoDetectAssign(ws){
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
+  aCols={id:-1,name:-1,score:-1,pillar:-1};
+  for(var c=range.s.c;c<=range.e.c;c++){
+    var h=cellVal(ws,hr,c).toLowerCase();
+    if(aCols.id<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))aCols.id=c;
+    if(aCols.name<0&&(h==='name'||h.includes('student name')||h.includes('full name')||h.includes('preferred')))aCols.name=c;
+    if(aCols.score<0&&(h.includes('score')||h.includes('mark')||h.includes('grade')||h.includes('result')))aCols.score=c;
+    if(aCols.pillar<0&&(h.includes('pillar')||h.includes('track')||h.includes('programme')||h.includes('major')))aCols.pillar=c;
+  }
+  ['id','name','score','pillar'].forEach(function(k){var inp=document.getElementById('a-cfg-'+k);if(inp){inp.value=colLetter(aCols[k]);inp.classList.toggle('auto-detected',aCols[k]>=0);}});
+  var wrap=document.getElementById('a-detect-cols');wrap.innerHTML='';
+  [{k:'id',l:'Student ID'},{k:'name',l:'Name'},{k:'score',l:'Score'},{k:'pillar',l:'Pillar'}].forEach(function(f){
+    var found=aCols[f.k]>=0;var chip=document.createElement('div');chip.className='detect-col-chip '+(found?'found':'missing');
+    chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';
+    wrap.appendChild(chip);
+  });
+  document.getElementById('a-detect-card').style.display='block';
+  if(document.querySelectorAll('#pillar-sections .pillar-section').length===0&&aCols.pillar>=0)autoPopulatePillars(ws);
+  checkAssignReady();
 }
 
-function downloadIntakeWithAssignment(){if(!S.a.resultWb)return;XLSX.writeFile(S.a.resultWb,'UPOP_Intake_WithAssignment_'+new Date().toISOString().slice(0,10)+'.xlsx');}
-function downloadRoomSheets(){if(!assignmentRooms||!assignmentRooms.length)return;var wb=XLSX.utils.book_new();assignmentRooms.forEach(function(rm){var data=[['Student ID','Name','Pillar','Assigned Class','Session Date']];rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.assignedClass,rm.date||'']);});var wsh=XLSX.utils.aoa_to_sheet(data);wsh['!cols']=[{wch:14},{wch:28},{wch:10},{wch:18},{wch:16}];XLSX.utils.book_append_sheet(wb,wsh,rm.name.replace(/[:\\\/\?\*\[\]]/g,'').slice(0,31));});XLSX.writeFile(wb,'UPOP_RoomSheets_'+new Date().toISOString().slice(0,10)+'.xlsx');}
+function autoPopulatePillars(ws){
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,seen={},order=[];
+  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,aCols.pillar);if(p&&!seen[p]){seen[p]=true;order.push(p);}}
+  var defaults={'CSD':4,'ASD':4,'EPD':2,'ESD':4,'DAI':4};
+  order.forEach(function(p){addPillarRow(p,defaults[p.toUpperCase()]||2,'');});
+}
 
-// ── Init ──
-renderPillarCards();
+// ════════════════════════════════════════════
+// PILLAR ROWS
+// ════════════════════════════════════════════
+function addPillarRow(pillar,rooms,date){
+  pillar=pillar||'';rooms=rooms||2;date=date||'';
+  var id='psec-'+(pillarIdCounter++);
+  var div=document.createElement('div');div.className='pillar-section';div.id=id;
+  div.innerHTML=
+    '<div class="pillar-section-head">'+
+      '<span class="pillar-section-name">'+(pillar||'New Pillar')+'</span>'+
+      '<span class="pillar-count" id="'+id+'-count">—</span>'+
+    '</div>'+
+    '<div class="pillar-section-body">'+
+      '<div class="field-group"><label class="field-label">Pillar <span>(exact match)</span></label>'+
+        '<input class="field-input" type="text" value="'+pillar+'" placeholder="e.g. EPD" oninput="updatePillarHead(\''+id+'\',this.value)"/></div>'+
+      '<div class="field-group"><label class="field-label">No. of Rooms</label>'+
+        '<input class="field-input" type="number" min="1" value="'+rooms+'"/></div>'+
+      '<div class="field-group"><label class="field-label">Session Date <span>(label)</span></label>'+
+        '<input class="field-input" type="text" value="'+date+'" placeholder="e.g. 20-May-26"/></div>'+
+      '<button class="del-pillar-btn" onclick="document.getElementById(\''+id+'\').remove();checkAssignReady()" title="Remove">✕</button>'+
+    '</div>';
+  document.getElementById('pillar-sections').appendChild(div);
+  checkAssignReady();
+}
+
+function updatePillarHead(sId,val){
+  var el=document.getElementById(sId);if(el)el.querySelector('.pillar-section-name').textContent=val||'New Pillar';
+  if(S.a.wb1&&S.a.sheet&&aCols.pillar>=0)updatePillarCounts();
+  validateAssign();
+}
+
+function updatePillarCounts(){
+  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws)return;
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
+  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
+  var pc={};for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC).trim();if(p)pc[p]=(pc[p]||0)+1;}
+  document.querySelectorAll('#pillar-sections .pillar-section').forEach(function(sec){
+    var inp=sec.querySelectorAll('input')[0];
+    var cnt=sec.querySelector('.pillar-count');if(!inp||!cnt)return;
+    var val=(inp.value||'').trim();
+    var total=val.split(/[&,]/).map(function(x){return x.trim();}).reduce(function(s,x){return s+(pc[x]||0);},0);
+    cnt.textContent=total>0?total+' students':'no match';
+    cnt.style.background=total>0?'':'var(--warn-lt)';cnt.style.borderColor=total>0?'#C39BD3':'#E8D09A';cnt.style.color=total>0?'var(--purple)':'var(--warn)';
+    sec.classList.toggle('has-warn',total===0);
+  });
+}
+
+function getPillarConfig(){
+  var rows=document.querySelectorAll('#pillar-sections .pillar-section'),config=[];
+  rows.forEach(function(row){
+    var inputs=row.querySelectorAll('input');
+    var pillar=(inputs[0].value||'').trim(),rooms=parseInt(inputs[1].value)||1,date=(inputs[2].value||'').trim();
+    if(pillar)config.push({pillar:pillar,rooms:rooms,date:date});
+  });
+  return config;
+}
+
+function checkAssignReady(){
+  var ok=S.a.wb1&&S.a.sheet&&getPillarConfig().length>0;
+  document.getElementById('a-run-btn').disabled=!ok;
+  if(S.a.wb1&&aCols.pillar>=0){updatePillarCounts();validateAssign();}
+}
+
+// ════════════════════════════════════════════
+// RUN VMOCK
+// ════════════════════════════════════════════
+function runVmock(){
+  var wb=getIntakeWb('v'),sheet=getIntakeSheet('v');
+  var idCol=colIdx(document.getElementById('v-cfg-id-col').value||'A');
+  var stCol=colIdx(document.getElementById('v-cfg-status-col').value||'J');
+  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  document.getElementById('v-log').innerHTML='';
+  document.getElementById('v-results-section').style.display='block';
+  setTimeout(function(){document.getElementById('v-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
+  var ws=wb.Sheets[sheet];if(!ws){flog('v-log','Sheet "'+sheet+'" not found.','err');return;}
+  flog('v-log','Intake sheet loaded: "'+sheet+'"','info');
+  var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
+  flog('v-log','VMOCK report: '+rows.length+' rows','info');
+  var map={},skip=0;
+  rows.forEach(function(r){var em=String(r[eH]||'').trim();var id=em.includes('@')?em.split('@')[0].trim():'';var st=String(r[sH]||'').trim();if(id)map[id]=st;else skip++;});
+  flog('v-log','Parsed '+Object.keys(map).length+' student IDs from emails'+(skip?' ('+skip+' rows had no email)':''),'ok');
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
+  var existHdr=cellVal(ws,hr,stCol),isFirst=!existHdr.toLowerCase().includes('status'),sCo=stCol;
+  if(isFirst){sCo=range.e.c+1;writeCell(ws,hr,sCo,'Status');range.e.c=sCo;ws['!ref']=XLSX.utils.encode_range(range);flog('v-log','No Status column found — creating one (first-time mode)','warn');}
+  else flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');
+  var cS=0,cN=0,cP=0,cM=0,cK=0;
+  for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;var old=cellVal(ws,R,sCo),nw=map[iid]||'';
+    if(isFirst){if(nw){writeCell(ws,R,sCo,nw);if(nw==='Submitted')cS++;else cP++;cN++;}else{writeCell(ws,R,sCo,'Not Found');cM++;}}
+    else{if(old==='Submitted'){cS++;cK++;}else if(nw==='Submitted'){writeCell(ws,R,sCo,'Submitted');cS++;cN++;}else{if(!old||old==='Not Found')cM++;else cP++;}}}
+  document.getElementById('v-s-sub').textContent=cS;document.getElementById('v-s-new').textContent=cN;document.getElementById('v-s-pend').textContent=cP;document.getElementById('v-s-miss').textContent=cM;
+  var pill=document.getElementById('v-mode-pill');
+  if(isFirst){pill.textContent='🆕 First-time Setup';pill.style.cssText='background:var(--gold-lt);color:var(--warn);border:1px solid #E8D09A;';}
+  else{pill.textContent='🔄 Update Run';pill.style.cssText='background:var(--success-lt);color:var(--success);border:1px solid #A8D5BE;';}
+  if(isFirst){flog('v-log',cN+' students filled from VMOCK report','ok');flog('v-log',cM+' not found — marked "Not Found"','warn');}
+  else{flog('v-log',cN+' students newly updated to Submitted','ok');flog('v-log',cK+' already Submitted — preserved','ok');flog('v-log',cP+' students unchanged','info');flog('v-log',cM+' still not found in VMOCK','warn');}
+  var ts=new Date().toLocaleTimeString();
+  document.getElementById('v-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+(cS+cN+cP+cM)+' students total &nbsp;·&nbsp; sheet: "'+sheet+'"';
+  flog('v-log','File ready to download','ok');
+  S.v.resultWb=wb;setProgStep('v',4);document.getElementById('tdot-vmock').classList.add('show');
+}
+
+// ════════════════════════════════════════════
+// RUN FORMS
+// ════════════════════════════════════════════
+function runForms(){
+  var wb=getIntakeWb('f'),sheet=getIntakeSheet('f');
+  var idCol=colIdx(document.getElementById('f-cfg-id-col').value||'A');
+  var fH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';
+  var colName=document.getElementById('f-cfg-new-col-name').value.trim()||'Forms Response';
+  document.getElementById('f-log').innerHTML='';
+  document.getElementById('f-results-section').style.display='block';
+  setTimeout(function(){document.getElementById('f-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
+  var ws=wb.Sheets[sheet];if(!ws){flog('f-log','Sheet "'+sheet+'" not found.','err');return;}
+  flog('f-log','Intake sheet loaded: "'+sheet+'"','info');
+  var formsRows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});
+  flog('f-log','Forms export: '+formsRows.length+' responses','info');
+  var responded={},skip=0;
+  formsRows.forEach(function(r){var id=String(r[fH]||'').trim();if(id)responded[id]=true;else skip++;});
+  flog('f-log','Found '+Object.keys(responded).length+' unique student IDs'+(skip?' ('+skip+' rows had no ID)':''),'ok');
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,newCol=range.e.c+1;
+  writeCell(ws,hr,newCol,colName);range.e.c=newCol;ws['!ref']=XLSX.utils.encode_range(range);
+  flog('f-log','New column "'+colName+'" appended at col '+colLetter(newCol),'info');
+  var cR=0,cNo=0,cT=0;
+  for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,'Responded');cR++;}else{writeCell(ws,R,newCol,'Not Responded');cNo++;}}
+  document.getElementById('f-s-resp').textContent=cR;document.getElementById('f-s-noresp').textContent=cNo;document.getElementById('f-s-total').textContent=cT;
+  var ts=new Date().toLocaleTimeString();
+  document.getElementById('f-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+cT+' students total &nbsp;·&nbsp; sheet: "'+sheet+'"';
+  flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');flog('f-log','File ready to download','ok');
+  S.f.resultWb=wb;setProgStep('f',4);document.getElementById('tdot-forms').classList.add('show');
+}
+
+// ════════════════════════════════════════════
+// RUN ASSIGNMENT
+// ════════════════════════════════════════════
+function runAssign(){
+  var idC=colIdx(document.getElementById('a-cfg-id').value)||0;
+  var nmC=colIdx(document.getElementById('a-cfg-name').value)||1;
+  var scC=colIdx(document.getElementById('a-cfg-score').value)||2;
+  var plC=colIdx(document.getElementById('a-cfg-pillar').value)||3;
+  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){flog('a-log','Sheet not found.','err');return;}
+  document.getElementById('a-log').innerHTML='';
+  document.getElementById('a-results-section').style.display='block';
+  setTimeout(function(){document.getElementById('a-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
+  flog('a-log','Sheet loaded: "'+S.a.sheet+'"','info');
+  var students=[];
+  for(var R=hr+1;R<=range.e.r;R++){var id=cellVal(ws,R,idC).replace(/\s/g,'');if(!id)continue;students.push({id:id,name:cellVal(ws,R,nmC),score:cellVal(ws,R,scC),pillar:cellVal(ws,R,plC)});}
+  flog('a-log',students.length+' students read from file','info');
+  var config=getPillarConfig();
+  flog('a-log',config.length+' pillar groups configured','info');
+  var rooms=[],totalAssigned=0,assignedIds={};
+  config.forEach(function(cfg){
+    var pillars=cfg.pillar.split(/[&,]/).map(function(p){return p.trim().toLowerCase();});
+    var matched=students.filter(function(s){return pillars.indexOf(s.pillar.trim().toLowerCase())>=0;});
+    matched.sort(function(a,b){return a.name.localeCompare(b.name);});
+    if(matched.length===0){flog('a-log','No students matched "'+cfg.pillar+'" — check pillar spelling','warn');return;}
+    totalAssigned+=matched.length;matched.forEach(function(s){assignedIds[s.id]=true;});
+    var perRoom=Math.floor(matched.length/cfg.rooms),remainder=matched.length%cfg.rooms,idx=0;
+    for(var r=0;r<cfg.rooms;r++){
+      var size=perRoom+(r<remainder?1:0),roomStudents=matched.slice(idx,idx+size);idx+=size;
+      var shortName=cfg.pillar.replace(/\s*&\s*/g,'+').replace(/\s/g,'');
+      var className=shortName+'-R'+(r+1);
+      roomStudents.forEach(function(s){s.assignedClass=className;});
+      rooms.push({name:cfg.pillar+' — Room '+(r+1),shortName:shortName+' Rm'+(r+1),date:cfg.date,students:roomStudents});
+      flog('a-log',cfg.pillar+' Room '+(r+1)+': '+size+' students'+(cfg.date?' ('+cfg.date+')':''),'ok');
+    }
+  });
+  var unmatched=students.filter(function(s){return !assignedIds[s.id];});
+  if(unmatched.length){flog('a-log',unmatched.length+' students not matched to any pillar','warn');unmatched.slice(0,3).forEach(function(s){flog('a-log','  ID '+s.id+' — pillar "'+s.pillar+'"','warn');});if(unmatched.length>3)flog('a-log','  …and '+(unmatched.length-3)+' more','warn');}
+  document.getElementById('a-s-students').textContent=totalAssigned;
+  document.getElementById('a-s-rooms').textContent=rooms.length;
+  document.getElementById('a-s-pillars').textContent=config.length;
+  var ts=new Date().toLocaleTimeString();
+  document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+totalAssigned+' students &nbsp;·&nbsp; '+rooms.length+' rooms';
+  // Preview table
+  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Date</th><th>#</th><th>Student ID</th><th>Name</th><th>Score</th><th>Class</th></tr></thead><tbody>';
+  rooms.forEach(function(rm){rm.students.forEach(function(s,i){html+='<tr>';if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+rm.name+'</span></td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';html+='<td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.score+'</td><td>'+s.assignedClass+'</td></tr>';});});
+  html+='</tbody></table>';
+  var pw=document.getElementById('a-preview-wrap');pw.innerHTML=html;pw.style.display='block';
+  flog('a-log','File ready to download','ok');
+  assignmentData=rooms;setProgStep('a',3);document.getElementById('tdot-assign').classList.add('show');
+}
+
+// ════════════════════════════════════════════
+// DOWNLOADS
+// ════════════════════════════════════════════
+function downloadResult(p){
+  var wb=S[p].resultWb;if(!wb)return;
+  var tag=p==='v'?'VMOCK':'Forms';
+  XLSX.writeFile(wb,'UPOP_Intake_'+tag+'_'+fmtDate()+'.xlsx');
+}
+
+function downloadAssignment(){
+  if(!assignmentData||!assignmentData.length)return;
+  var wb=XLSX.utils.book_new();
+  assignmentData.forEach(function(rm){
+    var data=[['Student ID','Name','Score','Class','Session Date']];
+    rm.students.forEach(function(s){data.push([s.id,s.name,s.score,s.assignedClass,rm.date||'']);});
+    var ws=XLSX.utils.aoa_to_sheet(data);
+    ws['!cols']=[{wch:14},{wch:28},{wch:10},{wch:14},{wch:16}];
+    var shName=rm.shortName.replace(/[:\\\/\?\*\[\]]/g,'').slice(0,31);
+    XLSX.utils.book_append_sheet(wb,ws,shName);
+  });
+  XLSX.writeFile(wb,'UPOP_ClassAssignment_'+fmtDate()+'.xlsx');
+}
+
+// ════════════════════════════════════════════
+// RESET / RE-CONFIGURE
+// ════════════════════════════════════════════
+function resetPage(p){
+  if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2?3:S.v.wb2?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
+  if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
+  if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';document.getElementById('a-preview-wrap').style.display='none';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+// Render empty intake steps on load
+renderIntakeStep('v');
+renderIntakeStep('f');
+// Default pillar rows (will be replaced when file is uploaded)
+// Don't pre-populate — wait for file scan
 </script>
 </body>
 </html>
