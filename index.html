@@ -244,13 +244,9 @@
     .room-card-name{font-weight:600;font-size:13px;flex:1;color:var(--text)}
     .room-capacity-badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
     .room-card-body{padding:12px 14px}
-    .room-fields{display:grid;grid-template-columns:1fr 1fr 1fr 80px;gap:10px;align-items:end}
+    .room-fields{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 80px;gap:10px;align-items:end}
     .room-delete-btn{height:36px;width:36px;border-radius:7px;border:1px solid #E8A09A;background:none;color:var(--danger);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .room-delete-btn:hover{background:var(--danger-lt)}
-    .room-pillar-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-    .room-pillar-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple)}
-    .room-fill-bar{height:4px;border-radius:2px;background:var(--border);margin-top:8px;overflow:hidden}
-    .room-fill-bar-inner{height:100%;background:var(--purple);border-radius:2px;transition:width .3s}
 
     /* ── SCORE FILTER ── */
     .score-filter-box{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:8px;padding:14px 16px;margin-bottom:18px}
@@ -258,9 +254,6 @@
     .score-filter-grid{display:grid;grid-template-columns:1fr 1fr 120px;gap:12px;align-items:end}
     .score-filter-preview{margin-top:10px;font-size:12px;color:var(--purple);background:rgba(108,52,131,.08);border-radius:6px;padding:7px 11px}
     .score-filter-preview strong{font-weight:700}
-
-    /* overflow badge on room */
-    .room-overflow-note{font-size:11px;color:var(--warn);margin-top:6px;font-weight:500}
 
     .preview-wrap{overflow-x:auto;margin-bottom:18px;border-radius:8px;border:1px solid var(--border)}
     .preview-table{width:100%;border-collapse:collapse;font-size:12px}
@@ -567,7 +560,7 @@
 
 
 <!-- ══════════════════════════════════════════════
-     PAGE 3 — CLASS ASSIGNMENT (REBUILT)
+     PAGE 3 — CLASS ASSIGNMENT
 ══════════════════════════════════════════════ -->
 <div class="page" id="page-assign">
   <div class="page-header">
@@ -590,7 +583,6 @@
     </div>
   </div>
 
-  <!-- STEP 1: Student file -->
   <div class="section-label">Step 1 — Student List</div>
   <div class="card" id="a-card1">
     <div class="card-header"><div class="step-badge" id="a-badge1">1</div><div class="card-title">Upload Student List</div><div class="card-pill" id="a-pill1">Waiting</div></div>
@@ -619,7 +611,6 @@
     </div>
   </div>
 
-  <!-- STEP 2: Score filter -->
   <div class="section-label">Step 2 — Score Filter</div>
   <div class="card" id="a-card2">
     <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Eligibility Filter — Highest Attempt Score</div><div class="card-pill" id="a-pill2">Required</div></div>
@@ -645,28 +636,24 @@
         </div>
       </div>
       <div style="font-size:12px;color:var(--muted);line-height:1.7">
-        <strong style="color:var(--text2)">Tip:</strong> Upload your student list first — the score column will be auto-detected if the header contains keywords like "score", "attempt", "mark", or "grade". You can override it above. Students with a blank or non-numeric score are treated as <em>ineligible</em> (score = 0).
+        <strong style="color:var(--text2)">Tip:</strong> Upload your student list first — the score column will be auto-detected if the header contains keywords like "score", "attempt", "mark", or "grade". Students with a blank or non-numeric score are treated as <em>ineligible</em>.
       </div>
     </div>
   </div>
 
-  <!-- STEP 3: Room builder -->
   <div class="section-label">Step 3 — Room Configuration</div>
   <div class="card" id="a-card3">
     <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Define Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
     <div class="card-body">
-
       <div class="room-builder-toolbar">
         <div>
-          <div class="room-builder-toolbar-left">Rooms — each with its own cap, venue, and date</div>
-          <div class="room-builder-sub">Students fill their pillar's home rooms first, then overflow to rooms with the most space</div>
+          <div class="room-builder-toolbar-left">Rooms — each with its own cap, venue, date &amp; time</div>
+          <div class="room-builder-sub">Each room produces one attendance sheet in the downloaded Excel</div>
         </div>
         <button class="add-room-btn" onclick="addRoom()">＋ Add Room</button>
       </div>
 
-      <div class="room-list" id="room-list">
-        <!-- rendered by JS -->
-      </div>
+      <div class="room-list" id="room-list"></div>
 
       <div id="a-room-summary" style="display:none;margin-bottom:14px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text2)">
         Total capacity: <strong id="a-total-cap">0</strong> seats across <strong id="a-room-count">0</strong> rooms
@@ -680,6 +667,7 @@
         <div class="mapping-row"><span class="map-label">Step 3</span><span class="map-arrow">→</span><span class="map-value">Pillars fill their home rooms up to each room's cap</span><span class="map-badge badge-ok">home rooms</span></div>
         <div class="mapping-row"><span class="map-label">Step 4</span><span class="map-arrow">→</span><span class="map-value">Overflow → room with most remaining capacity</span><span class="map-badge badge-gold">overflow</span></div>
         <div class="mapping-row"><span class="map-label">Step 5</span><span class="map-arrow">→</span><span class="map-value">Students who don't fit → Unassigned sheet</span><span class="map-badge badge-warn">overflow sheet</span></div>
+        <div class="mapping-row"><span class="map-label">Download</span><span class="map-arrow">→</span><span class="map-value">One attendance sheet per room — ID, Official Name, Acad Plan, Sign</span><span class="map-badge badge-purple">attendance format</span></div>
       </div>
 
       <div class="validation-box" id="a-validation"></div>
@@ -704,7 +692,7 @@
         <div class="flog" id="a-log"></div>
         <div class="preview-wrap" id="a-preview-wrap" style="display:none"></div>
         <div class="result-actions">
-          <button class="btn btn-download" onclick="downloadAssignment()">⬇&nbsp; Download Class Assignment</button>
+          <button class="btn btn-download" onclick="downloadAssignment()">⬇&nbsp; Download Attendance Sheets (.xlsx)</button>
           <button class="btn btn-ghost" onclick="resetPage('a')" style="flex:0 0 auto;padding:0 18px">↩ Re-configure</button>
         </div>
       </div>
@@ -792,12 +780,8 @@ var S={
 };
 var aCols={id:-1,name:-1,score:-1,pillar:-1};
 var assignmentData=null;
-
-// Room definitions: [{id, name, venue, date, cap, pillar}]
-// pillar = '' means any pillar (overflow ok), or a pillar label for home-room
 var roomDefs = [];
 var roomIdCounter = 0;
-
 var summaryData={vmock:null,forms:null,assign:null};
 
 // ══════════════════════════════════════════════
@@ -817,7 +801,7 @@ function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle(
 function markDone(p,n){document.getElementById(p+'-card'+n).classList.add('is-done');document.getElementById(p+'-badge'+n).textContent='✓';document.getElementById(p+'-pill'+n).textContent='Ready';}
 function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:var(--font-body);z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .35s';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},350);},2200);}
 function setProgStep(p,step){
-  var total=p==='a'?4:4;
+  var total=4;
   for(var i=1;i<=total;i++){
     var dot=document.getElementById(p+'-pd'+i),lbl=document.getElementById(p+'-pl'+i),line=document.getElementById(p+'-line'+i);if(!dot)continue;
     if(i<step){dot.classList.add('done');dot.classList.remove('active');dot.textContent='✓';if(lbl){lbl.classList.add('done');lbl.classList.remove('active');}}
@@ -827,6 +811,7 @@ function setProgStep(p,step){
   }
 }
 function statusRank(s){var v=(s||'').trim().toLowerCase();if(v==='submitted')return 3;if(v==='attempted')return 2;if(v==='yet to attempt')return 1;return 0;}
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ══════════════════════════════════════════════
 // TABS
@@ -897,7 +882,7 @@ function updateSheetChips(p){
 }
 
 // ══════════════════════════════════════════════
-// AUTO-DETECT COLUMNS
+// AUTO-DETECT
 // ══════════════════════════════════════════════
 function autoDetectVF(ws,p){
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,dId=-1,dSt=-1;
@@ -931,7 +916,7 @@ function validateAssign(){
 }
 
 // ══════════════════════════════════════════════
-// SCANS (v/f)
+// SCANS
 // ══════════════════════════════════════════════
 function scanVmock(){if(!S.v.wb2)return;var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}var has=rows.length&&sH in rows[0];document.getElementById('v-map-status-col').textContent=sH+' column';var b=document.getElementById('v-map-status-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');validateVmock();}
 function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';var has=rows.length&&idH in rows[0];document.getElementById('f-map-id-col').textContent=idH+' column';var b=document.getElementById('f-map-id-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}validateForms();}
@@ -986,7 +971,6 @@ function autoDetectAssign(ws){
     var inp=document.getElementById('a-cfg-'+k);
     if(inp){inp.value=colLetter(aCols[k]);inp.classList.toggle('auto-detected',aCols[k]>=0);}
   });
-  // sync score col to step 2 field
   if(aCols.score>=0){
     var sc=document.getElementById('a-cfg-score-col');if(sc){sc.value=colLetter(aCols.score);sc.classList.add('auto-detected');}
     var sh=document.getElementById('a-cfg-score-col-header');if(sh&&scoreHeader)sh.value=scoreHeader;
@@ -1029,8 +1013,7 @@ function getPillarOptions(){
 
 function addRoom(){
   var id=++roomIdCounter;
-  var pillars=getPillarOptions();
-  roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',cap:30,pillar:''});
+  roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:''});
   renderRoomList();
   validateAssign();
   updateRoomCapacitySummary();
@@ -1048,9 +1031,9 @@ function onRoomChange(id){
   r.name=(document.getElementById('rname-'+id).value||'').trim();
   r.venue=(document.getElementById('rvenue-'+id).value||'').trim();
   r.date=(document.getElementById('rdate-'+id).value||'').trim();
+  r.time=(document.getElementById('rtime-'+id).value||'').trim();
   r.cap=parseInt(document.getElementById('rcap-'+id).value)||0;
   r.pillar=(document.getElementById('rpillar-'+id).value||'').trim();
-  // update card name header
   var nm=document.getElementById('rcard-name-'+id);if(nm)nm.textContent=r.name||'Room '+id;
   var cb=document.getElementById('rcap-badge-'+id);if(cb)cb.textContent='Cap: '+r.cap;
   validateAssign();
@@ -1071,10 +1054,11 @@ function renderRoomList(){
         '<div class="room-capacity-badge" id="rcap-badge-'+r.id+'">Cap: '+r.cap+'</div>'+
       '</div>'+
       '<div class="room-card-body">'+
-        '<div class="room-fields">'+
+        '<div class="room-fields" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr 80px">'+
           '<div class="field-group"><label class="field-label">Room Name</label><input class="field-input" id="rname-'+r.id+'" value="'+escHtml(r.name)+'" placeholder="e.g. LT2A" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Venue / Location <span>optional</span></label><input class="field-input" id="rvenue-'+r.id+'" value="'+escHtml(r.venue)+'" placeholder="e.g. Lecture Theatre 2" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Session Date <span>optional</span></label><input class="field-input" id="rdate-'+r.id+'" value="'+escHtml(r.date)+'" placeholder="e.g. 20-May-26" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Venue / Location <span>optional</span></label><input class="field-input" id="rvenue-'+r.id+'" value="'+escHtml(r.venue)+'" placeholder="e.g. LT 1 Albert Hong" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Session Date <span>optional</span></label><input class="field-input" id="rdate-'+r.id+'" value="'+escHtml(r.date)+'" placeholder="e.g. 25/3/2026" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Session Time <span>optional</span></label><input class="field-input" id="rtime-'+r.id+'" value="'+escHtml(r.time||'')+'" placeholder="e.g. 2 - 5pm" oninput="onRoomChange('+r.id+')"/></div>'+
           '<div class="field-group"><label class="field-label">Student Cap</label><input class="field-input" id="rcap-'+r.id+'" type="number" min="1" value="'+r.cap+'" oninput="onRoomChange('+r.id+')"/></div>'+
           '<button class="room-delete-btn" onclick="deleteRoom('+r.id+')" title="Remove room">✕</button>'+
         '</div>'+
@@ -1090,15 +1074,12 @@ function renderRoomList(){
   }
 }
 
-function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
 function updateRoomCapacitySummary(){
   var sum=document.getElementById('a-room-summary');
   if(!roomDefs.length){sum.style.display='none';return;}
   var total=roomDefs.reduce(function(s,r){return s+(r.cap||0);},0);
   document.getElementById('a-total-cap').textContent=total;
   document.getElementById('a-room-count').textContent=roomDefs.length;
-  // estimate eligible
   var note='';
   if(S.a.wb1&&S.a.sheet){
     var ws=S.a.wb1.Sheets[S.a.sheet];if(ws){
@@ -1113,7 +1094,7 @@ function updateRoomCapacitySummary(){
         if(!isNaN(sc)&&sc<threshold)eligible++;
       }
       note='· ~'+eligible+' eligible of '+total2+' students';
-      if(eligible>total)note+=' <span style="color:var(--danger);font-weight:600">⚠ '+( eligible-total)+' may overflow</span>';
+      if(eligible>total)note+=' <span style="color:var(--danger);font-weight:600">⚠ '+(eligible-total)+' may overflow</span>';
       else note+=' <span style="color:var(--success);font-weight:600">✓ capacity sufficient</span>';
     }
   }
@@ -1201,7 +1182,7 @@ function runForms(){
 }
 
 // ══════════════════════════════════════════════
-// RUN ASSIGNMENT — NEW LOGIC
+// RUN ASSIGNMENT
 // ══════════════════════════════════════════════
 function runAssign(){
   var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){flog('a-log','Sheet not found.','err');return;}
@@ -1209,37 +1190,31 @@ function runAssign(){
   document.getElementById('a-results-section').style.display='block';
   setTimeout(function(){document.getElementById('a-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
 
-  // Column indices
-  var idC  = aCols.id>=0   ? aCols.id   : colIdx(document.getElementById('a-cfg-id').value||'A');
-  var nmC  = aCols.name>=0 ? aCols.name : colIdx(document.getElementById('a-cfg-name').value||'B');
-  var plC  = aCols.pillar>=0? aCols.pillar: colIdx(document.getElementById('a-cfg-pillar').value||'C');
-  var scC  = aCols.score>=0 ? aCols.score : colIdx(document.getElementById('a-cfg-score-col').value||'D');
-  // Allow override from step-2 field
+  var idC  = aCols.id>=0    ? aCols.id    : colIdx(document.getElementById('a-cfg-id').value||'A');
+  var nmC  = aCols.name>=0  ? aCols.name  : colIdx(document.getElementById('a-cfg-name').value||'B');
+  var plC  = aCols.pillar>=0 ? aCols.pillar: colIdx(document.getElementById('a-cfg-pillar').value||'C');
   var scColOverride = document.getElementById('a-cfg-score-col').value.trim();
-  if(scColOverride) scC=colIdx(scColOverride);
+  var scC  = scColOverride ? colIdx(scColOverride) : (aCols.score>=0 ? aCols.score : colIdx('D'));
   var threshold = parseFloat(document.getElementById('a-cfg-threshold').value)||70;
 
   flog('a-log','Sheet: "'+S.a.sheet+'"','info');
   flog('a-log','Score column: '+colLetter(scC)+' · Threshold: < '+threshold,'info');
 
-  // Read all students
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
   var eligible=[],ineligible=[],totalRead=0;
   for(var R=hr+1;R<=range.e.r;R++){
     var id=cellVal(ws,R,idC).replace(/\s/g,'');if(!id)continue;
     totalRead++;
     var sc=parseFloat(cellVal(ws,R,scC));
-    if(isNaN(sc))sc=0; // blank = 0, treated as ineligible
+    if(isNaN(sc))sc=0;
     var student={id:id,name:cellVal(ws,R,nmC),pillar:cellVal(ws,R,plC).trim(),score:sc,row:R};
     if(sc<threshold) eligible.push(student);
     else ineligible.push(student);
   }
   flog('a-log',totalRead+' students read — '+eligible.length+' eligible (score < '+threshold+'), '+ineligible.length+' ineligible','info');
 
-  // Build room state: copy caps, track fill
-  var rooms=roomDefs.map(function(r){return {id:r.id,name:r.name,venue:r.venue,date:r.date,cap:r.cap,pillar:r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};});
+  var rooms=roomDefs.map(function(r){return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};});
 
-  // Group eligible by pillar (sorted A-Z by name within each pillar)
   var byPillar={};
   eligible.forEach(function(s){
     var p=s.pillar||'(none)';
@@ -1250,7 +1225,6 @@ function runAssign(){
 
   var unassigned=[];
 
-  // Helper: room with most remaining capacity (excluding full rooms)
   function bestOverflowRoom(){
     var best=null,bestRemain=-1;
     rooms.forEach(function(r){
@@ -1260,10 +1234,8 @@ function runAssign(){
     return best;
   }
 
-  // For each pillar, fill home rooms first, then overflow
   Object.keys(byPillar).forEach(function(pillar){
-    var pool=byPillar[pillar].slice(); // copy
-    // Home rooms for this pillar (rooms where r.pillar === pillar)
+    var pool=byPillar[pillar].slice();
     var homeRooms=rooms.filter(function(r){return r.pillar===pillar;});
     if(homeRooms.length){
       homeRooms.forEach(function(room){
@@ -1272,11 +1244,10 @@ function runAssign(){
           room.students.push(s);
         }
       });
-      flog('a-log','Pillar "'+pillar+'": '+byPillar[pillar].length+' eligible, '+( byPillar[pillar].length-pool.length)+' placed in home rooms, '+pool.length+' overflow','info');
+      flog('a-log','Pillar "'+pillar+'": '+byPillar[pillar].length+' eligible, '+(byPillar[pillar].length-pool.length)+' placed in home rooms, '+pool.length+' overflow','info');
     } else {
       flog('a-log','Pillar "'+pillar+'": no home room — all '+pool.length+' go to overflow pool','warn');
     }
-    // Overflow remaining pool
     pool.forEach(function(s){
       var r=bestOverflowRoom();
       if(r){s.assignedRoom=r.name;s.assignedVenue=r.venue;s.assignedDate=r.date;r.students.push(s);}
@@ -1288,7 +1259,6 @@ function runAssign(){
   flog('a-log',totalAssigned+' students assigned across '+rooms.length+' rooms','ok');
   if(unassigned.length) flog('a-log',unassigned.length+' students could not be placed — all rooms full → Unassigned sheet','warn');
 
-  // Stats
   document.getElementById('a-s-eligible').textContent=eligible.length;
   document.getElementById('a-s-students').textContent=totalAssigned;
   document.getElementById('a-s-rooms').textContent=rooms.filter(function(r){return r.students.length>0;}).length;
@@ -1298,23 +1268,22 @@ function runAssign(){
   var ts=fmtTs();
   document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+eligible.length+' eligible students &nbsp;·&nbsp; score threshold: &lt;'+threshold;
 
-  // Preview table (assigned rooms only)
-  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>#</th><th>Student ID</th><th>Name</th><th>Pillar</th><th>Score</th></tr></thead><tbody>';
+  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>Time</th><th>#</th><th>Student ID</th><th>Name</th><th>Pillar</th><th>Score</th></tr></thead><tbody>';
   rooms.forEach(function(rm){
     rm.students.forEach(function(s,i){
       html+='<tr>';
-      if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+escHtml(rm.name)+'</span></td><td rowspan="'+rm.students.length+'">'+escHtml(rm.venue||'—')+'</td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';
+      if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+escHtml(rm.name)+'</span></td><td rowspan="'+rm.students.length+'">'+escHtml(rm.venue||'—')+'</td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+(rm.time||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';
       html+='<td>'+escHtml(s.id)+'</td><td>'+escHtml(s.name)+'</td><td>'+escHtml(s.pillar)+'</td><td>'+s.score+'</td></tr>';
     });
   });
   if(unassigned.length){
-    html+='<tr><td colspan="4" style="background:var(--danger-lt);color:var(--danger);font-weight:600;padding:6px 11px;font-size:11px">⚠ Unassigned (all rooms full)</td></tr>';
-    unassigned.forEach(function(s){html+='<tr><td colspan="3"></td><td></td><td class="td-overflow">'+escHtml(s.id)+'</td><td class="td-overflow">'+escHtml(s.name)+'</td><td>'+escHtml(s.pillar)+'</td><td>'+s.score+'</td></tr>';});
+    html+='<tr><td colspan="5" style="background:var(--danger-lt);color:var(--danger);font-weight:600;padding:6px 11px;font-size:11px">⚠ Unassigned (all rooms full)</td></tr>';
+    unassigned.forEach(function(s){html+='<tr><td colspan="4"></td><td></td><td class="td-overflow">'+escHtml(s.id)+'</td><td class="td-overflow">'+escHtml(s.name)+'</td><td>'+escHtml(s.pillar)+'</td><td>'+s.score+'</td></tr>';});
   }
   html+='</tbody></table>';
   var pw=document.getElementById('a-preview-wrap');pw.innerHTML=html;pw.style.display='block';
 
-  flog('a-log','File ready to download','ok');
+  flog('a-log','File ready to download — one attendance sheet per room','ok');
   assignmentData={rooms:rooms,unassigned:unassigned,threshold:threshold,eligible:eligible.length,ineligible:ineligible.length};
   setProgStep('a',4);document.getElementById('tdot-assign').classList.add('show');
 
@@ -1332,31 +1301,133 @@ function runAssign(){
 function downloadResult(p){var wb=S[p].resultWb;if(!wb)return;XLSX.writeFile(wb,'UPOP_Intake_'+(p==='v'?'VMOCK':'Forms')+'_'+fmtDate()+'.xlsx');}
 
 function downloadAssignment(){
-  if(!assignmentData)return;
-  var wb=XLSX.utils.book_new();
-  // One sheet per room
-  assignmentData.rooms.forEach(function(rm){
-    if(!rm.students.length)return;
-    var data=[['Student ID','Name','Pillar','Score','Room','Venue','Session Date']];
-    rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.score,s.assignedRoom,s.assignedVenue||'',s.assignedDate||'']);});
-    var ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:28},{wch:10},{wch:8},{wch:14},{wch:22},{wch:14}];
-    XLSX.utils.book_append_sheet(wb,ws,rm.shortName.replace(/[:\\\/\?\*\[\]]/g,'').slice(0,31));
-  });
-  // Unassigned sheet
-  if(assignmentData.unassigned&&assignmentData.unassigned.length){
-    var udata=[['Student ID','Name','Pillar','Score','Note']];
-    assignmentData.unassigned.forEach(function(s){udata.push([s.id,s.name,s.pillar,s.score,'All rooms full — increase caps or add rooms']);});
-    var uws=XLSX.utils.aoa_to_sheet(udata);uws['!cols']=[{wch:14},{wch:28},{wch:10},{wch:8},{wch:40}];
-    XLSX.utils.book_append_sheet(wb,uws,'Unassigned');
+  if(!assignmentData) return;
+  var wb = XLSX.utils.book_new();
+
+  // Style helper
+  function sc(ws, ref, bold, sz, bgRGB, fgRGB, hAlign, bdrStyle){
+    if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
+    var bdr = bdrStyle !== false ? {
+      bottom:{style:'thin', color:{rgb:'CCCCCC'}},
+      right: {style:'thin', color:{rgb:'CCCCCC'}}
+    } : {};
+    ws[ref].s = {
+      font:      {bold:!!bold, sz:sz||11, name:'Arial', color:{rgb:fgRGB||'000000'}},
+      fill:      bgRGB ? {patternType:'solid', fgColor:{rgb:bgRGB}} : {patternType:'none'},
+      alignment: {horizontal:hAlign||'left', vertical:'center'},
+      border:    bdr
+    };
   }
-  // Summary sheet
-  var sdata=[['Room Summary — UPOP Class Assignment — '+fmtDate()],['Score threshold: < '+assignmentData.threshold],[]];
-  sdata.push(['Room','Venue','Date','Home Pillar','Cap','Assigned','Remaining']);
-  assignmentData.rooms.forEach(function(r){sdata.push([r.name,r.venue||'',r.date||'',r.pillar||'(shared)',r.cap,r.students.length,r.cap-r.students.length]);});
-  if(assignmentData.unassigned&&assignmentData.unassigned.length)sdata.push(['Unassigned','','','',0,assignmentData.unassigned.length,0]);
-  var sws=XLSX.utils.aoa_to_sheet(sdata);sws['!cols']=[{wch:16},{wch:22},{wch:14},{wch:12},{wch:6},{wch:10},{wch:10}];
-  XLSX.utils.book_append_sheet(wb,sws,'_Summary');
-  XLSX.writeFile(wb,'UPOP_ClassAssignment_'+fmtDate()+'.xlsx');
+
+  function makeAttendanceSheet(rm){
+    var pillarLabel = rm.pillar || 'UPOP';
+    // Matches screenshot layout exactly:
+    // Row 1 : [Acad Plan / pillar label]  [blank] [blank] [blank]
+    // Row 2 : [Date]   [blank] [date]  [blank]
+    // Row 3 : [Time]   [blank] [time]  [blank]
+    // Row 4 : [Venue]  [blank] [venue] [blank]
+    // Row 5 : blank
+    // Row 6 : blank
+    // Row 7 : ID | Official Name | Acad Plan | Sign
+    // Row 8+: student data
+    var aoa = [
+      [pillarLabel, '', '', ''],
+      ['Date',  '', rm.date  || '', ''],
+      ['Time',  '', rm.time  || '', ''],
+      ['Venue', '', rm.venue || '', ''],
+      ['', '', '', ''],
+      ['', '', '', ''],
+      ['ID', 'Official Name', 'Acad Plan', 'Sign']
+    ];
+    rm.students.forEach(function(s){
+      aoa.push([s.id, s.name, s.pillar || pillarLabel, '']);
+    });
+
+    var ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!cols'] = [{wch:14}, {wch:36}, {wch:14}, {wch:14}];
+
+    // Row heights (0-indexed)
+    var rh = [];
+    for(var i = 0; i < aoa.length; i++) rh.push({hpt: i===0 ? 26 : i < 6 ? 18 : 22});
+    ws['!rows'] = rh;
+
+    // Row 1 — pillar/acad plan label, dark green bold
+    sc(ws,'A1', true, 13, null, '1B4332', 'left', false);
+    // Rows 2-4 label cells (col A) — bold grey text
+    ['A2','A3','A4'].forEach(function(ref){ sc(ws, ref, true, 11, null, '555555', 'left', false); });
+    // Rows 2-4 value cells (col C)
+    ['C2','C3','C4'].forEach(function(ref){ sc(ws, ref, false, 11, null, '111111', 'left', false); });
+
+    // Table header row 7 — white text on grey background
+    ['A7','B7','C7','D7'].forEach(function(ref){
+      if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
+      ws[ref].s = {
+        font:      {bold:true, sz:11, name:'Arial', color:{rgb:'FFFFFF'}},
+        fill:      {patternType:'solid', fgColor:{rgb:'808080'}},
+        alignment: {horizontal:'center', vertical:'center'},
+        border:    {bottom:{style:'medium', color:{rgb:'555555'}}, right:{style:'thin', color:{rgb:'999999'}}}
+      };
+    });
+
+    // Student rows — alternating white/light grey
+    for(var i = 0; i < rm.students.length; i++){
+      var exR = 8 + i;
+      var bg  = (i % 2 === 0) ? 'FFFFFF' : 'F2F2F2';
+      ['A','B','C','D'].forEach(function(col){
+        var ref = col + exR;
+        if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
+        ws[ref].s = {
+          font:      {sz:11, name:'Arial', color:{rgb:'1A1A1A'}},
+          fill:      {patternType:'solid', fgColor:{rgb:bg}},
+          alignment: {horizontal:'left', vertical:'center'},
+          border:    {bottom:{style:'thin', color:{rgb:'DDDDDD'}}, right:{style:'thin', color:{rgb:'DDDDDD'}}}
+        };
+      });
+    }
+    return ws;
+  }
+
+  // One attendance sheet per non-empty room
+  var sheetN = 0;
+  assignmentData.rooms.forEach(function(rm){
+    if(!rm.students.length) return;
+    sheetN++;
+    var ws   = makeAttendanceSheet(rm);
+    // Strip illegal Excel sheet-name chars: \ / ? * [ ] :
+    var safe = rm.name.replace(/[\\\/\?\*\[\]:]/g, '').trim().slice(0,31) || ('Room'+sheetN);
+    XLSX.utils.book_append_sheet(wb, ws, safe);
+  });
+
+  // Unassigned sheet (plain table)
+  if(assignmentData.unassigned && assignmentData.unassigned.length){
+    var udata = [['Student ID','Official Name','Acad Plan','Score','Note']];
+    assignmentData.unassigned.forEach(function(s){
+      udata.push([s.id, s.name, s.pillar, s.score, 'All rooms full — add more capacity or rooms']);
+    });
+    var uws = XLSX.utils.aoa_to_sheet(udata);
+    uws['!cols'] = [{wch:14},{wch:36},{wch:14},{wch:8},{wch:44}];
+    XLSX.utils.book_append_sheet(wb, uws, 'Unassigned');
+  }
+
+  // _Summary sheet
+  var sdata = [
+    ['UPOP Class Assignment — ' + fmtDate()],
+    ['Score threshold: < ' + assignmentData.threshold],
+    [],
+    ['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']
+  ];
+  assignmentData.rooms.forEach(function(r){
+    sdata.push([r.name, r.venue||'', r.date||'', r.time||'', r.pillar||'(shared)', r.cap, r.students.length, r.cap - r.students.length]);
+  });
+  if(assignmentData.unassigned && assignmentData.unassigned.length){
+    sdata.push([]);
+    sdata.push(['Unassigned', assignmentData.unassigned.length, 'students could not be placed']);
+  }
+  var sws = XLSX.utils.aoa_to_sheet(sdata);
+  sws['!cols'] = [{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
+  XLSX.utils.book_append_sheet(wb, sws, '_Summary');
+
+  XLSX.writeFile(wb, 'UPOP_AttendanceSheets_' + fmtDate() + '.xlsx');
 }
 
 // ══════════════════════════════════════════════
@@ -1402,8 +1473,8 @@ function refreshSummary(){
       '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.rooms+'</span><span class="summary-stat-lbl">Rooms</span></div>'+
       '<div class="summary-stat s-pend"><span class="summary-stat-num">'+am.ineligible+'</span><span class="summary-stat-lbl">Ineligible</span></div>'+
       (am.overflow?'<div class="summary-stat s-overflow"><span class="summary-stat-num">'+am.overflow+'</span><span class="summary-stat-lbl">Unassigned</span></div>':'');
-    var tbl='<table class="summary-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>Home Pillar</th><th>Cap</th><th>Assigned</th></tr></thead><tbody>';
-    am.roomList.forEach(function(r){if(!r.students.length)return;tbl+='<tr><td><strong>'+escHtml(r.name)+'</strong></td><td>'+escHtml(r.venue||'—')+'</td><td>'+(r.date||'—')+'</td><td>'+(r.pillar||'<em>shared</em>')+'</td><td>'+r.cap+'</td><td>'+r.students.length+'</td></tr>';});
+    var tbl='<table class="summary-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>Time</th><th>Home Pillar</th><th>Cap</th><th>Assigned</th></tr></thead><tbody>';
+    am.roomList.forEach(function(r){if(!r.students.length)return;tbl+='<tr><td><strong>'+escHtml(r.name)+'</strong></td><td>'+escHtml(r.venue||'—')+'</td><td>'+(r.date||'—')+'</td><td>'+(r.time||'—')+'</td><td>'+(r.pillar||'<em>shared</em>')+'</td><td>'+r.cap+'</td><td>'+r.students.length+'</td></tr>';});
     tbl+='</tbody></table>';
     document.getElementById('sum-assign-table-wrap').innerHTML=tbl;
   }
@@ -1421,12 +1492,19 @@ function exportSummaryReport(){
     od.push(['Class Assignment — score < '+am.threshold]);
     od.push(['Eligible','Assigned','Ineligible','Unassigned','Rooms']);
     od.push([am.eligible,am.students,am.ineligible,am.overflow,am.rooms]);
-    od.push([]);od.push(['Room','Venue','Date','Home Pillar','Cap','Assigned']);
-    am.roomList.forEach(function(r){od.push([r.name,r.venue||'',r.date||'',r.pillar||'(shared)',r.cap,r.students.length]);});
+    od.push([]);od.push(['Room','Venue','Date','Time','Home Pillar','Cap','Assigned']);
+    am.roomList.forEach(function(r){od.push([r.name,r.venue||'',r.date||'',r.time||'',r.pillar||'(shared)',r.cap,r.students.length]);});
   }
   var ows=XLSX.utils.aoa_to_sheet(od);ows['!cols']=[{wch:28},{wch:12},{wch:12},{wch:20},{wch:10}];
   XLSX.utils.book_append_sheet(wb,ows,'Summary');
-  if(am&&am.roomList)am.roomList.forEach(function(rm){if(!rm.students.length)return;var data=[['Student ID','Name','Pillar','Score','Room','Venue','Session Date']];rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.score,s.assignedRoom,s.assignedVenue||'',s.assignedDate||'']);});var ws=XLSX.utils.aoa_to_sheet(data);XLSX.utils.book_append_sheet(wb,ws,rm.shortName.replace(/[:\\\/\?\*\[\]]/g,'').slice(0,31));});
+  if(am&&am.roomList)am.roomList.forEach(function(rm){
+    if(!rm.students.length)return;
+    var data=[['Student ID','Official Name','Acad Plan','Score','Room','Venue','Date','Time']];
+    rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.score,s.assignedRoom,s.assignedVenue||'',s.assignedDate||'',rm.time||'']);});
+    var ws=XLSX.utils.aoa_to_sheet(data);
+    var safe=(rm.shortName||rm.name).replace(/[\\\/\?\*\[\]:]/g,'').slice(0,31);
+    XLSX.utils.book_append_sheet(wb,ws,safe);
+  });
   XLSX.writeFile(wb,'UPOP_SummaryReport_'+fmtDate()+'.xlsx');
 }
 
