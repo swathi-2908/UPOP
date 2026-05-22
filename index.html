@@ -119,7 +119,6 @@
     .sheet-chip.active{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
 
     .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-    .config-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
     .field-group{display:flex;flex-direction:column;gap:5px}
     .field-label{font-size:12px;font-weight:600;color:var(--text2)}
     .field-label span{font-weight:400;color:var(--muted);font-size:11px;margin-left:4px}
@@ -230,6 +229,22 @@
     .detect-col-chip.found .chip-val{color:var(--success);font-family:'Menlo','Consolas',monospace;font-size:11px}
     .detect-col-chip.missing .chip-val{color:var(--warn);font-size:11px}
 
+    /* ── PILLAR QUICK SETUP ── */
+    .pillar-quick-setup{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:10px;padding:16px 18px;margin-bottom:18px}
+    .pqs-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .pqs-sub{font-size:12px;color:var(--purple);opacity:.7;margin-bottom:12px}
+    .pillar-chips-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .pillar-chip{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;background:var(--surface);border:1.5px solid #C39BD3;color:var(--purple);cursor:pointer;transition:all .15s;user-select:none}
+    .pillar-chip:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+    .pillar-chip.selected{background:var(--purple);color:#fff;border-color:var(--purple)}
+    .pillar-chip .pc-count{opacity:.7;font-size:11px}
+    .pqs-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pqs-cap-field{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--purple);font-weight:600}
+    .pqs-cap-input{width:60px;height:30px;border-radius:6px;border:1px solid #C39BD3;background:var(--surface);text-align:center;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--purple);outline:none}
+    .pqs-generate-btn{display:flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:none;background:var(--purple);color:#fff;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+    .pqs-generate-btn:hover{background:#5B2C6F;transform:translateY(-1px)}
+    .pqs-note{font-size:11px;color:var(--purple);opacity:.65;margin-top:8px}
+
     /* ── ROOM BUILDER ── */
     .room-builder-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
     .room-builder-toolbar-left{font-size:13px;font-weight:600;color:var(--text)}
@@ -242,11 +257,14 @@
     .room-card-head{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border)}
     .room-number-badge{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
     .room-card-name{font-weight:600;font-size:13px;flex:1;color:var(--text)}
-    .room-capacity-badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
+    .room-pillar-tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap;margin-right:4px}
+    .room-pillar-tag.shared{background:var(--gold-lt);border-color:#E8D09A;color:var(--gold)}
+    .room-capacity-badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
     .room-card-body{padding:12px 14px}
-    .room-fields{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 80px;gap:10px;align-items:end}
+    .room-fields-compact{display:grid;grid-template-columns:1fr 1fr 1fr 42px;gap:10px;align-items:end}
     .room-delete-btn{height:36px;width:36px;border-radius:7px;border:1px solid #E8A09A;background:none;color:var(--danger);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .room-delete-btn:hover{background:var(--danger-lt)}
+    .room-pillar-row{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
     /* ── SCORE FILTER ── */
     .score-filter-box{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:8px;padding:14px 16px;margin-bottom:18px}
@@ -254,14 +272,6 @@
     .score-filter-grid{display:grid;grid-template-columns:1fr 1fr 120px;gap:12px;align-items:end}
     .score-filter-preview{margin-top:10px;font-size:12px;color:var(--purple);background:rgba(108,52,131,.08);border-radius:6px;padding:7px 11px}
     .score-filter-preview strong{font-weight:700}
-
-    .preview-wrap{overflow-x:auto;margin-bottom:18px;border-radius:8px;border:1px solid var(--border)}
-    .preview-table{width:100%;border-collapse:collapse;font-size:12px}
-    .preview-table th{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 11px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
-    .preview-table td{border-bottom:1px solid var(--border);padding:7px 11px;color:var(--text)}
-    .preview-table tr:last-child td{border-bottom:none}
-    .preview-table tr:nth-child(even) td{background:var(--surface2)}
-    .preview-table .td-overflow{color:var(--danger);font-weight:600}
 
     .summary-empty{text-align:center;padding:60px 20px;color:var(--muted)}
     .summary-empty .se-icon{font-size:44px;margin-bottom:14px}
@@ -300,6 +310,15 @@
     .summary-table tr:nth-child(even) td{background:var(--surface2)}
     .room-badge{display:inline-flex;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
 
+    /* room breakdown in results */
+    .room-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:18px}
+    .room-result-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+    .room-result-name{font-weight:700;font-size:13px;color:var(--purple);margin-bottom:2px}
+    .room-result-pillar{font-size:11px;color:var(--muted);margin-bottom:6px}
+    .room-result-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-bottom:4px}
+    .room-result-fill{height:100%;border-radius:3px;background:var(--purple)}
+    .room-result-nums{font-size:11px;color:var(--text2);display:flex;justify-content:space-between}
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     .animate-in{animation:fadeUp .3s ease forwards}
 
@@ -308,9 +327,9 @@
 
     @media(max-width:640px){
       .stats-grid-3,.stats-grid-4,.stats-grid-5{grid-template-columns:repeat(2,1fr)}
-      .config-grid,.config-grid-3{grid-template-columns:1fr}
+      .config-grid{grid-template-columns:1fr}
       .topbar-badge,.tab-btn span{display:none}
-      .room-fields{grid-template-columns:1fr 1fr}
+      .room-fields-compact{grid-template-columns:1fr 1fr}
       .score-filter-grid{grid-template-columns:1fr 1fr}
       .btn-row,.result-actions{flex-direction:column}
     }
@@ -565,21 +584,21 @@
 <div class="page" id="page-assign">
   <div class="page-header">
     <h1>Class Assignment</h1>
-    <p>Define rooms with individual caps and dates. Students are filtered by score threshold, grouped by pillar first, then overflow fills rooms with the most remaining capacity.</p>
+    <p>Upload your student list — pillars are detected automatically. Pick rooms and caps, then assign.</p>
   </div>
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="a-pd1" style="color:var(--purple)">1</div><span class="prog-label active" id="a-pl1">Student List</span></div>
     <div class="prog-line" id="a-line1"></div>
     <div class="prog-step"><div class="prog-dot" id="a-pd2">2</div><span class="prog-label" id="a-pl2">Score Filter</span></div>
     <div class="prog-line" id="a-line2"></div>
-    <div class="prog-step"><div class="prog-dot" id="a-pd3">3</div><span class="prog-label" id="a-pl3">Rooms Setup</span></div>
+    <div class="prog-step"><div class="prog-dot" id="a-pd3">3</div><span class="prog-label" id="a-pl3">Rooms</span></div>
     <div class="prog-line" id="a-line3"></div>
     <div class="prog-step"><div class="prog-dot" id="a-pd4">4</div><span class="prog-label" id="a-pl4">Results</span></div>
   </div>
   <div class="info-banner purple">
     <span class="icon">ℹ</span>
     <div>
-      <strong>How it works:</strong> Only students with score <strong>strictly below</strong> your threshold are eligible. Within eligible students, pillars fill their home rooms first (A–Z by name). If a pillar overflows, surplus students go to whichever room has the most remaining capacity. Leftover students who don't fit anywhere are exported to a separate <strong>Unassigned</strong> sheet.
+      <strong>Pillar-first logic:</strong> Each pillar fills its own dedicated rooms first (A–Z by name). If a pillar overflows its rooms, surplus students go to rooms with the most remaining space — keeping mixing to a minimum. Leftover students are exported to an <strong>Unassigned</strong> sheet.
     </div>
   </div>
 
@@ -599,12 +618,11 @@
         <div class="detect-card-head"><span class="detect-card-title">Detected columns</span><button class="override-btn" onclick="toggleAdv('a-adv-panel',this)">Edit manually ↓</button></div>
         <div class="detect-cols" id="a-detect-cols"></div>
         <div class="advanced-panel" id="a-adv-panel" style="margin-top:10px">
-          <div class="config-grid" style="margin-bottom:0;grid-template-columns:1fr 1fr 1fr 1fr 1fr">
+          <div class="config-grid" style="margin-bottom:0;grid-template-columns:1fr 1fr 1fr 1fr">
             <div class="field-group"><label class="field-label">Student ID Col</label><input class="field-input" id="a-cfg-id" value="A" maxlength="3"/></div>
             <div class="field-group"><label class="field-label">Name Col</label><input class="field-input" id="a-cfg-name" value="B" maxlength="3"/></div>
             <div class="field-group"><label class="field-label">Pillar Col</label><input class="field-input" id="a-cfg-pillar" value="C" maxlength="3"/></div>
             <div class="field-group"><label class="field-label">Score Col</label><input class="field-input" id="a-cfg-score" value="D" maxlength="3"/></div>
-            <div class="field-group"><label class="field-label">Score Col Header <span>for detection</span></label><input class="field-input" id="a-cfg-score-header" value="" placeholder="auto"/></div>
           </div>
         </div>
       </div>
@@ -613,17 +631,17 @@
 
   <div class="section-label">Step 2 — Score Filter</div>
   <div class="card" id="a-card2">
-    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Eligibility Filter — Highest Attempt Score</div><div class="card-pill" id="a-pill2">Required</div></div>
+    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Eligibility — Only assign students below this score</div><div class="card-pill" id="a-pill2">Required</div></div>
     <div class="card-body">
       <div class="score-filter-box">
-        <div class="score-filter-title">🎯 Score Threshold — only assign students below this score</div>
+        <div class="score-filter-title">🎯 Score Threshold</div>
         <div class="score-filter-grid">
           <div class="field-group">
-            <label class="field-label">Score / Attempt Column <span id="a-score-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
-            <input class="field-input" id="a-cfg-score-col" value="" placeholder="e.g. D or E" maxlength="3" oninput="updateScorePreview()"/>
+            <label class="field-label">Score Column <span id="a-score-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+            <input class="field-input" id="a-cfg-score-col" value="" placeholder="e.g. D" maxlength="3" oninput="updateScorePreview()"/>
           </div>
           <div class="field-group">
-            <label class="field-label">Score Column Header <span>in your file</span></label>
+            <label class="field-label">Column Header <span>in your file</span></label>
             <input class="field-input" id="a-cfg-score-col-header" value="" placeholder="e.g. Highest Attempt" oninput="updateScorePreview()"/>
           </div>
           <div class="field-group">
@@ -635,22 +653,33 @@
           Only students with score <strong>&lt; 70</strong> will be eligible for assignment.
         </div>
       </div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.7">
-        <strong style="color:var(--text2)">Tip:</strong> Upload your student list first — the score column will be auto-detected if the header contains keywords like "score", "attempt", "mark", or "grade". Students with a blank or non-numeric score are treated as <em>ineligible</em>.
-      </div>
     </div>
   </div>
 
-  <div class="section-label">Step 3 — Room Configuration</div>
+  <div class="section-label">Step 3 — Room Setup</div>
   <div class="card" id="a-card3">
     <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Define Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
     <div class="card-body">
+
+      <!-- PILLAR QUICK SETUP — shown once pillars are detected -->
+      <div class="pillar-quick-setup" id="pqs-box" style="display:none">
+        <div class="pqs-title">⚡ Quick Room Setup</div>
+        <div class="pqs-sub">Click a pillar to assign it a dedicated room. You can add more rooms manually below.</div>
+        <div class="pillar-chips-row" id="pqs-pillar-chips"></div>
+        <div class="pqs-actions">
+          <span class="pqs-cap-field">Cap per room: <input class="pqs-cap-input" id="pqs-cap" type="number" value="30" min="1"/></span>
+          <button class="pqs-generate-btn" onclick="generateRoomsFromPillars()">✦ Generate selected rooms</button>
+          <button class="pqs-generate-btn" style="background:var(--gold)" onclick="addSharedRoom()">＋ Add shared/overflow room</button>
+        </div>
+        <div class="pqs-note">Tip: Add a shared room as a buffer for overflow students — it takes any pillar's excess.</div>
+      </div>
+
       <div class="room-builder-toolbar">
         <div>
-          <div class="room-builder-toolbar-left">Rooms — each with its own cap, venue, date &amp; time</div>
+          <div class="room-builder-toolbar-left">All Rooms</div>
           <div class="room-builder-sub">Each room produces one attendance sheet in the downloaded Excel</div>
         </div>
-        <button class="add-room-btn" onclick="addRoom()">＋ Add Room</button>
+        <button class="add-room-btn" onclick="addRoom()">＋ Add blank room</button>
       </div>
 
       <div class="room-list" id="room-list"></div>
@@ -661,13 +690,11 @@
       </div>
 
       <div class="mapping-summary">
-        <div class="mapping-summary-head"><span class="mapping-summary-title">Assignment logic</span></div>
+        <div class="mapping-summary-head"><span class="mapping-summary-title">Assignment logic — minimal mixing</span></div>
         <div class="mapping-row"><span class="map-label">Step 1</span><span class="map-arrow">→</span><span class="map-value">Filter: score &lt; threshold → eligible pool</span><span class="map-badge badge-purple">score filter</span></div>
-        <div class="mapping-row"><span class="map-label">Step 2</span><span class="map-arrow">→</span><span class="map-value">Sort eligible students A–Z by name per pillar</span><span class="map-badge badge-ok">within pillar</span></div>
-        <div class="mapping-row"><span class="map-label">Step 3</span><span class="map-arrow">→</span><span class="map-value">Pillars fill their home rooms up to each room's cap</span><span class="map-badge badge-ok">home rooms</span></div>
-        <div class="mapping-row"><span class="map-label">Step 4</span><span class="map-arrow">→</span><span class="map-value">Overflow → room with most remaining capacity</span><span class="map-badge badge-gold">overflow</span></div>
-        <div class="mapping-row"><span class="map-label">Step 5</span><span class="map-arrow">→</span><span class="map-value">Students who don't fit → Unassigned sheet</span><span class="map-badge badge-warn">overflow sheet</span></div>
-        <div class="mapping-row"><span class="map-label">Download</span><span class="map-arrow">→</span><span class="map-value">One attendance sheet per room — ID, Official Name, Acad Plan, Sign</span><span class="map-badge badge-purple">attendance format</span></div>
+        <div class="mapping-row"><span class="map-label">Step 2</span><span class="map-arrow">→</span><span class="map-value">Each pillar fills its dedicated rooms first, A–Z by name</span><span class="map-badge badge-ok">home rooms</span></div>
+        <div class="mapping-row"><span class="map-label">Step 3</span><span class="map-arrow">→</span><span class="map-value">Overflow → shared/buffer rooms first, then any room with space</span><span class="map-badge badge-gold">minimal mix</span></div>
+        <div class="mapping-row"><span class="map-label">Step 4</span><span class="map-arrow">→</span><span class="map-value">Students who don't fit anywhere → Unassigned sheet</span><span class="map-badge badge-warn">overflow sheet</span></div>
       </div>
 
       <div class="validation-box" id="a-validation"></div>
@@ -684,13 +711,14 @@
         <div class="stats-grid-5">
           <div class="stat s-purple"><span class="stat-num" id="a-s-eligible">0</span><span class="stat-lbl">Eligible</span></div>
           <div class="stat s-purple"><span class="stat-num" id="a-s-students">0</span><span class="stat-lbl">Assigned</span></div>
-          <div class="stat s-purple"><span class="stat-num" id="a-s-rooms">0</span><span class="stat-lbl">Rooms</span></div>
+          <div class="stat s-purple"><span class="stat-num" id="a-s-rooms">0</span><span class="stat-lbl">Rooms Used</span></div>
           <div class="stat s-pend"><span class="stat-num" id="a-s-ineligible">0</span><span class="stat-lbl">Ineligible</span></div>
           <div class="stat s-overflow"><span class="stat-num" id="a-s-overflow">0</span><span class="stat-lbl">Unassigned</span></div>
         </div>
         <div class="result-meta" id="a-result-meta"></div>
+        <!-- Room breakdown cards -->
+        <div class="room-results-grid" id="a-room-results-grid"></div>
         <div class="flog" id="a-log"></div>
-        <div class="preview-wrap" id="a-preview-wrap" style="display:none"></div>
         <div class="result-actions">
           <button class="btn btn-download" onclick="downloadAssignment()">⬇&nbsp; Download Attendance Sheets (.xlsx)</button>
           <button class="btn btn-ghost" onclick="resetPage('a')" style="flex:0 0 auto;padding:0 18px">↩ Re-configure</button>
@@ -783,6 +811,8 @@ var assignmentData=null;
 var roomDefs = [];
 var roomIdCounter = 0;
 var summaryData={vmock:null,forms:null,assign:null};
+var detectedPillars=[]; // [{name, count}]
+var selectedPillarChips={}; // pillarName -> true/false
 
 // ══════════════════════════════════════════════
 // UTILITIES
@@ -797,7 +827,7 @@ function fmtDate(){return new Date().toISOString().slice(0,10);}
 function fmtTs(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 function showFilePill(cid,file){document.getElementById(cid).innerHTML='<div class="file-pill"><div class="file-pill-icon">📄</div><span class="file-pill-name">'+file.name+'</span><span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span></div>';}
 function flog(boxId,msg,type){var box=document.getElementById(boxId);var icons={ok:'✅',warn:'⚠️',err:'❌',info:'ℹ️'};var el=document.createElement('div');el.className='flog-entry';el.innerHTML='<span class="flog-icon">'+(icons[type]||'ℹ️')+'</span><span class="flog-msg '+(type||'info')+'">'+msg+'</span>';box.appendChild(el);box.scrollTop=box.scrollHeight;}
-function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Override ↓';}
+function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Edit manually ↓';}
 function markDone(p,n){document.getElementById(p+'-card'+n).classList.add('is-done');document.getElementById(p+'-badge'+n).textContent='✓';document.getElementById(p+'-pill'+n).textContent='Ready';}
 function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:var(--font-body);z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .35s';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},350);},2200);}
 function setProgStep(p,step){
@@ -913,6 +943,7 @@ function validateAssign(){
   if(totalCap<1){issues.push('Total room capacity must be at least 1.');showValidation('a-validation',issues,'error');document.getElementById('a-run-btn').disabled=true;return;}
   showValidation('a-validation',[],'');
   document.getElementById('a-run-btn').disabled=false;
+  setProgStep('a',3);
 }
 
 // ══════════════════════════════════════════════
@@ -982,9 +1013,63 @@ function autoDetectAssign(ws){
     chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';wrap.appendChild(chip);
   });
   document.getElementById('a-detect-card').style.display='block';
+
+  // Detect pillars from data
+  detectPillarsFromSheet(ws, hr, range);
   updateScorePreview();
   updateRoomCapacitySummary();
   validateAssign();
+}
+
+function detectPillarsFromSheet(ws, hr, range){
+  var plC=aCols.pillar>=0?aCols.pillar:colIdx(document.getElementById('a-cfg-pillar').value||'C');
+  var counts={};
+  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC).trim();if(p)counts[p]=(counts[p]||0)+1;}
+  detectedPillars=Object.keys(counts).sort().map(function(n){return {name:n,count:counts[n]};});
+  selectedPillarChips={};
+  renderPillarQuickSetup();
+}
+
+function renderPillarQuickSetup(){
+  var box=document.getElementById('pqs-box');
+  if(!detectedPillars.length){box.style.display='none';return;}
+  box.style.display='block';
+  var chipsEl=document.getElementById('pqs-pillar-chips');chipsEl.innerHTML='';
+  detectedPillars.forEach(function(p){
+    var chip=document.createElement('div');
+    chip.className='pillar-chip'+(selectedPillarChips[p.name]?' selected':'');
+    chip.innerHTML=escHtml(p.name)+' <span class="pc-count">('+p.count+')</span>';
+    chip.onclick=function(){
+      selectedPillarChips[p.name]=!selectedPillarChips[p.name];
+      chip.classList.toggle('selected',!!selectedPillarChips[p.name]);
+    };
+    chipsEl.appendChild(chip);
+  });
+}
+
+function generateRoomsFromPillars(){
+  var cap=parseInt(document.getElementById('pqs-cap').value)||30;
+  var selected=detectedPillars.filter(function(p){return selectedPillarChips[p.name];});
+  if(!selected.length){showToast('Select at least one pillar first');return;}
+  selected.forEach(function(p){
+    // How many rooms does this pillar need?
+    var needed=Math.ceil(p.count/cap);
+    for(var i=0;i<needed;i++){
+      var id=++roomIdCounter;
+      var roomName=needed>1?p.name+' '+(i+1):p.name;
+      roomDefs.push({id:id,name:roomName,venue:'',date:'',time:'',cap:cap,pillar:p.name,isShared:false});
+    }
+  });
+  renderRoomList();
+  validateAssign();
+  updateRoomCapacitySummary();
+  showToast('Rooms generated — fill in venue and dates below');
+}
+
+function addSharedRoom(){
+  var id=++roomIdCounter;
+  roomDefs.push({id:id,name:'Shared / Overflow',venue:'',date:'',time:'',cap:30,pillar:'',isShared:true});
+  renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
 // ══════════════════════════════════════════════
@@ -1002,28 +1087,18 @@ function updateScorePreview(){
 // ROOM BUILDER
 // ══════════════════════════════════════════════
 function getPillarOptions(){
-  if(!S.a.wb1||!S.a.sheet) return [];
-  var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws)return [];
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  var plC=aCols.pillar>=0?aCols.pillar:colIdx(document.getElementById('a-cfg-pillar').value||'C');
-  var seen={};
-  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC).trim();if(p)seen[p]=true;}
-  return Object.keys(seen).sort();
+  var opts=detectedPillars.map(function(p){return p.name;});
+  return opts;
 }
 
 function addRoom(){
   var id=++roomIdCounter;
-  roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:''});
-  renderRoomList();
-  validateAssign();
-  updateRoomCapacitySummary();
+  roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:'',isShared:false});
+  renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
 function deleteRoom(id){
-  roomDefs=roomDefs.filter(function(r){return r.id!==id;});
-  renderRoomList();
-  validateAssign();
-  updateRoomCapacitySummary();
+  roomDefs=roomDefs.filter(function(r){return r.id!==id;});renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
 function onRoomChange(id){
@@ -1034,10 +1109,11 @@ function onRoomChange(id){
   r.time=(document.getElementById('rtime-'+id).value||'').trim();
   r.cap=parseInt(document.getElementById('rcap-'+id).value)||0;
   r.pillar=(document.getElementById('rpillar-'+id).value||'').trim();
+  r.isShared=!r.pillar;
   var nm=document.getElementById('rcard-name-'+id);if(nm)nm.textContent=r.name||'Room '+id;
   var cb=document.getElementById('rcap-badge-'+id);if(cb)cb.textContent='Cap: '+r.cap;
-  validateAssign();
-  updateRoomCapacitySummary();
+  var pt=document.getElementById('rpillar-tag-'+id);if(pt){pt.textContent=r.pillar||'Shared';pt.className='room-pillar-tag'+(r.isShared?' shared':'');}
+  validateAssign();updateRoomCapacitySummary();
 }
 
 function renderRoomList(){
@@ -1045,32 +1121,36 @@ function renderRoomList(){
   var pillars=getPillarOptions();
   roomDefs.forEach(function(r,idx){
     var div=document.createElement('div');div.className='room-card';
-    var pillarOpts='<option value="">Any pillar (overflow allowed)</option>';
+    var pillarOpts='<option value="">Shared / Overflow (no home pillar)</option>';
     pillars.forEach(function(p){pillarOpts+='<option value="'+p+'"'+(r.pillar===p?' selected':'')+'>'+p+' — home room</option>';});
+    var isShared=!r.pillar;
     div.innerHTML=
       '<div class="room-card-head">'+
         '<div class="room-number-badge">'+(idx+1)+'</div>'+
         '<div class="room-card-name" id="rcard-name-'+r.id+'">'+(r.name||'Room '+r.id)+'</div>'+
+        '<span class="room-pillar-tag'+(isShared?' shared':'')+'" id="rpillar-tag-'+r.id+'">'+(r.pillar||'Shared')+'</span>'+
         '<div class="room-capacity-badge" id="rcap-badge-'+r.id+'">Cap: '+r.cap+'</div>'+
       '</div>'+
       '<div class="room-card-body">'+
-        '<div class="room-fields" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr 80px">'+
-          '<div class="field-group"><label class="field-label">Room Name</label><input class="field-input" id="rname-'+r.id+'" value="'+escHtml(r.name)+'" placeholder="e.g. LT2A" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Venue / Location <span>optional</span></label><input class="field-input" id="rvenue-'+r.id+'" value="'+escHtml(r.venue)+'" placeholder="e.g. LT 1 Albert Hong" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Session Date <span>optional</span></label><input class="field-input" id="rdate-'+r.id+'" value="'+escHtml(r.date)+'" placeholder="e.g. 25/3/2026" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Session Time <span>optional</span></label><input class="field-input" id="rtime-'+r.id+'" value="'+escHtml(r.time||'')+'" placeholder="e.g. 2 - 5pm" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<div class="field-group"><label class="field-label">Student Cap</label><input class="field-input" id="rcap-'+r.id+'" type="number" min="1" value="'+r.cap+'" oninput="onRoomChange('+r.id+')"/></div>'+
+        '<div class="room-fields-compact">'+
+          '<div class="field-group"><label class="field-label">Room Name</label><input class="field-input" id="rname-'+r.id+'" value="'+escHtml(r.name)+'" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Date <span>optional</span></label><input class="field-input" id="rdate-'+r.id+'" value="'+escHtml(r.date)+'" placeholder="e.g. 25/3/2026" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Time <span>optional</span></label><input class="field-input" id="rtime-'+r.id+'" value="'+escHtml(r.time||'')+'" placeholder="e.g. 2–5pm" oninput="onRoomChange('+r.id+')"/></div>'+
           '<button class="room-delete-btn" onclick="deleteRoom('+r.id+')" title="Remove room">✕</button>'+
         '</div>'+
+        '<div class="room-pillar-row">'+
+          '<div class="field-group"><label class="field-label">Venue / Location <span>optional</span></label><input class="field-input" id="rvenue-'+r.id+'" value="'+escHtml(r.venue)+'" placeholder="e.g. LT 1 Albert Hong" oninput="onRoomChange('+r.id+')"/></div>'+
+          '<div class="field-group"><label class="field-label">Student Cap</label><input class="field-input" id="rcap-'+r.id+'" type="number" min="1" value="'+r.cap+'" oninput="onRoomChange('+r.id+')"/></div>'+
+        '</div>'+
         '<div class="field-group" style="margin-top:10px">'+
-          '<label class="field-label">Home Pillar <span>Students from this pillar fill here first. Leave blank for shared/overflow.</span></label>'+
+          '<label class="field-label">Home Pillar <span>students from this pillar fill here first; leave blank = shared buffer</span></label>'+
           '<select class="field-input" id="rpillar-'+r.id+'" onchange="onRoomChange('+r.id+')">'+pillarOpts+'</select>'+
         '</div>'+
       '</div>';
     list.appendChild(div);
   });
   if(!roomDefs.length){
-    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — click <strong>+ Add Room</strong> to get started</div>';
+    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — use Quick Setup above or click <strong>+ Add blank room</strong></div>';
   }
 }
 
@@ -1089,9 +1169,7 @@ function updateRoomCapacitySummary(){
       var eligible=0,total2=0;
       for(var R=hr+1;R<=range.e.r;R++){
         var id=cellVal(ws,R,aCols.id>=0?aCols.id:0).replace(/\s/g,'');if(!id)continue;
-        total2++;
-        var sc=parseFloat(cellVal(ws,R,scC));
-        if(!isNaN(sc)&&sc<threshold)eligible++;
+        total2++;var sc=parseFloat(cellVal(ws,R,scC));if(!isNaN(sc)&&sc<threshold)eligible++;
       }
       note='· ~'+eligible+' eligible of '+total2+' students';
       if(eligible>total)note+=' <span style="color:var(--danger);font-weight:600">⚠ '+(eligible-total)+' may overflow</span>';
@@ -1182,7 +1260,7 @@ function runForms(){
 }
 
 // ══════════════════════════════════════════════
-// RUN ASSIGNMENT
+// RUN ASSIGNMENT — pillar-first, minimal mixing
 // ══════════════════════════════════════════════
 function runAssign(){
   var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){flog('a-log','Sheet not found.','err');return;}
@@ -1208,56 +1286,81 @@ function runAssign(){
     var sc=parseFloat(cellVal(ws,R,scC));
     if(isNaN(sc))sc=0;
     var student={id:id,name:cellVal(ws,R,nmC),pillar:cellVal(ws,R,plC).trim(),score:sc,row:R};
-    if(sc<threshold) eligible.push(student);
+    if(sc<threshold)eligible.push(student);
     else ineligible.push(student);
   }
   flog('a-log',totalRead+' students read — '+eligible.length+' eligible (score < '+threshold+'), '+ineligible.length+' ineligible','info');
 
-  var rooms=roomDefs.map(function(r){return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};});
+  // Build room objects — keep isShared flag
+  var rooms=roomDefs.map(function(r){
+    return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,isShared:r.isShared||!r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};
+  });
 
+  // Group eligible by pillar, sort each group A-Z by name
   var byPillar={};
   eligible.forEach(function(s){
     var p=s.pillar||'(none)';
     if(!byPillar[p])byPillar[p]=[];
     byPillar[p].push(s);
   });
-  Object.keys(byPillar).forEach(function(p){byPillar[p].sort(function(a,b){return a.name.localeCompare(b.name);});});
+  Object.keys(byPillar).forEach(function(p){
+    byPillar[p].sort(function(a,b){return a.name.localeCompare(b.name);});
+  });
 
   var unassigned=[];
 
+  // Shared rooms = rooms with no dedicated pillar — used as overflow buffer
+  var sharedRooms=rooms.filter(function(r){return r.isShared;});
+  var dedicatedRooms=rooms.filter(function(r){return !r.isShared;});
+
+  function roomRemaining(r){return r.cap-r.students.length;}
+
+  // Best overflow room: prefer shared first, then dedicated with most remaining
   function bestOverflowRoom(){
-    var best=null,bestRemain=-1;
-    rooms.forEach(function(r){
-      var remain=r.cap-r.students.length;
-      if(remain>0&&remain>bestRemain){bestRemain=remain;best=r;}
+    // 1. Try shared rooms first (most remaining)
+    var best=null,bestR=-1;
+    sharedRooms.forEach(function(r){
+      var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
+    });
+    if(best)return best;
+    // 2. Then any dedicated room with most remaining (last resort — mixing)
+    dedicatedRooms.forEach(function(r){
+      var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
     });
     return best;
   }
 
-  Object.keys(byPillar).forEach(function(pillar){
+  // Process each pillar
+  Object.keys(byPillar).sort().forEach(function(pillar){
     var pool=byPillar[pillar].slice();
-    var homeRooms=rooms.filter(function(r){return r.pillar===pillar;});
+    // Home rooms for this pillar (in order defined by user)
+    var homeRooms=dedicatedRooms.filter(function(r){return r.pillar===pillar;});
+    var placed=0;
+
     if(homeRooms.length){
+      // Fill home rooms sequentially (room 1 first, room 2 when room 1 full, etc.)
       homeRooms.forEach(function(room){
-        while(pool.length&&room.students.length<room.cap){
+        while(pool.length&&roomRemaining(room)>0){
           var s=pool.shift();s.assignedRoom=room.name;s.assignedVenue=room.venue;s.assignedDate=room.date;
-          room.students.push(s);
+          room.students.push(s);placed++;
         }
       });
-      flog('a-log','Pillar "'+pillar+'": '+byPillar[pillar].length+' eligible, '+(byPillar[pillar].length-pool.length)+' placed in home rooms, '+pool.length+' overflow','info');
-    } else {
-      flog('a-log','Pillar "'+pillar+'": no home room — all '+pool.length+' go to overflow pool','warn');
     }
+
+    var overflowed=pool.length;
+    // Overflow — try shared/buffer rooms, then any room
     pool.forEach(function(s){
       var r=bestOverflowRoom();
       if(r){s.assignedRoom=r.name;s.assignedVenue=r.venue;s.assignedDate=r.date;r.students.push(s);}
       else{s.assignedRoom='Unassigned';unassigned.push(s);}
     });
+
+    flog('a-log','Pillar "'+pillar+'": '+byPillar[pillar].length+' eligible'+(homeRooms.length?' — '+placed+' in home rooms'+(overflowed?' · '+overflowed+' overflow to buffer/shared':''):'— no home room, all to shared/overflow'),'info');
   });
 
   var totalAssigned=eligible.length-unassigned.length;
-  flog('a-log',totalAssigned+' students assigned across '+rooms.length+' rooms','ok');
-  if(unassigned.length) flog('a-log',unassigned.length+' students could not be placed — all rooms full → Unassigned sheet','warn');
+  flog('a-log',totalAssigned+' students assigned across '+rooms.filter(function(r){return r.students.length>0;}).length+' rooms','ok');
+  if(unassigned.length)flog('a-log',unassigned.length+' students unassigned — all rooms full','warn');
 
   document.getElementById('a-s-eligible').textContent=eligible.length;
   document.getElementById('a-s-students').textContent=totalAssigned;
@@ -1268,30 +1371,33 @@ function runAssign(){
   var ts=fmtTs();
   document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+eligible.length+' eligible students &nbsp;·&nbsp; score threshold: &lt;'+threshold;
 
-  var html='<table class="preview-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>Time</th><th>#</th><th>Student ID</th><th>Name</th><th>Pillar</th><th>Score</th></tr></thead><tbody>';
+  // Room result cards (instead of big table)
+  var grid=document.getElementById('a-room-results-grid');grid.innerHTML='';
   rooms.forEach(function(rm){
-    rm.students.forEach(function(s,i){
-      html+='<tr>';
-      if(i===0)html+='<td rowspan="'+rm.students.length+'"><span class="room-badge">'+escHtml(rm.name)+'</span></td><td rowspan="'+rm.students.length+'">'+escHtml(rm.venue||'—')+'</td><td rowspan="'+rm.students.length+'">'+(rm.date||'—')+'</td><td rowspan="'+rm.students.length+'">'+(rm.time||'—')+'</td><td rowspan="'+rm.students.length+'">'+rm.students.length+'</td>';
-      html+='<td>'+escHtml(s.id)+'</td><td>'+escHtml(s.name)+'</td><td>'+escHtml(s.pillar)+'</td><td>'+s.score+'</td></tr>';
-    });
+    if(!rm.students.length)return;
+    var pct=Math.round(rm.students.length/rm.cap*100);
+    // count unique pillars in this room
+    var pillarsInRoom={};rm.students.forEach(function(s){if(s.pillar)pillarsInRoom[s.pillar]=true;});
+    var pillarList=Object.keys(pillarsInRoom).join(', ')||'—';
+    var card=document.createElement('div');card.className='room-result-card';
+    card.innerHTML=
+      '<div class="room-result-name">'+escHtml(rm.name)+'</div>'+
+      '<div class="room-result-pillar">'+escHtml(pillarList)+(rm.date?' · '+rm.date:'')+'</div>'+
+      '<div class="room-result-bar"><div class="room-result-fill" style="width:'+pct+'%"></div></div>'+
+      '<div class="room-result-nums"><span>'+rm.students.length+' students</span><span>'+rm.cap+' cap ('+pct+'%)</span></div>';
+    grid.appendChild(card);
   });
   if(unassigned.length){
-    html+='<tr><td colspan="5" style="background:var(--danger-lt);color:var(--danger);font-weight:600;padding:6px 11px;font-size:11px">⚠ Unassigned (all rooms full)</td></tr>';
-    unassigned.forEach(function(s){html+='<tr><td colspan="4"></td><td></td><td class="td-overflow">'+escHtml(s.id)+'</td><td class="td-overflow">'+escHtml(s.name)+'</td><td>'+escHtml(s.pillar)+'</td><td>'+s.score+'</td></tr>';});
+    var uc=document.createElement('div');uc.className='room-result-card';
+    uc.style.borderColor='var(--danger)';uc.style.background='var(--danger-lt)';
+    uc.innerHTML='<div class="room-result-name" style="color:var(--danger)">⚠ Unassigned</div><div class="room-result-pillar">All rooms were full</div><div class="room-result-nums"><span style="color:var(--danger);font-weight:700">'+unassigned.length+' students</span><span>in download</span></div>';
+    grid.appendChild(uc);
   }
-  html+='</tbody></table>';
-  var pw=document.getElementById('a-preview-wrap');pw.innerHTML=html;pw.style.display='block';
 
-  flog('a-log','File ready to download — one attendance sheet per room','ok');
+  flog('a-log','File ready — one attendance sheet per room','ok');
   assignmentData={rooms:rooms,unassigned:unassigned,threshold:threshold,eligible:eligible.length,ineligible:ineligible.length};
   setProgStep('a',4);document.getElementById('tdot-assign').classList.add('show');
-
-  summaryData.assign={
-    students:totalAssigned,rooms:rooms.filter(function(r){return r.students.length>0;}).length,
-    eligible:eligible.length,ineligible:ineligible.length,overflow:unassigned.length,
-    roomList:rooms,file:S.a.sheet,time:ts,threshold:threshold
-  };
+  summaryData.assign={students:totalAssigned,rooms:rooms.filter(function(r){return r.students.length>0;}).length,eligible:eligible.length,ineligible:ineligible.length,overflow:unassigned.length,roomList:rooms,file:S.a.sheet,time:ts,threshold:threshold};
   document.getElementById('tdot-summary').classList.add('show');
 }
 
@@ -1304,32 +1410,14 @@ function downloadAssignment(){
   if(!assignmentData) return;
   var wb = XLSX.utils.book_new();
 
-  // Style helper
   function sc(ws, ref, bold, sz, bgRGB, fgRGB, hAlign, bdrStyle){
     if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-    var bdr = bdrStyle !== false ? {
-      bottom:{style:'thin', color:{rgb:'CCCCCC'}},
-      right: {style:'thin', color:{rgb:'CCCCCC'}}
-    } : {};
-    ws[ref].s = {
-      font:      {bold:!!bold, sz:sz||11, name:'Arial', color:{rgb:fgRGB||'000000'}},
-      fill:      bgRGB ? {patternType:'solid', fgColor:{rgb:bgRGB}} : {patternType:'none'},
-      alignment: {horizontal:hAlign||'left', vertical:'center'},
-      border:    bdr
-    };
+    var bdr = bdrStyle !== false ? {bottom:{style:'thin', color:{rgb:'CCCCCC'}},right:{style:'thin', color:{rgb:'CCCCCC'}}} : {};
+    ws[ref].s = {font:{bold:!!bold, sz:sz||11, name:'Arial', color:{rgb:fgRGB||'000000'}},fill:bgRGB ? {patternType:'solid', fgColor:{rgb:bgRGB}} : {patternType:'none'},alignment:{horizontal:hAlign||'left', vertical:'center'},border:bdr};
   }
 
   function makeAttendanceSheet(rm){
     var pillarLabel = rm.pillar || 'UPOP';
-    // Matches screenshot layout exactly:
-    // Row 1 : [Acad Plan / pillar label]  [blank] [blank] [blank]
-    // Row 2 : [Date]   [blank] [date]  [blank]
-    // Row 3 : [Time]   [blank] [time]  [blank]
-    // Row 4 : [Venue]  [blank] [venue] [blank]
-    // Row 5 : blank
-    // Row 6 : blank
-    // Row 7 : ID | Official Name | Acad Plan | Sign
-    // Row 8+: student data
     var aoa = [
       [pillarLabel, '', '', ''],
       ['Date',  '', rm.date  || '', ''],
@@ -1339,94 +1427,53 @@ function downloadAssignment(){
       ['', '', '', ''],
       ['ID', 'Official Name', 'Acad Plan', 'Sign']
     ];
-    rm.students.forEach(function(s){
-      aoa.push([s.id, s.name, s.pillar || pillarLabel, '']);
-    });
-
+    rm.students.forEach(function(s){ aoa.push([s.id, s.name, s.pillar || pillarLabel, '']); });
     var ws = XLSX.utils.aoa_to_sheet(aoa);
     ws['!cols'] = [{wch:14}, {wch:36}, {wch:14}, {wch:14}];
-
-    // Row heights (0-indexed)
     var rh = [];
     for(var i = 0; i < aoa.length; i++) rh.push({hpt: i===0 ? 26 : i < 6 ? 18 : 22});
     ws['!rows'] = rh;
-
-    // Row 1 — pillar/acad plan label, dark green bold
     sc(ws,'A1', true, 13, null, '1B4332', 'left', false);
-    // Rows 2-4 label cells (col A) — bold grey text
     ['A2','A3','A4'].forEach(function(ref){ sc(ws, ref, true, 11, null, '555555', 'left', false); });
-    // Rows 2-4 value cells (col C)
     ['C2','C3','C4'].forEach(function(ref){ sc(ws, ref, false, 11, null, '111111', 'left', false); });
-
-    // Table header row 7 — white text on grey background
     ['A7','B7','C7','D7'].forEach(function(ref){
       if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-      ws[ref].s = {
-        font:      {bold:true, sz:11, name:'Arial', color:{rgb:'FFFFFF'}},
-        fill:      {patternType:'solid', fgColor:{rgb:'808080'}},
-        alignment: {horizontal:'center', vertical:'center'},
-        border:    {bottom:{style:'medium', color:{rgb:'555555'}}, right:{style:'thin', color:{rgb:'999999'}}}
-      };
+      ws[ref].s = {font:{bold:true, sz:11, name:'Arial', color:{rgb:'FFFFFF'}},fill:{patternType:'solid', fgColor:{rgb:'808080'}},alignment:{horizontal:'center', vertical:'center'},border:{bottom:{style:'medium', color:{rgb:'555555'}}, right:{style:'thin', color:{rgb:'999999'}}}};
     });
-
-    // Student rows — alternating white/light grey
     for(var i = 0; i < rm.students.length; i++){
       var exR = 8 + i;
       var bg  = (i % 2 === 0) ? 'FFFFFF' : 'F2F2F2';
       ['A','B','C','D'].forEach(function(col){
         var ref = col + exR;
         if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-        ws[ref].s = {
-          font:      {sz:11, name:'Arial', color:{rgb:'1A1A1A'}},
-          fill:      {patternType:'solid', fgColor:{rgb:bg}},
-          alignment: {horizontal:'left', vertical:'center'},
-          border:    {bottom:{style:'thin', color:{rgb:'DDDDDD'}}, right:{style:'thin', color:{rgb:'DDDDDD'}}}
-        };
+        ws[ref].s = {font:{sz:11, name:'Arial', color:{rgb:'1A1A1A'}},fill:{patternType:'solid', fgColor:{rgb:bg}},alignment:{horizontal:'left', vertical:'center'},border:{bottom:{style:'thin', color:{rgb:'DDDDDD'}}, right:{style:'thin', color:{rgb:'DDDDDD'}}}};
       });
     }
     return ws;
   }
 
-  // One attendance sheet per non-empty room
   var sheetN = 0;
   assignmentData.rooms.forEach(function(rm){
     if(!rm.students.length) return;
     sheetN++;
-    var ws   = makeAttendanceSheet(rm);
-    // Strip illegal Excel sheet-name chars: \ / ? * [ ] :
+    var ws = makeAttendanceSheet(rm);
     var safe = rm.name.replace(/[\\\/\?\*\[\]:]/g, '').trim().slice(0,31) || ('Room'+sheetN);
     XLSX.utils.book_append_sheet(wb, ws, safe);
   });
 
-  // Unassigned sheet (plain table)
   if(assignmentData.unassigned && assignmentData.unassigned.length){
     var udata = [['Student ID','Official Name','Acad Plan','Score','Note']];
-    assignmentData.unassigned.forEach(function(s){
-      udata.push([s.id, s.name, s.pillar, s.score, 'All rooms full — add more capacity or rooms']);
-    });
+    assignmentData.unassigned.forEach(function(s){ udata.push([s.id, s.name, s.pillar, s.score, 'All rooms full']); });
     var uws = XLSX.utils.aoa_to_sheet(udata);
-    uws['!cols'] = [{wch:14},{wch:36},{wch:14},{wch:8},{wch:44}];
+    uws['!cols'] = [{wch:14},{wch:36},{wch:14},{wch:8},{wch:30}];
     XLSX.utils.book_append_sheet(wb, uws, 'Unassigned');
   }
 
-  // _Summary sheet
-  var sdata = [
-    ['UPOP Class Assignment — ' + fmtDate()],
-    ['Score threshold: < ' + assignmentData.threshold],
-    [],
-    ['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']
-  ];
-  assignmentData.rooms.forEach(function(r){
-    sdata.push([r.name, r.venue||'', r.date||'', r.time||'', r.pillar||'(shared)', r.cap, r.students.length, r.cap - r.students.length]);
-  });
-  if(assignmentData.unassigned && assignmentData.unassigned.length){
-    sdata.push([]);
-    sdata.push(['Unassigned', assignmentData.unassigned.length, 'students could not be placed']);
-  }
+  var sdata = [['UPOP Class Assignment — ' + fmtDate()],['Score threshold: < ' + assignmentData.threshold],[],['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']];
+  assignmentData.rooms.forEach(function(r){ sdata.push([r.name, r.venue||'', r.date||'', r.time||'', r.pillar||'(shared)', r.cap, r.students.length, r.cap - r.students.length]); });
   var sws = XLSX.utils.aoa_to_sheet(sdata);
   sws['!cols'] = [{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
   XLSX.utils.book_append_sheet(wb, sws, '_Summary');
-
   XLSX.writeFile(wb, 'UPOP_AttendanceSheets_' + fmtDate() + '.xlsx');
 }
 
@@ -1514,7 +1561,7 @@ function exportSummaryReport(){
 function resetPage(p){
   if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2?3:S.v.wb2?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
   if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
-  if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';var pw=document.getElementById('a-preview-wrap');if(pw)pw.style.display='none';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;}
+  if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;document.getElementById('a-room-results-grid').innerHTML='';}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
