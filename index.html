@@ -229,6 +229,21 @@
     .detect-col-chip.found .chip-val{color:var(--success);font-family:'Menlo','Consolas',monospace;font-size:11px}
     .detect-col-chip.missing .chip-val{color:var(--warn);font-size:11px}
 
+    /* ── FORMS UNMATCHED PANEL ── */
+    .unmatched-panel{margin-top:16px;border:1.5px solid #E8D09A;border-radius:10px;background:var(--gold-lt);overflow:hidden}
+    .unmatched-panel-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;transition:background .15s}
+    .unmatched-panel-head:hover{background:rgba(181,136,58,.08)}
+    .unmatched-panel-icon{width:28px;height:28px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff}
+    .unmatched-panel-title{font-size:13px;font-weight:600;color:var(--gold);flex:1}
+    .unmatched-panel-count{font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;background:var(--gold);color:#fff}
+    .unmatched-panel-toggle{font-size:11px;color:var(--gold);font-weight:600;margin-left:6px}
+    .unmatched-panel-body{display:none;padding:0 16px 14px;border-top:1px solid #E8D09A}
+    .unmatched-panel-body.open{display:block}
+    .unmatched-desc{font-size:12px;color:#7A5B1A;line-height:1.6;margin-bottom:10px;padding-top:12px}
+    .unmatched-grid{display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto;padding:2px}
+    .unmatched-id-chip{font-family:'Menlo','Consolas',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--surface);border:1px solid #E8D09A;color:#7A3B10;white-space:nowrap}
+    .unmatched-empty{font-size:12px;color:var(--success);font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 0}
+
     /* ── PILLAR QUICK SETUP ── */
     .pillar-quick-setup{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:10px;padding:16px 18px;margin-bottom:18px}
     .pqs-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;display:flex;align-items:center;gap:8px}
@@ -245,26 +260,39 @@
     .pqs-generate-btn:hover{background:#5B2C6F;transform:translateY(-1px)}
     .pqs-note{font-size:11px;color:var(--purple);opacity:.65;margin-top:8px}
 
-    /* ── ROOM BUILDER ── */
-    .room-builder-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    /* ── IMPROVED ROOM BUILDER ── */
+    .room-builder-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .room-builder-toolbar-left{font-size:13px;font-weight:600;color:var(--text)}
     .room-builder-sub{font-size:12px;color:var(--muted);margin-top:2px}
     .add-room-btn{display:flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px dashed var(--purple);background:var(--purple-lt);color:var(--purple);font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
     .add-room-btn:hover{background:var(--purple);color:#fff}
 
-    .room-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-    .room-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s}
-    .room-card-head{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border)}
-    .room-number-badge{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-    .room-card-name{font-weight:600;font-size:13px;flex:1;color:var(--text)}
-    .room-pillar-tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap;margin-right:4px}
-    .room-pillar-tag.shared{background:var(--gold-lt);border-color:#E8D09A;color:var(--gold)}
-    .room-capacity-badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
-    .room-card-body{padding:12px 14px}
-    .room-fields-compact{display:grid;grid-template-columns:1fr 1fr 1fr 42px;gap:10px;align-items:end}
-    .room-delete-btn{height:36px;width:36px;border-radius:7px;border:1px solid #E8A09A;background:none;color:var(--danger);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
-    .room-delete-btn:hover{background:var(--danger-lt)}
-    .room-pillar-row{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .room-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+
+    /* Compact room row — the default view */
+    .room-row{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s,box-shadow .15s}
+    .room-row.expanded{border-color:#C39BD3;box-shadow:0 0 0 3px rgba(108,52,131,.06)}
+    .room-row-head{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;transition:background .15s}
+    .room-row-head:hover{background:var(--surface2)}
+    .room-num-badge{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+    .room-row-name{font-weight:600;font-size:13px;flex:1;color:var(--text)}
+    .room-inline-tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .room-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+    .room-tag.pillar{background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple)}
+    .room-tag.shared{background:var(--gold-lt);border:1px solid #E8D09A;color:var(--gold)}
+    .room-tag.cap{background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+    .room-tag.venue{background:var(--info-lt);border:1px solid #A9CCE3;color:var(--info);max-width:120px;overflow:hidden;text-overflow:ellipsis}
+    .room-tag.date{background:var(--teal-lt);border:1px solid #A2D9CE;color:var(--teal)}
+    .room-expand-icon{font-size:12px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+    .room-row.expanded .room-expand-icon{transform:rotate(180deg)}
+    .room-delete-compact{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+    .room-delete-compact:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
+
+    /* Expanded body */
+    .room-row-body{display:none;padding:14px;border-top:1px solid var(--border);background:var(--surface2)}
+    .room-row.expanded .room-row-body{display:block}
+    .room-fields-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+    .room-fields-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
     /* ── SCORE FILTER ── */
     .score-filter-box{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:8px;padding:14px 16px;margin-bottom:18px}
@@ -310,7 +338,6 @@
     .summary-table tr:nth-child(even) td{background:var(--surface2)}
     .room-badge{display:inline-flex;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:var(--purple-lt);border:1px solid #C39BD3;color:var(--purple);white-space:nowrap}
 
-    /* room breakdown in results */
     .room-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:18px}
     .room-result-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
     .room-result-name{font-weight:700;font-size:13px;color:var(--purple);margin-bottom:2px}
@@ -329,7 +356,8 @@
       .stats-grid-3,.stats-grid-4,.stats-grid-5{grid-template-columns:repeat(2,1fr)}
       .config-grid{grid-template-columns:1fr}
       .topbar-badge,.tab-btn span{display:none}
-      .room-fields-compact{grid-template-columns:1fr 1fr}
+      .room-fields-grid{grid-template-columns:1fr 1fr}
+      .room-fields-grid-2{grid-template-columns:1fr}
       .score-filter-grid{grid-template-columns:1fr 1fr}
       .btn-row,.result-actions{flex-direction:column}
     }
@@ -567,6 +595,22 @@
           <div class="stat s-total"><span class="stat-num" id="f-s-total">0</span><span class="stat-lbl">Total Students</span></div>
         </div>
         <div class="result-meta" id="f-result-meta"></div>
+
+        <!-- UNMATCHED PANEL — IDs in Forms export not found in intake -->
+        <div class="unmatched-panel" id="f-unmatched-panel" style="display:none">
+          <div class="unmatched-panel-head" onclick="toggleUnmatched()">
+            <div class="unmatched-panel-icon">⚠️</div>
+            <div class="unmatched-panel-title">IDs in Forms export not found in intake list</div>
+            <div class="unmatched-panel-count" id="f-unmatched-count">0</div>
+            <span class="unmatched-panel-toggle" id="f-unmatched-toggle">Show ↓</span>
+          </div>
+          <div class="unmatched-panel-body" id="f-unmatched-body">
+            <p class="unmatched-desc">These Student IDs appeared in the Forms export but could not be matched to anyone in the intake list. They may be typos, IDs not in this cohort, or external respondents. Review them manually.</p>
+            <div class="unmatched-grid" id="f-unmatched-grid"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px"></div>
         <div class="flog" id="f-log"></div>
         <div class="result-actions">
           <button class="btn btn-download" onclick="downloadResult('f')">⬇&nbsp; Download Updated Intake List</button>
@@ -579,7 +623,7 @@
 
 
 <!-- ══════════════════════════════════════════════
-     PAGE 3 — CLASS ASSIGNMENT
+     PAGE 3 — CLASS ASSIGNMENT (IMPROVED UX)
 ══════════════════════════════════════════════ -->
 <div class="page" id="page-assign">
   <div class="page-header">
@@ -589,7 +633,7 @@
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="a-pd1" style="color:var(--purple)">1</div><span class="prog-label active" id="a-pl1">Student List</span></div>
     <div class="prog-line" id="a-line1"></div>
-    <div class="prog-step"><div class="prog-dot" id="a-pd2">2</div><span class="prog-label" id="a-pl2">Score Filter</span></div>
+    <div class="prog-step"><div class="prog-dot" id="a-pd2">2</div><span class="prog-label" id="a-pl2">Threshold</span></div>
     <div class="prog-line" id="a-line2"></div>
     <div class="prog-step"><div class="prog-dot" id="a-pd3">3</div><span class="prog-label" id="a-pl3">Rooms</span></div>
     <div class="prog-line" id="a-line3"></div>
@@ -602,6 +646,7 @@
     </div>
   </div>
 
+  <!-- STEP 1: UPLOAD -->
   <div class="section-label">Step 1 — Student List</div>
   <div class="card" id="a-card1">
     <div class="card-header"><div class="step-badge" id="a-badge1">1</div><div class="card-title">Upload Student List</div><div class="card-pill" id="a-pill1">Waiting</div></div>
@@ -629,9 +674,10 @@
     </div>
   </div>
 
-  <div class="section-label">Step 2 — Score Filter</div>
+  <!-- STEP 2: SCORE THRESHOLD — compact inline -->
+  <div class="section-label">Step 2 — Score Threshold</div>
   <div class="card" id="a-card2">
-    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Eligibility — Only assign students below this score</div><div class="card-pill" id="a-pill2">Required</div></div>
+    <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Only assign students <em>below</em> this score</div><div class="card-pill" id="a-pill2">Required</div></div>
     <div class="card-body">
       <div class="score-filter-box">
         <div class="score-filter-title">🎯 Score Threshold</div>
@@ -656,28 +702,29 @@
     </div>
   </div>
 
+  <!-- STEP 3: ROOMS — improved UX -->
   <div class="section-label">Step 3 — Room Setup</div>
   <div class="card" id="a-card3">
     <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Define Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
     <div class="card-body">
 
-      <!-- PILLAR QUICK SETUP — shown once pillars are detected -->
+      <!-- PILLAR QUICK SETUP -->
       <div class="pillar-quick-setup" id="pqs-box" style="display:none">
-        <div class="pqs-title">⚡ Quick Room Setup</div>
-        <div class="pqs-sub">Click a pillar to assign it a dedicated room. You can add more rooms manually below.</div>
+        <div class="pqs-title">⚡ Quick Setup — click pillars to assign dedicated rooms</div>
+        <div class="pqs-sub">Each selected pillar gets its own room(s). You can edit details after generating.</div>
         <div class="pillar-chips-row" id="pqs-pillar-chips"></div>
         <div class="pqs-actions">
           <span class="pqs-cap-field">Cap per room: <input class="pqs-cap-input" id="pqs-cap" type="number" value="30" min="1"/></span>
-          <button class="pqs-generate-btn" onclick="generateRoomsFromPillars()">✦ Generate selected rooms</button>
-          <button class="pqs-generate-btn" style="background:var(--gold)" onclick="addSharedRoom()">＋ Add shared/overflow room</button>
+          <button class="pqs-generate-btn" onclick="generateRoomsFromPillars()">✦ Generate rooms</button>
+          <button class="pqs-generate-btn" style="background:var(--gold)" onclick="addSharedRoom()">＋ Add shared room</button>
         </div>
-        <div class="pqs-note">Tip: Add a shared room as a buffer for overflow students — it takes any pillar's excess.</div>
+        <div class="pqs-note">Tip: A shared room absorbs overflow from any pillar — add at least one as a buffer.</div>
       </div>
 
       <div class="room-builder-toolbar">
         <div>
-          <div class="room-builder-toolbar-left">All Rooms</div>
-          <div class="room-builder-sub">Each room produces one attendance sheet in the downloaded Excel</div>
+          <div class="room-builder-toolbar-left">All Rooms <span id="room-count-label" style="font-size:12px;color:var(--muted);font-weight:400"></span></div>
+          <div class="room-builder-sub">Click any room to expand and edit details · each room = one attendance sheet</div>
         </div>
         <button class="add-room-btn" onclick="addRoom()">＋ Add blank room</button>
       </div>
@@ -716,7 +763,6 @@
           <div class="stat s-overflow"><span class="stat-num" id="a-s-overflow">0</span><span class="stat-lbl">Unassigned</span></div>
         </div>
         <div class="result-meta" id="a-result-meta"></div>
-        <!-- Room breakdown cards -->
         <div class="room-results-grid" id="a-room-results-grid"></div>
         <div class="flog" id="a-log"></div>
         <div class="result-actions">
@@ -730,7 +776,7 @@
 
 
 <!-- ══════════════════════════════════════════════
-     PAGE 4 — SUMMARY DASHBOARD
+     PAGE 4 — SUMMARY
 ══════════════════════════════════════════════ -->
 <div class="page" id="page-summary">
   <div class="page-header">
@@ -811,8 +857,9 @@ var assignmentData=null;
 var roomDefs = [];
 var roomIdCounter = 0;
 var summaryData={vmock:null,forms:null,assign:null};
-var detectedPillars=[]; // [{name, count}]
-var selectedPillarChips={}; // pillarName -> true/false
+var detectedPillars=[];
+var selectedPillarChips={};
+var expandedRooms={};
 
 // ══════════════════════════════════════════════
 // UTILITIES
@@ -964,7 +1011,6 @@ wireSecondary('v-file2','v');wireSecondary('f-file2','f');
 ['v-cfg-vmock-email','v-cfg-vmock-status'].forEach(function(id){document.getElementById(id).addEventListener('input',scanVmock);});
 document.getElementById('f-cfg-forms-id').addEventListener('input',scanForms);
 
-// ── Assignment file ──
 document.getElementById('a-file1').addEventListener('change',function(){
   var f=this.files[0];if(!f)return;
   readWb(f,function(wb){
@@ -1013,8 +1059,6 @@ function autoDetectAssign(ws){
     chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';wrap.appendChild(chip);
   });
   document.getElementById('a-detect-card').style.display='block';
-
-  // Detect pillars from data
   detectPillarsFromSheet(ws, hr, range);
   updateScorePreview();
   updateRoomCapacitySummary();
@@ -1052,7 +1096,6 @@ function generateRoomsFromPillars(){
   var selected=detectedPillars.filter(function(p){return selectedPillarChips[p.name];});
   if(!selected.length){showToast('Select at least one pillar first');return;}
   selected.forEach(function(p){
-    // How many rooms does this pillar need?
     var needed=Math.ceil(p.count/cap);
     for(var i=0;i<needed;i++){
       var id=++roomIdCounter;
@@ -1063,7 +1106,7 @@ function generateRoomsFromPillars(){
   renderRoomList();
   validateAssign();
   updateRoomCapacitySummary();
-  showToast('Rooms generated — fill in venue and dates below');
+  showToast('Rooms generated — expand to add venue/date details');
 }
 
 function addSharedRoom(){
@@ -1084,21 +1127,29 @@ function updateScorePreview(){
 }
 
 // ══════════════════════════════════════════════
-// ROOM BUILDER
+// ROOM BUILDER — COMPACT/EXPANDABLE
 // ══════════════════════════════════════════════
 function getPillarOptions(){
-  var opts=detectedPillars.map(function(p){return p.name;});
-  return opts;
+  return detectedPillars.map(function(p){return p.name;});
 }
 
 function addRoom(){
   var id=++roomIdCounter;
   roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:'',isShared:false});
+  expandedRooms[id]=true; // auto-expand new blank rooms
   renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
 function deleteRoom(id){
-  roomDefs=roomDefs.filter(function(r){return r.id!==id;});renderRoomList();validateAssign();updateRoomCapacitySummary();
+  roomDefs=roomDefs.filter(function(r){return r.id!==id;});
+  delete expandedRooms[id];
+  renderRoomList();validateAssign();updateRoomCapacitySummary();
+}
+
+function toggleRoomExpand(id){
+  expandedRooms[id]=!expandedRooms[id];
+  var row=document.getElementById('room-row-'+id);
+  if(row) row.classList.toggle('expanded',!!expandedRooms[id]);
 }
 
 function onRoomChange(id){
@@ -1110,35 +1161,61 @@ function onRoomChange(id){
   r.cap=parseInt(document.getElementById('rcap-'+id).value)||0;
   r.pillar=(document.getElementById('rpillar-'+id).value||'').trim();
   r.isShared=!r.pillar;
-  var nm=document.getElementById('rcard-name-'+id);if(nm)nm.textContent=r.name||'Room '+id;
-  var cb=document.getElementById('rcap-badge-'+id);if(cb)cb.textContent='Cap: '+r.cap;
-  var pt=document.getElementById('rpillar-tag-'+id);if(pt){pt.textContent=r.pillar||'Shared';pt.className='room-pillar-tag'+(r.isShared?' shared':'');}
+  // Update compact summary tags without re-rendering the whole list
+  var nameEl=document.getElementById('rcard-name-'+id);if(nameEl)nameEl.textContent=r.name||'Room '+id;
+  var ptEl=document.getElementById('rpillar-tag-'+id);if(ptEl){ptEl.textContent=r.pillar||'Shared';ptEl.className='room-tag '+(r.isShared?'shared':'pillar');}
+  var capEl=document.getElementById('rcap-tag-'+id);if(capEl)capEl.textContent='Cap: '+r.cap;
+  var vEl=document.getElementById('rvenue-tag-'+id);
+  if(vEl){if(r.venue){vEl.textContent=r.venue;vEl.style.display='inline-flex';}else vEl.style.display='none';}
+  var dEl=document.getElementById('rdate-tag-'+id);
+  if(dEl){if(r.date){dEl.textContent=r.date;dEl.style.display='inline-flex';}else dEl.style.display='none';}
   validateAssign();updateRoomCapacitySummary();
 }
 
 function renderRoomList(){
   var list=document.getElementById('room-list');list.innerHTML='';
   var pillars=getPillarOptions();
+  var countLabel=document.getElementById('room-count-label');
+  if(countLabel) countLabel.textContent=roomDefs.length?'('+roomDefs.length+')':'';
+
+  if(!roomDefs.length){
+    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — use Quick Setup above or click <strong>+ Add blank room</strong></div>';
+    return;
+  }
+
   roomDefs.forEach(function(r,idx){
-    var div=document.createElement('div');div.className='room-card';
+    var isExp=!!expandedRooms[r.id];
+    var isShared=!r.pillar;
+    var div=document.createElement('div');
+    div.className='room-row'+(isExp?' expanded':'');
+    div.id='room-row-'+r.id;
+
     var pillarOpts='<option value="">Shared / Overflow (no home pillar)</option>';
     pillars.forEach(function(p){pillarOpts+='<option value="'+p+'"'+(r.pillar===p?' selected':'')+'>'+p+' — home room</option>';});
-    var isShared=!r.pillar;
+
+    var venueDisplay=r.venue?'display:inline-flex':'display:none';
+    var dateDisplay=r.date?'display:inline-flex':'display:none';
+
     div.innerHTML=
-      '<div class="room-card-head">'+
-        '<div class="room-number-badge">'+(idx+1)+'</div>'+
-        '<div class="room-card-name" id="rcard-name-'+r.id+'">'+(r.name||'Room '+r.id)+'</div>'+
-        '<span class="room-pillar-tag'+(isShared?' shared':'')+'" id="rpillar-tag-'+r.id+'">'+(r.pillar||'Shared')+'</span>'+
-        '<div class="room-capacity-badge" id="rcap-badge-'+r.id+'">Cap: '+r.cap+'</div>'+
+      '<div class="room-row-head" onclick="toggleRoomExpand('+r.id+')">'+
+        '<div class="room-num-badge">'+(idx+1)+'</div>'+
+        '<div class="room-row-name" id="rcard-name-'+r.id+'">'+(r.name||'Room '+r.id)+'</div>'+
+        '<div class="room-inline-tags">'+
+          '<span class="room-tag '+(isShared?'shared':'pillar')+'" id="rpillar-tag-'+r.id+'">'+(r.pillar||'Shared')+'</span>'+
+          '<span class="room-tag cap" id="rcap-tag-'+r.id+'">Cap: '+r.cap+'</span>'+
+          '<span class="room-tag venue" id="rvenue-tag-'+r.id+'" style="'+venueDisplay+'">'+escHtml(r.venue)+'</span>'+
+          '<span class="room-tag date" id="rdate-tag-'+r.id+'" style="'+dateDisplay+'">'+escHtml(r.date)+'</span>'+
+        '</div>'+
+        '<span class="room-expand-icon">▾</span>'+
+        '<button class="room-delete-compact" onclick="event.stopPropagation();deleteRoom('+r.id+')" title="Remove room">✕</button>'+
       '</div>'+
-      '<div class="room-card-body">'+
-        '<div class="room-fields-compact">'+
+      '<div class="room-row-body">'+
+        '<div class="room-fields-grid">'+
           '<div class="field-group"><label class="field-label">Room Name</label><input class="field-input" id="rname-'+r.id+'" value="'+escHtml(r.name)+'" oninput="onRoomChange('+r.id+')"/></div>'+
           '<div class="field-group"><label class="field-label">Date <span>optional</span></label><input class="field-input" id="rdate-'+r.id+'" value="'+escHtml(r.date)+'" placeholder="e.g. 25/3/2026" oninput="onRoomChange('+r.id+')"/></div>'+
           '<div class="field-group"><label class="field-label">Time <span>optional</span></label><input class="field-input" id="rtime-'+r.id+'" value="'+escHtml(r.time||'')+'" placeholder="e.g. 2–5pm" oninput="onRoomChange('+r.id+')"/></div>'+
-          '<button class="room-delete-btn" onclick="deleteRoom('+r.id+')" title="Remove room">✕</button>'+
         '</div>'+
-        '<div class="room-pillar-row">'+
+        '<div class="room-fields-grid-2">'+
           '<div class="field-group"><label class="field-label">Venue / Location <span>optional</span></label><input class="field-input" id="rvenue-'+r.id+'" value="'+escHtml(r.venue)+'" placeholder="e.g. LT 1 Albert Hong" oninput="onRoomChange('+r.id+')"/></div>'+
           '<div class="field-group"><label class="field-label">Student Cap</label><input class="field-input" id="rcap-'+r.id+'" type="number" min="1" value="'+r.cap+'" oninput="onRoomChange('+r.id+')"/></div>'+
         '</div>'+
@@ -1149,9 +1226,6 @@ function renderRoomList(){
       '</div>';
     list.appendChild(div);
   });
-  if(!roomDefs.length){
-    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — use Quick Setup above or click <strong>+ Add blank room</strong></div>';
-  }
 }
 
 function updateRoomCapacitySummary(){
@@ -1182,6 +1256,16 @@ function updateRoomCapacitySummary(){
 
 document.getElementById('a-cfg-threshold').addEventListener('input',function(){updateScorePreview();updateRoomCapacitySummary();});
 document.getElementById('a-cfg-score-col').addEventListener('input',function(){updateScorePreview();updateRoomCapacitySummary();});
+
+// ══════════════════════════════════════════════
+// FORMS — UNMATCHED TOGGLE
+// ══════════════════════════════════════════════
+function toggleUnmatched(){
+  var body=document.getElementById('f-unmatched-body');
+  var toggle=document.getElementById('f-unmatched-toggle');
+  body.classList.toggle('open');
+  toggle.textContent=body.classList.contains('open')?'Hide ↑':'Show ↓';
+}
 
 // ══════════════════════════════════════════════
 // RUN VMOCK
@@ -1229,7 +1313,7 @@ function runVmock(){
 }
 
 // ══════════════════════════════════════════════
-// RUN FORMS
+// RUN FORMS — with unmatched ID display
 // ══════════════════════════════════════════════
 function runForms(){
   var wb=getIntakeWb('f'),sheet=getIntakeSheet('f');
@@ -1248,14 +1332,45 @@ function runForms(){
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,newCol=range.e.c+1;
   writeCell(ws,hr,newCol,colName);range.e.c=newCol;ws['!ref']=XLSX.utils.encode_range(range);
   flog('f-log','New column "'+colName+'" appended','info');
+
+  // Build intake ID set to find unmatched
+  var intakeIds={};
+  for(var R0=hr+1;R0<=range.e.r;R0++){
+    var iid0=cellVal(ws,R0,idCol).replace(/\s/g,'');
+    if(iid0)intakeIds[iid0]=true;
+  }
+
   var cR=0,cNo=0,cT=0;
   for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,'Responded');cR++;}else{writeCell(ws,R,newCol,'Not Responded');cNo++;}}
+
+  // Find IDs in forms export that weren't in intake
+  var unmatched=Object.keys(responded).filter(function(id){return !intakeIds[id];}).sort();
+
   document.getElementById('f-s-resp').textContent=cR;document.getElementById('f-s-noresp').textContent=cNo;document.getElementById('f-s-total').textContent=cT;
   var ts=fmtTs();
   document.getElementById('f-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+cT+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
-  flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');flog('f-log','File ready to download','ok');
+  flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');
+
+  // Render unmatched panel
+  var panel=document.getElementById('f-unmatched-panel');
+  var grid=document.getElementById('f-unmatched-grid');
+  document.getElementById('f-unmatched-count').textContent=unmatched.length;
+  grid.innerHTML='';
+  if(unmatched.length>0){
+    panel.style.display='block';
+    unmatched.forEach(function(id){
+      var chip=document.createElement('div');chip.className='unmatched-id-chip';chip.textContent=id;grid.appendChild(chip);
+    });
+    flog('f-log',unmatched.length+' IDs in Forms export had no match in intake list — see panel above','warn');
+  } else {
+    panel.style.display='block';
+    grid.innerHTML='<div class="unmatched-empty">✅ All IDs in the Forms export matched students in the intake list.</div>';
+    flog('f-log','All Forms IDs matched intake list — no unmatched entries','ok');
+  }
+
+  flog('f-log','File ready to download','ok');
   S.f.resultWb=wb;setProgStep('f',4);document.getElementById('tdot-forms').classList.add('show');
-  summaryData.forms={resp:cR,noresp:cNo,total:cT,colName:colName,file:sheet,time:ts};
+  summaryData.forms={resp:cR,noresp:cNo,total:cT,colName:colName,file:sheet,time:ts,unmatched:unmatched.length};
   document.getElementById('tdot-summary').classList.add('show');
 }
 
@@ -1291,12 +1406,10 @@ function runAssign(){
   }
   flog('a-log',totalRead+' students read — '+eligible.length+' eligible (score < '+threshold+'), '+ineligible.length+' ineligible','info');
 
-  // Build room objects — keep isShared flag
   var rooms=roomDefs.map(function(r){
     return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,isShared:r.isShared||!r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};
   });
 
-  // Group eligible by pillar, sort each group A-Z by name
   var byPillar={};
   eligible.forEach(function(s){
     var p=s.pillar||'(none)';
@@ -1308,37 +1421,29 @@ function runAssign(){
   });
 
   var unassigned=[];
-
-  // Shared rooms = rooms with no dedicated pillar — used as overflow buffer
   var sharedRooms=rooms.filter(function(r){return r.isShared;});
   var dedicatedRooms=rooms.filter(function(r){return !r.isShared;});
 
   function roomRemaining(r){return r.cap-r.students.length;}
 
-  // Best overflow room: prefer shared first, then dedicated with most remaining
   function bestOverflowRoom(){
-    // 1. Try shared rooms first (most remaining)
     var best=null,bestR=-1;
     sharedRooms.forEach(function(r){
       var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
     });
     if(best)return best;
-    // 2. Then any dedicated room with most remaining (last resort — mixing)
     dedicatedRooms.forEach(function(r){
       var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
     });
     return best;
   }
 
-  // Process each pillar
   Object.keys(byPillar).sort().forEach(function(pillar){
     var pool=byPillar[pillar].slice();
-    // Home rooms for this pillar (in order defined by user)
     var homeRooms=dedicatedRooms.filter(function(r){return r.pillar===pillar;});
     var placed=0;
 
     if(homeRooms.length){
-      // Fill home rooms sequentially (room 1 first, room 2 when room 1 full, etc.)
       homeRooms.forEach(function(room){
         while(pool.length&&roomRemaining(room)>0){
           var s=pool.shift();s.assignedRoom=room.name;s.assignedVenue=room.venue;s.assignedDate=room.date;
@@ -1348,7 +1453,6 @@ function runAssign(){
     }
 
     var overflowed=pool.length;
-    // Overflow — try shared/buffer rooms, then any room
     pool.forEach(function(s){
       var r=bestOverflowRoom();
       if(r){s.assignedRoom=r.name;s.assignedVenue=r.venue;s.assignedDate=r.date;r.students.push(s);}
@@ -1371,12 +1475,10 @@ function runAssign(){
   var ts=fmtTs();
   document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+eligible.length+' eligible students &nbsp;·&nbsp; score threshold: &lt;'+threshold;
 
-  // Room result cards (instead of big table)
   var grid=document.getElementById('a-room-results-grid');grid.innerHTML='';
   rooms.forEach(function(rm){
     if(!rm.students.length)return;
     var pct=Math.round(rm.students.length/rm.cap*100);
-    // count unique pillars in this room
     var pillarsInRoom={};rm.students.forEach(function(s){if(s.pillar)pillarsInRoom[s.pillar]=true;});
     var pillarList=Object.keys(pillarsInRoom).join(', ')||'—';
     var card=document.createElement('div');card.className='room-result-card';
@@ -1501,7 +1603,7 @@ function refreshSummary(){
   document.getElementById('sum-forms-module').style.display=fm?'block':'none';
   if(fm){
     document.getElementById('sum-forms-title').textContent='Microsoft Forms — '+fm.colName;
-    document.getElementById('sum-forms-file').textContent='Sheet: '+fm.file;
+    document.getElementById('sum-forms-file').textContent='Sheet: '+fm.file+(fm.unmatched?' · ⚠ '+fm.unmatched+' unmatched IDs in export':'');
     document.getElementById('sum-forms-time').textContent=fm.time;
     var total2=fm.total||1,pct2=Math.round(fm.resp/total2*100);
     document.getElementById('sum-forms-stats').innerHTML='<div class="summary-stat s-resp"><span class="summary-stat-num">'+fm.resp+'</span><span class="summary-stat-lbl">Responded</span></div><div class="summary-stat s-noresp"><span class="summary-stat-num">'+fm.noresp+'</span><span class="summary-stat-lbl">Not Responded</span></div><div class="summary-stat s-total"><span class="summary-stat-num">'+fm.total+'</span><span class="summary-stat-lbl">Total</span></div>';
@@ -1533,7 +1635,7 @@ function exportSummaryReport(){
   var vm=summaryData.vmock;
   if(vm){od.push(['VMOCK Assessment — '+vm.mode+' run']);od.push(['Submitted','Attempted','Yet to Attempt','Not Found','Total']);od.push([vm.sub,vm.att,vm.yta,vm.miss,vm.total]);od.push([]);}
   var fm=summaryData.forms;
-  if(fm){od.push(['Microsoft Forms — '+fm.colName]);od.push(['Responded','Not Responded','Total']);od.push([fm.resp,fm.noresp,fm.total]);od.push([]);}
+  if(fm){od.push(['Microsoft Forms — '+fm.colName]);od.push(['Responded','Not Responded','Total','Unmatched IDs in export']);od.push([fm.resp,fm.noresp,fm.total,fm.unmatched||0]);od.push([]);}
   var am=summaryData.assign;
   if(am){
     od.push(['Class Assignment — score < '+am.threshold]);
@@ -1560,7 +1662,7 @@ function exportSummaryReport(){
 // ══════════════════════════════════════════════
 function resetPage(p){
   if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2?3:S.v.wb2?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
-  if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
+  if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';document.getElementById('f-unmatched-panel').style.display='none';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
   if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;document.getElementById('a-room-results-grid').innerHTML='';}
   window.scrollTo({top:0,behavior:'smooth'});
 }
