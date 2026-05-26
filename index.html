@@ -95,6 +95,8 @@
     .card.is-done .card-pill{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
     .card-body{padding:20px}
 
+    /* ── MULTI-REPORT UPLOAD AREA ── */
+    .multi-dz-wrapper{position:relative}
     .dropzone{position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
     .dropzone:hover,.dropzone.drag-over{border-color:var(--accent2);background:var(--accent-lt)}
     .dropzone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -102,6 +104,20 @@
     .dz-title{font-weight:600;font-size:13px;color:var(--text);margin-bottom:3px}
     .dz-sub{font-size:12px;color:var(--muted)}
     .dz-sub span{color:var(--accent2);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+
+    /* ── REPORT LIST ── */
+    .report-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .report-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:9px 12px}
+    .report-pill-icon{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff}
+    .report-pill-num{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--accent);color:#fff;flex-shrink:0}
+    .report-pill-name{font-weight:600;font-size:12px;color:var(--accent);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .report-pill-meta{font-size:11px;color:var(--muted);white-space:nowrap}
+    .report-pill-remove{width:22px;height:22px;border-radius:5px;border:1px solid #A8D5BE;background:none;color:var(--accent);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+    .report-pill-remove:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
+    .reports-summary-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--accent-lt);border:1px solid #A8D5BE;border-radius:7px;margin-top:8px;font-size:12px;color:var(--accent);font-weight:600}
+    .reports-summary-bar .rsum-count{display:flex;align-items:center;gap:7px}
+    .reports-clear-all{font-size:11px;font-weight:600;color:var(--danger);background:none;border:1px solid #E8A09A;border-radius:5px;padding:3px 9px;cursor:pointer;font-family:var(--font-body);transition:all .15s}
+    .reports-clear-all:hover{background:var(--danger-lt)}
 
     .file-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:11px 14px;margin-top:10px}
     .file-pill-icon{width:30px;height:30px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
@@ -119,6 +135,7 @@
     .sheet-chip.active{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
 
     .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+    .config-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
     .field-group{display:flex;flex-direction:column;gap:5px}
     .field-label{font-size:12px;font-weight:600;color:var(--text2)}
     .field-label span{font-weight:400;color:var(--muted);font-size:11px;margin-left:4px}
@@ -135,7 +152,7 @@
     .override-btn:hover{text-decoration:underline}
     .mapping-row{display:flex;align-items:center;gap:9px;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border)}
     .mapping-row:last-child{border-bottom:none}
-    .map-label{color:var(--muted);min-width:130px;font-weight:600}
+    .map-label{color:var(--muted);min-width:160px;font-weight:600}
     .map-arrow{color:var(--border2);font-size:10px}
     .map-value{font-family:'Menlo','Consolas',monospace;font-size:11px;padding:2px 7px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);flex:1}
     .map-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;white-space:nowrap}
@@ -192,6 +209,7 @@
     .stats-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:18px}
     .stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}
     .stats-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
+    .stats-grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:18px}
     .stat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center}
     .stat-num{display:block;font-family:var(--font-head);font-size:28px;font-weight:700;line-height:1;margin-bottom:5px}
     .stat-lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -206,6 +224,7 @@
     .stat.s-purple{border-color:#C39BD3;background:var(--purple-lt)}.stat.s-purple .stat-num{color:var(--purple)}
     .stat.s-teal{border-color:#A2D9CE;background:var(--teal-lt)}.stat.s-teal .stat-num{color:var(--teal)}
     .stat.s-overflow{border-color:#E8A09A;background:var(--danger-lt)}.stat.s-overflow .stat-num{color:var(--danger)}
+    .stat.s-reports{border-color:#A9CCE3;background:var(--info-lt)}.stat.s-reports .stat-num{color:var(--info)}
 
     .flog{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;font-size:12px;line-height:1.9;max-height:180px;overflow-y:auto;margin-bottom:18px}
     .flog-entry{display:flex;align-items:flex-start;gap:8px;padding:2px 0}
@@ -335,8 +354,8 @@
     ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 
     @media(max-width:640px){
-      .stats-grid-3,.stats-grid-4,.stats-grid-5{grid-template-columns:repeat(2,1fr)}
-      .config-grid{grid-template-columns:1fr}
+      .stats-grid-3,.stats-grid-4,.stats-grid-5,.stats-grid-6{grid-template-columns:repeat(2,1fr)}
+      .config-grid,.config-grid-3{grid-template-columns:1fr}
       .topbar-badge,.tab-btn span{display:none}
       .room-fields-grid{grid-template-columns:1fr 1fr}
       .room-fields-grid-2{grid-template-columns:1fr}
@@ -397,12 +416,12 @@
 <div class="page active" id="page-vmock">
   <div class="page-header">
     <h1>VMOCK Assessment Tracker</h1>
-    <p>Match students by Student ID (from their email) and update submission status from the VMOCK report.</p>
+    <p>Upload one or more VMOCK reports — statuses and scores are consolidated automatically before updating the intake list.</p>
   </div>
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="v-pd1" style="color:var(--accent)">1</div><span class="prog-label active" id="v-pl1">Intake File</span></div>
     <div class="prog-line" id="v-line1"></div>
-    <div class="prog-step"><div class="prog-dot" id="v-pd2">2</div><span class="prog-label" id="v-pl2">VMOCK Report</span></div>
+    <div class="prog-step"><div class="prog-dot" id="v-pd2">2</div><span class="prog-label" id="v-pl2">VMOCK Reports</span></div>
     <div class="prog-line" id="v-line2"></div>
     <div class="prog-step"><div class="prog-dot" id="v-pd3">3</div><span class="prog-label" id="v-pl3">Configure</span></div>
     <div class="prog-line" id="v-line3"></div>
@@ -410,23 +429,35 @@
   </div>
   <div class="info-banner green">
     <span class="icon">ℹ</span>
-    <div><strong>First time?</strong> A Status column is created and filled. Not found → marked <em>Not Found</em>.<br/><strong>Re-runs:</strong> Priority: <strong>Submitted</strong> › <strong>Attempted</strong> › <strong>Yet to Attempt</strong>. A higher-ranked status always wins.</div>
+    <div>
+      <strong>Multi-report consolidation:</strong> Upload as many VMOCK exports as you need — they are merged before writing.<br/>
+      <strong>Status priority (highest wins):</strong> <em>Submitted</em> › <em>Attempted</em> › <em>Yet to Attempt</em><br/>
+      <strong>Score:</strong> The highest <em>Highest Attempt Level</em> score across all reports is kept. Both status and score are written to the output.
+    </div>
   </div>
+
   <div class="section-label">Step 1 — Intake List</div>
   <div class="card" id="v-card1">
     <div class="card-header"><div class="step-badge" id="v-badge1">1</div><div class="card-title">Intake Excel File</div><div class="card-pill" id="v-pill1">Waiting</div></div>
     <div class="card-body" id="v-intake-body"></div>
   </div>
-  <div class="section-label">Step 2 — VMOCK Report</div>
+
+  <div class="section-label">Step 2 — VMOCK Reports</div>
   <div class="card" id="v-card2">
-    <div class="card-header"><div class="step-badge" id="v-badge2">2</div><div class="card-title">Upload VMOCK Assessment Report</div><div class="card-pill" id="v-pill2">Waiting</div></div>
+    <div class="card-header"><div class="step-badge" id="v-badge2">2</div><div class="card-title">Upload VMOCK Assessment Reports <span id="v-report-count-badge" style="display:none;font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--info-lt);border:1px solid #A9CCE3;color:var(--info);margin-left:6px"></span></div><div class="card-pill" id="v-pill2">Waiting</div></div>
     <div class="card-body">
-      <div class="dropzone" id="v-dz2"><input type="file" id="v-file2" accept=".xlsx,.xls,.csv"/>
-        <div class="dz-icon">📊</div><div class="dz-title">Drop your VMOCK report here</div><div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv</div>
+      <!-- drop zone always visible to add more -->
+      <div class="dropzone" id="v-dz2">
+        <input type="file" id="v-file2" accept=".xlsx,.xls,.csv" multiple/>
+        <div class="dz-icon">📊</div>
+        <div class="dz-title">Drop VMOCK report(s) here</div>
+        <div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv &nbsp;·&nbsp; <strong>multiple files supported</strong></div>
       </div>
-      <div id="v-file2-info"></div>
+      <!-- loaded reports list -->
+      <div id="v-reports-list" style="margin-top:2px"></div>
     </div>
   </div>
+
   <div class="section-label">Step 3 — Configuration</div>
   <div class="card" id="v-card3">
     <div class="card-header"><div class="step-badge" id="v-badge3">3</div><div class="card-title">Column Settings</div><div class="card-pill" id="v-pill3">Required</div></div>
@@ -436,49 +467,68 @@
         <div class="sheet-chips" id="v-sheet-chips"></div>
         <div id="v-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
-      <div class="config-grid" style="margin-bottom:16px">
-        <div class="field-group"><label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/></div>
-        <div class="field-group"><label class="field-label">Status Column <span>(if exists)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label><input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/></div>
+
+      <!-- Intake output columns -->
+      <div class="config-grid-3" style="margin-bottom:16px">
+        <div class="field-group">
+          <label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="v-cfg-id-col" type="text" value="A" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Status Output Column <span>(write here)</span> <span id="v-status-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="v-cfg-status-col" type="text" value="J" maxlength="3"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Score Output Column <span>(write here)</span> <span id="v-score-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
+          <input class="field-input" id="v-cfg-score-out-col" type="text" value="K" maxlength="3"/>
+        </div>
       </div>
+
       <div class="priority-legend">
-        <span class="priority-legend-title">Override priority:</span>
+        <span class="priority-legend-title">Status priority (across all reports):</span>
         <div class="pl-item"><div class="pl-num p1">1</div><span style="font-size:11px;font-weight:600;color:var(--accent)">Submitted</span></div>
         <span class="pl-arrow">›</span>
         <div class="pl-item"><div class="pl-num p2">2</div><span style="font-size:11px;font-weight:600;color:var(--gold)">Attempted</span></div>
         <span class="pl-arrow">›</span>
         <div class="pl-item"><div class="pl-num p3">3</div><span style="font-size:11px;font-weight:600;color:var(--muted)">Yet to Attempt</span></div>
-        <span style="font-size:11px;color:var(--muted);margin-left:6px">— higher always wins</span>
+        <span style="font-size:11px;color:var(--muted);margin-left:6px">· Score: highest value across all reports</span>
       </div>
+
       <div class="mapping-summary">
-        <div class="mapping-summary-head"><span class="mapping-summary-title">VMOCK — how IDs are extracted</span><button class="override-btn" onclick="toggleAdv('v-adv-panel',this)">Override ↓</button></div>
-        <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value">Email column</span><span class="map-badge badge-ok">fixed</span></div>
-        <div class="mapping-row"><span class="map-label">Extracted as</span><span class="map-arrow">→</span><span class="map-value">text before @ symbol</span><span class="map-badge badge-ok">auto</span></div>
+        <div class="mapping-summary-head"><span class="mapping-summary-title">VMOCK report — column mapping</span><button class="override-btn" onclick="toggleAdv('v-adv-panel',this)">Override ↓</button></div>
+        <div class="mapping-row"><span class="map-label">Student ID from</span><span class="map-arrow">→</span><span class="map-value">Email column (text before @)</span><span class="map-badge badge-ok">fixed</span></div>
         <div class="mapping-row"><span class="map-label">Status from</span><span class="map-arrow">→</span><span class="map-value" id="v-map-status-col">Status column</span><span class="map-badge" id="v-map-status-badge">—</span></div>
-        <div class="mapping-row"><span class="map-label">Override rule</span><span class="map-arrow">→</span><span class="map-value">Submitted › Attempted › Yet to Attempt</span><span class="map-badge badge-gold">priority</span></div>
+        <div class="mapping-row"><span class="map-label">Score from</span><span class="map-arrow">→</span><span class="map-value" id="v-map-score-col">Highest Attempt Level column</span><span class="map-badge" id="v-map-score-badge">—</span></div>
+        <div class="mapping-row"><span class="map-label">Consolidation rule</span><span class="map-arrow">→</span><span class="map-value">Highest status rank + highest score across all reports</span><span class="map-badge badge-gold">multi-report</span></div>
         <div class="example-row" id="v-example-row" style="display:none">
-          <div style="color:var(--muted);font-family:var(--font-body);font-size:11px;margin-bottom:2px">Sample from your VMOCK file:</div>
+          <div style="color:var(--muted);font-family:var(--font-body);font-size:11px;margin-bottom:2px">Sample from your VMOCK file(s):</div>
           <div>Email: <span class="hl-id" id="v-ex-email"></span></div>
-          <div>→ ID matched: <span class="hl-id" id="v-ex-id"></span></div>
+          <div>→ ID: <span class="hl-id" id="v-ex-id"></span> &nbsp;·&nbsp; Status: <span class="hl-id" id="v-ex-status"></span> &nbsp;·&nbsp; Score: <span class="hl-id" id="v-ex-score"></span></div>
         </div>
       </div>
+
       <div class="advanced-panel" id="v-adv-panel">
-        <div class="config-note">Override only if VMOCK uses different column header names.</div>
-        <div class="config-grid">
+        <div class="config-note">Override only if your VMOCK reports use different column header names.</div>
+        <div class="config-grid-3">
           <div class="field-group"><label class="field-label">Email Field</label><input class="field-input" id="v-cfg-vmock-email" value="Email"/></div>
           <div class="field-group"><label class="field-label">Status Field</label><input class="field-input" id="v-cfg-vmock-status" value="Status"/></div>
+          <div class="field-group"><label class="field-label">Score Field</label><input class="field-input" id="v-cfg-vmock-score" value="Highest Attempt Level"/></div>
         </div>
       </div>
+
       <div class="validation-box" id="v-validation"></div>
       <div class="divider"></div>
-      <button class="btn btn-primary" id="v-run-btn" onclick="runVmock()" disabled>⚡&nbsp; Match Students &amp; Update Statuses</button>
+      <button class="btn btn-primary" id="v-run-btn" onclick="runVmock()" disabled>⚡&nbsp; Consolidate Reports &amp; Update Statuses</button>
     </div>
   </div>
+
   <div id="v-results-section" style="display:none">
     <div class="section-label">Results</div>
     <div class="card animate-in">
       <div class="card-header"><div class="step-badge" style="background:#4CAF50;border-color:#4CAF50;color:#fff">✓</div><div class="card-title">Update Complete</div><div id="v-mode-pill" class="card-pill"></div></div>
       <div class="card-body">
-        <div class="stats-grid-5">
+        <div class="stats-grid-6">
+          <div class="stat s-reports"><span class="stat-num" id="v-s-reports">0</span><span class="stat-lbl">Reports Used</span></div>
           <div class="stat s-sub"><span class="stat-num" id="v-s-sub">0</span><span class="stat-lbl">Submitted</span></div>
           <div class="stat s-att"><span class="stat-num" id="v-s-att">0</span><span class="stat-lbl">Attempted</span></div>
           <div class="stat s-new"><span class="stat-num" id="v-s-new">0</span><span class="stat-lbl">Newly Updated</span></div>
@@ -625,7 +675,6 @@
     </div>
   </div>
 
-  <!-- STEP 1: UPLOAD -->
   <div class="section-label">Step 1 — Student List</div>
   <div class="card" id="a-card1">
     <div class="card-header"><div class="step-badge" id="a-badge1">1</div><div class="card-title">Upload Student List</div><div class="card-pill" id="a-pill1">Waiting</div></div>
@@ -653,7 +702,6 @@
     </div>
   </div>
 
-  <!-- STEP 2: SCORE THRESHOLD -->
   <div class="section-label">Step 2 — Score Threshold</div>
   <div class="card" id="a-card2">
     <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Only assign students <em>below</em> this score</div><div class="card-pill" id="a-pill2">Required</div></div>
@@ -681,12 +729,10 @@
     </div>
   </div>
 
-  <!-- STEP 3: ROOMS -->
   <div class="section-label">Step 3 — Room Setup</div>
   <div class="card" id="a-card3">
     <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Define Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
     <div class="card-body">
-
       <div class="room-builder-toolbar">
         <div>
           <div class="room-builder-toolbar-left">All Rooms <span id="room-count-label" style="font-size:12px;color:var(--muted);font-weight:400"></span></div>
@@ -694,14 +740,11 @@
         </div>
         <button class="add-room-btn" onclick="addRoom()">＋ Add room</button>
       </div>
-
       <div class="room-list" id="room-list"></div>
-
       <div id="a-room-summary" style="display:none;margin-bottom:14px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text2)">
         Total capacity: <strong id="a-total-cap">0</strong> seats across <strong id="a-room-count">0</strong> rooms
         <span id="a-eligible-note" style="margin-left:10px;color:var(--muted)"></span>
       </div>
-
       <div class="mapping-summary">
         <div class="mapping-summary-head"><span class="mapping-summary-title">Assignment logic — minimal mixing</span></div>
         <div class="mapping-row"><span class="map-label">Step 1</span><span class="map-arrow">→</span><span class="map-value">Filter: score &lt; threshold → eligible pool</span><span class="map-badge badge-purple">score filter</span></div>
@@ -709,7 +752,6 @@
         <div class="mapping-row"><span class="map-label">Step 3</span><span class="map-arrow">→</span><span class="map-value">Overflow → shared/buffer rooms first, then any room with space</span><span class="map-badge badge-gold">minimal mix</span></div>
         <div class="mapping-row"><span class="map-label">Step 4</span><span class="map-arrow">→</span><span class="map-value">Students who don't fit anywhere → Unassigned sheet</span><span class="map-badge badge-warn">overflow sheet</span></div>
       </div>
-
       <div class="validation-box" id="a-validation"></div>
       <div class="divider"></div>
       <button class="btn btn-purple" id="a-run-btn" onclick="runAssign()" disabled>⚡&nbsp; Assign Students to Rooms</button>
@@ -814,7 +856,7 @@
 // ══════════════════════════════════════════════
 var sharedWb=null, sharedSheet='';
 var S={
-  v:{wb2:null,resultWb:null,sheet:''},
+  v:{wb2List:[],resultWb:null,sheet:''},  // wb2List = array of loaded VMOCK workbooks
   f:{wb2:null,resultWb:null,sheet:''},
   a:{wb1:null,resultWb:null,sheet:''}
 };
@@ -833,14 +875,16 @@ function colLetter(i){if(i<0)return '?';return i<26?String.fromCharCode(65+i):St
 function fmtSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';}
 function cellVal(ws,r,c){if(c<0)return '';var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?String(cell.v).trim():'';}
 function writeCell(ws,r,c,val){ws[XLSX.utils.encode_cell({r:r,c:c})]={v:val,t:'s',w:val};}
+function writeCellNum(ws,r,c,val){ws[XLSX.utils.encode_cell({r:r,c:c})]={v:val,t:'n',w:String(val)};}
 function readWb(file,cb){var fr=new FileReader();fr.onload=function(e){cb(XLSX.read(new Uint8Array(e.target.result),{type:'array'}));};fr.readAsArrayBuffer(file);}
 function fmtDate(){return new Date().toISOString().slice(0,10);}
 function fmtTs(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 function showFilePill(cid,file){document.getElementById(cid).innerHTML='<div class="file-pill"><div class="file-pill-icon">📄</div><span class="file-pill-name">'+file.name+'</span><span class="file-pill-meta">'+file.name.split('.').pop().toUpperCase()+' · '+fmtSize(file.size)+'</span></div>';}
 function flog(boxId,msg,type){var box=document.getElementById(boxId);var icons={ok:'✅',warn:'⚠️',err:'❌',info:'ℹ️'};var el=document.createElement('div');el.className='flog-entry';el.innerHTML='<span class="flog-icon">'+(icons[type]||'ℹ️')+'</span><span class="flog-msg '+(type||'info')+'">'+msg+'</span>';box.appendChild(el);box.scrollTop=box.scrollHeight;}
-function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Edit manually ↓';}
+function toggleAdv(id,btn){var p=document.getElementById(id);p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'Hide ↑':'Override ↓';}
 function markDone(p,n){document.getElementById(p+'-card'+n).classList.add('is-done');document.getElementById(p+'-badge'+n).textContent='✓';document.getElementById(p+'-pill'+n).textContent='Ready';}
-function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:var(--font-body);z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .35s';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},350);},2200);}
+function statusRank(s){var v=(s||'').trim().toLowerCase();if(v==='submitted')return 3;if(v==='attempted')return 2;if(v==='yet to attempt')return 1;return 0;}
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setProgStep(p,step){
   var total=4;
   for(var i=1;i<=total;i++){
@@ -851,8 +895,6 @@ function setProgStep(p,step){
     if(line)line.classList.toggle('done',i<step);
   }
 }
-function statusRank(s){var v=(s||'').trim().toLowerCase();if(v==='submitted')return 3;if(v==='attempted')return 2;if(v==='yet to attempt')return 1;return 0;}
-function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ══════════════════════════════════════════════
 // TABS
@@ -926,22 +968,55 @@ function updateSheetChips(p){
 // AUTO-DETECT
 // ══════════════════════════════════════════════
 function autoDetectVF(ws,p){
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,dId=-1,dSt=-1;
-  for(var c=range.s.c;c<=range.e.c;c++){var h=cellVal(ws,hr,c).toLowerCase();if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;if(dSt<0&&h.includes('status'))dSt=c;}
-  function set(iid,bid,val){if(val<0)return;var inp=document.getElementById(iid);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}var b=document.getElementById(bid);if(b)b.style.display='inline-flex';}
-  if(p==='v'){set('v-cfg-id-col','v-id-col-badge',dId);set('v-cfg-status-col','v-status-col-badge',dSt);}
-  if(p==='f'){set('f-cfg-id-col','f-id-col-badge',dId);}
+  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,dId=-1,dSt=-1,dSc=-1;
+  for(var c=range.s.c;c<=range.e.c;c++){
+    var h=cellVal(ws,hr,c).toLowerCase();
+    if(dId<0&&(h.includes('student id')||h==='id'||h.includes('studentid')))dId=c;
+    if(dSt<0&&h==='status')dSt=c;
+    if(dSc<0&&(h.includes('vmock')||h.includes('highest attempt')||h.includes('score')))dSc=c;
+  }
+  function setInp(iid,bid,val){if(val<0)return;var inp=document.getElementById(iid);if(inp){inp.value=colLetter(val);inp.classList.add('auto-detected');}var b=document.getElementById(bid);if(b)b.style.display='inline-flex';}
+  if(p==='v'){
+    setInp('v-cfg-id-col','v-id-col-badge',dId);
+    setInp('v-cfg-status-col','v-status-col-badge',dSt);
+    // next col after status for score output, or K default
+    if(dSt>=0){
+      var scoreOut=document.getElementById('v-cfg-score-out-col');
+      if(scoreOut&&!scoreOut.classList.contains('auto-detected')){
+        scoreOut.value=colLetter(dSt+1);
+      }
+    }
+  }
+  if(p==='f'){setInp('f-cfg-id-col','f-id-col-badge',dId);}
 }
 
 // ══════════════════════════════════════════════
 // READY CHECKS
 // ══════════════════════════════════════════════
 function checkReady(p){
-  if(p==='v'){var ok=!!(getIntakeWb('v')&&getIntakeSheet('v')&&S.v.wb2);document.getElementById('v-run-btn').disabled=!ok;if(ok){validateVmock();setProgStep('v',3);}}
+  if(p==='v'){var ok=!!(getIntakeWb('v')&&getIntakeSheet('v')&&S.v.wb2List.length>0);document.getElementById('v-run-btn').disabled=!ok;if(ok){validateVmock();setProgStep('v',3);}}
   if(p==='f'){var ok=!!(getIntakeWb('f')&&getIntakeSheet('f')&&S.f.wb2);document.getElementById('f-run-btn').disabled=!ok;if(ok){validateForms();setProgStep('f',3);}}
 }
+
 function showValidation(boxId,issues,type){var box=document.getElementById(boxId);if(!issues.length){box.classList.remove('show');return;}box.className='validation-box show '+(type||'warn');box.innerHTML='<strong>'+(type==='error'?'❌ Please fix before running:':'⚠️ Heads-up before running:')+'</strong><ul>'+issues.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';}
-function validateVmock(){var issues=[];var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';if(S.v.wb2){var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});if(!rows.length)issues.push('VMOCK report appears empty.');else{if(!(eH in rows[0]))issues.push('Email column "'+eH+'" not found in VMOCK report.');if(!(sH in rows[0]))issues.push('Status column "'+sH+'" not found in VMOCK report.');}}showValidation('v-validation',issues,issues.length?'warn':'');}
+
+function validateVmock(){
+  var issues=[];
+  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  var scH=document.getElementById('v-cfg-vmock-score').value.trim()||'Highest Attempt Level';
+  S.v.wb2List.forEach(function(entry,idx){
+    var rows=XLSX.utils.sheet_to_json(entry.wb.Sheets[entry.wb.SheetNames[0]],{defval:''});
+    if(!rows.length){issues.push('Report '+(idx+1)+' ("'+entry.name+'"): appears empty.');}
+    else{
+      if(!(eH in rows[0]))issues.push('Report '+(idx+1)+': Email column "'+eH+'" not found.');
+      if(!(sH in rows[0]))issues.push('Report '+(idx+1)+': Status column "'+sH+'" not found.');
+      if(!(scH in rows[0]))issues.push('Report '+(idx+1)+': Score column "'+scH+'" not found — scores will be empty.');
+    }
+  });
+  showValidation('v-validation',issues,issues.some(function(i){return i.includes('not found')&&!i.includes('Score')})?'error':'warn');
+}
+
 function validateForms(){var issues=[];var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';if(S.f.wb2){var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});if(!rows.length)issues.push('Forms export appears empty.');else if(!(idH in rows[0]))issues.push('Student ID column "'+idH+'" not found in Forms export.');}showValidation('f-validation',issues,issues.length?'warn':'');}
 
 function validateAssign(){
@@ -958,21 +1033,141 @@ function validateAssign(){
 }
 
 // ══════════════════════════════════════════════
+// VMOCK REPORT LIST RENDERING
+// ══════════════════════════════════════════════
+function renderVmockReportList(){
+  var list=document.getElementById('v-reports-list');
+  var badge=document.getElementById('v-report-count-badge');
+  var n=S.v.wb2List.length;
+
+  if(!n){list.innerHTML='';badge.style.display='none';return;}
+
+  badge.style.display='inline-flex';
+  badge.textContent=n+' report'+(n>1?'s':'')+' loaded';
+
+  var html='<div class="reports-summary-bar"><div class="rsum-count">✅ <strong>'+n+'</strong> VMOCK report'+(n>1?'s':'')+' loaded — will be consolidated before matching</div><button class="reports-clear-all" onclick="clearAllReports()">Clear all</button></div>';
+  html+='<div class="report-list">';
+  S.v.wb2List.forEach(function(entry,idx){
+    html+='<div class="report-pill">'+
+      '<div class="report-pill-icon">📊</div>'+
+      '<div class="report-pill-num">'+(idx+1)+'</div>'+
+      '<span class="report-pill-name">'+escHtml(entry.name)+'</span>'+
+      '<span class="report-pill-meta">'+fmtSize(entry.size)+'</span>'+
+      '<button class="report-pill-remove" onclick="removeReport('+idx+')" title="Remove this report">✕</button>'+
+    '</div>';
+  });
+  html+='</div>';
+  list.innerHTML=html;
+
+  // mark step 2 done
+  markDone('v',2);
+  checkReady('v');
+  scanVmock();
+}
+
+function removeReport(idx){
+  S.v.wb2List.splice(idx,1);
+  renderVmockReportList();
+  if(!S.v.wb2List.length){
+    document.getElementById('v-card2').classList.remove('is-done');
+    document.getElementById('v-badge2').textContent='2';
+    document.getElementById('v-pill2').textContent='Waiting';
+    document.getElementById('v-example-row').style.display='none';
+  }
+  checkReady('v');
+}
+
+function clearAllReports(){
+  S.v.wb2List=[];
+  renderVmockReportList();
+  document.getElementById('v-card2').classList.remove('is-done');
+  document.getElementById('v-badge2').textContent='2';
+  document.getElementById('v-pill2').textContent='Waiting';
+  document.getElementById('v-example-row').style.display='none';
+  checkReady('v');
+}
+
+// ══════════════════════════════════════════════
 // SCANS
 // ══════════════════════════════════════════════
-function scanVmock(){if(!S.v.wb2)return;var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});if(ex){var em=String(ex[eH]).trim();document.getElementById('v-ex-email').textContent=em;document.getElementById('v-ex-id').textContent=em.split('@')[0];document.getElementById('v-example-row').style.display='block';}var has=rows.length&&sH in rows[0];document.getElementById('v-map-status-col').textContent=sH+' column';var b=document.getElementById('v-map-status-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');validateVmock();}
+function scanVmock(){
+  if(!S.v.wb2List.length)return;
+  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  var scH=document.getElementById('v-cfg-vmock-score').value.trim()||'Highest Attempt Level';
+
+  // show sample from first report
+  var firstWb=S.v.wb2List[0].wb;
+  var rows=XLSX.utils.sheet_to_json(firstWb.Sheets[firstWb.SheetNames[0]],{defval:''});
+  var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});
+  if(ex){
+    var em=String(ex[eH]).trim();
+    document.getElementById('v-ex-email').textContent=em;
+    document.getElementById('v-ex-id').textContent=em.split('@')[0];
+    document.getElementById('v-ex-status').textContent=String(ex[sH]||'—');
+    document.getElementById('v-ex-score').textContent=String(ex[scH]||'—');
+    document.getElementById('v-example-row').style.display='block';
+  }
+
+  // update mapping badges based on first report
+  var has=rows.length&&sH in rows[0];
+  document.getElementById('v-map-status-col').textContent=sH+' column';
+  var sb=document.getElementById('v-map-status-badge');sb.textContent=has?'found':'not found';sb.className='map-badge '+(has?'badge-ok':'badge-warn');
+
+  var hasSc=rows.length&&scH in rows[0];
+  document.getElementById('v-map-score-col').textContent=scH+' column';
+  var scb=document.getElementById('v-map-score-badge');scb.textContent=hasSc?'found':'not found';scb.className='map-badge '+(hasSc?'badge-ok':'badge-warn');
+
+  validateVmock();
+}
+
 function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb2.Sheets[S.f.wb2.SheetNames[0]],{defval:''});var idH=document.getElementById('f-cfg-forms-id').value.trim()||'Student ID';var has=rows.length&&idH in rows[0];document.getElementById('f-map-id-col').textContent=idH+' column';var b=document.getElementById('f-map-id-badge');b.textContent=has?'found':'not found';b.className='map-badge '+(has?'badge-ok':'badge-warn');if(has){var ids={};rows.forEach(function(r){var id=String(r[idH]||'').trim();if(id)ids[id]=true;});var keys=Object.keys(ids);document.getElementById('f-ex-ids').textContent=keys.slice(0,5).join(', ')+(keys.length>5?' …':'');document.getElementById('f-ex-total').textContent=keys.length+' unique IDs across '+rows.length+' responses';document.getElementById('f-example-row').style.display='block';}validateForms();}
 
 // ══════════════════════════════════════════════
-// FILE WIRING
+// FILE WIRING — VMOCK (multi-file)
 // ══════════════════════════════════════════════
-function wireSecondary(inputId,p){
-  document.getElementById(inputId).addEventListener('change',function(){var f=this.files[0];if(!f)return;readWb(f,function(wb){S[p].wb2=wb;showFilePill(p+'-file2-info',f);markDone(p,2);if(p==='v')scanVmock();else scanForms();checkReady(p);setProgStep(p,3);});});
-  var dz=document.getElementById(p+'-dz2');if(!dz)return;
-  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById(inputId);var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
-}
-wireSecondary('v-file2','v');wireSecondary('f-file2','f');
-['v-cfg-vmock-email','v-cfg-vmock-status'].forEach(function(id){document.getElementById(id).addEventListener('input',scanVmock);});
+(function(){
+  var inp=document.getElementById('v-file2');
+  var dz=document.getElementById('v-dz2');
+
+  function handleFiles(files){
+    var pending=files.length,done=0;
+    Array.from(files).forEach(function(f){
+      // avoid duplicates by name
+      var already=S.v.wb2List.some(function(e){return e.name===f.name;});
+      if(already){pending--;if(++done>=pending)renderVmockReportList();return;}
+      readWb(f,function(wb){
+        S.v.wb2List.push({wb:wb,name:f.name,size:f.size});
+        if(++done>=pending)renderVmockReportList();
+      });
+    });
+    if(!files.length)return;
+    // reset the input so same file can be re-added after remove
+    inp.value='';
+  }
+
+  inp.addEventListener('change',function(){handleFiles(this.files);});
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
+  dz.addEventListener('drop',function(e){
+    e.preventDefault();dz.classList.remove('drag-over');
+    handleFiles(e.dataTransfer.files);
+  });
+})();
+
+// ══════════════════════════════════════════════
+// FILE WIRING — FORMS (single)
+// ══════════════════════════════════════════════
+(function(){
+  var inp=document.getElementById('f-file2');
+  var dz=document.getElementById('f-dz2');
+  inp.addEventListener('change',function(){var f=this.files[0];if(!f)return;readWb(f,function(wb){S.f.wb2=wb;showFilePill('f-file2-info',f);markDone('f',2);scanForms();checkReady('f');setProgStep('f',3);});});
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event('change'));});
+})();
+
+['v-cfg-vmock-email','v-cfg-vmock-status','v-cfg-vmock-score'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',scanVmock);
+});
 document.getElementById('f-cfg-forms-id').addEventListener('input',scanForms);
 
 document.getElementById('a-file1').addEventListener('change',function(){
@@ -1040,31 +1235,16 @@ function updateScorePreview(){
 }
 
 // ══════════════════════════════════════════════
-// ROOM BUILDER — COMPACT/EXPANDABLE
+// ROOM BUILDER
 // ══════════════════════════════════════════════
-function getPillarOptions(){
-  return [];
-}
-
 function addRoom(){
   var id=++roomIdCounter;
   roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:'',isShared:false});
   expandedRooms[id]=true;
   renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
-
-function deleteRoom(id){
-  roomDefs=roomDefs.filter(function(r){return r.id!==id;});
-  delete expandedRooms[id];
-  renderRoomList();validateAssign();updateRoomCapacitySummary();
-}
-
-function toggleRoomExpand(id){
-  expandedRooms[id]=!expandedRooms[id];
-  var row=document.getElementById('room-row-'+id);
-  if(row) row.classList.toggle('expanded',!!expandedRooms[id]);
-}
-
+function deleteRoom(id){roomDefs=roomDefs.filter(function(r){return r.id!==id;});delete expandedRooms[id];renderRoomList();validateAssign();updateRoomCapacitySummary();}
+function toggleRoomExpand(id){expandedRooms[id]=!expandedRooms[id];var row=document.getElementById('room-row-'+id);if(row)row.classList.toggle('expanded',!!expandedRooms[id]);}
 function onRoomChange(id){
   var r=roomDefs.find(function(r){return r.id===id;});if(!r)return;
   r.name=(document.getElementById('rname-'+id).value||'').trim();
@@ -1077,37 +1257,19 @@ function onRoomChange(id){
   var nameEl=document.getElementById('rcard-name-'+id);if(nameEl)nameEl.textContent=r.name||'Room '+id;
   var ptEl=document.getElementById('rpillar-tag-'+id);if(ptEl){ptEl.textContent=r.pillar||'Shared';ptEl.className='room-tag '+(r.isShared?'shared':'pillar');}
   var capEl=document.getElementById('rcap-tag-'+id);if(capEl)capEl.textContent='Cap: '+r.cap;
-  var vEl=document.getElementById('rvenue-tag-'+id);
-  if(vEl){if(r.venue){vEl.textContent=r.venue;vEl.style.display='inline-flex';}else vEl.style.display='none';}
-  var dEl=document.getElementById('rdate-tag-'+id);
-  if(dEl){if(r.date){dEl.textContent=r.date;dEl.style.display='inline-flex';}else dEl.style.display='none';}
+  var vEl=document.getElementById('rvenue-tag-'+id);if(vEl){if(r.venue){vEl.textContent=r.venue;vEl.style.display='inline-flex';}else vEl.style.display='none';}
+  var dEl=document.getElementById('rdate-tag-'+id);if(dEl){if(r.date){dEl.textContent=r.date;dEl.style.display='inline-flex';}else dEl.style.display='none';}
   validateAssign();updateRoomCapacitySummary();
 }
-
 function renderRoomList(){
   var list=document.getElementById('room-list');list.innerHTML='';
-  var pillars=getPillarOptions();
   var countLabel=document.getElementById('room-count-label');
-  if(countLabel) countLabel.textContent=roomDefs.length?'('+roomDefs.length+')':'';
-
-  if(!roomDefs.length){
-    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — click <strong>+ Add room</strong> to get started</div>';
-    return;
-  }
-
+  if(countLabel)countLabel.textContent=roomDefs.length?'('+roomDefs.length+')':'';
+  if(!roomDefs.length){list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — click <strong>+ Add room</strong> to get started</div>';return;}
   roomDefs.forEach(function(r,idx){
-    var isExp=!!expandedRooms[r.id];
-    var isShared=!r.pillar;
-    var div=document.createElement('div');
-    div.className='room-row'+(isExp?' expanded':'');
-    div.id='room-row-'+r.id;
-
-    var pillarOpts='<option value="">Shared / Overflow (no home pillar)</option>';
-    pillars.forEach(function(p){pillarOpts+='<option value="'+p+'"'+(r.pillar===p?' selected':'')+'>'+p+' — home room</option>';});
-
-    var venueDisplay=r.venue?'display:inline-flex':'display:none';
-    var dateDisplay=r.date?'display:inline-flex':'display:none';
-
+    var isExp=!!expandedRooms[r.id];var isShared=!r.pillar;var div=document.createElement('div');
+    div.className='room-row'+(isExp?' expanded':'');div.id='room-row-'+r.id;
+    var venueDisplay=r.venue?'display:inline-flex':'display:none';var dateDisplay=r.date?'display:inline-flex':'display:none';
     div.innerHTML=
       '<div class="room-row-head" onclick="toggleRoomExpand('+r.id+')">'+
         '<div class="room-num-badge">'+(idx+1)+'</div>'+
@@ -1139,88 +1301,195 @@ function renderRoomList(){
     list.appendChild(div);
   });
 }
-
 function updateRoomCapacitySummary(){
   var sum=document.getElementById('a-room-summary');
   if(!roomDefs.length){sum.style.display='none';return;}
   var total=roomDefs.reduce(function(s,r){return s+(r.cap||0);},0);
-  document.getElementById('a-total-cap').textContent=total;
-  document.getElementById('a-room-count').textContent=roomDefs.length;
+  document.getElementById('a-total-cap').textContent=total;document.getElementById('a-room-count').textContent=roomDefs.length;
   var note='';
-  if(S.a.wb1&&S.a.sheet){
-    var ws=S.a.wb1.Sheets[S.a.sheet];if(ws){
-      var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-      var scC=aCols.score>=0?aCols.score:colIdx(document.getElementById('a-cfg-score-col').value||'D');
-      var threshold=parseFloat(document.getElementById('a-cfg-threshold').value)||70;
-      var eligible=0,total2=0;
-      for(var R=hr+1;R<=range.e.r;R++){
-        var id=cellVal(ws,R,aCols.id>=0?aCols.id:0).replace(/\s/g,'');if(!id)continue;
-        total2++;var sc=parseFloat(cellVal(ws,R,scC));if(!isNaN(sc)&&sc<threshold)eligible++;
-      }
-      note='· ~'+eligible+' eligible of '+total2+' students';
-      if(eligible>total)note+=' <span style="color:var(--danger);font-weight:600">⚠ '+(eligible-total)+' may overflow</span>';
-      else note+=' <span style="color:var(--success);font-weight:600">✓ capacity sufficient</span>';
-    }
-  }
-  document.getElementById('a-eligible-note').innerHTML=note;
-  sum.style.display='block';
+  if(S.a.wb1&&S.a.sheet){var ws=S.a.wb1.Sheets[S.a.sheet];if(ws){var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;var scC=aCols.score>=0?aCols.score:colIdx(document.getElementById('a-cfg-score-col').value||'D');var threshold=parseFloat(document.getElementById('a-cfg-threshold').value)||70;var eligible=0,total2=0;for(var R=hr+1;R<=range.e.r;R++){var id=cellVal(ws,R,aCols.id>=0?aCols.id:0).replace(/\s/g,'');if(!id)continue;total2++;var sc=parseFloat(cellVal(ws,R,scC));if(!isNaN(sc)&&sc<threshold)eligible++;}note='· ~'+eligible+' eligible of '+total2+' students';if(eligible>total)note+=' <span style="color:var(--danger);font-weight:600">⚠ '+(eligible-total)+' may overflow</span>';else note+=' <span style="color:var(--success);font-weight:600">✓ capacity sufficient</span>';}}
+  document.getElementById('a-eligible-note').innerHTML=note;sum.style.display='block';
 }
 
 document.getElementById('a-cfg-threshold').addEventListener('input',function(){updateScorePreview();updateRoomCapacitySummary();});
 document.getElementById('a-cfg-score-col').addEventListener('input',function(){updateScorePreview();updateRoomCapacitySummary();});
 
 // ══════════════════════════════════════════════
-// FORMS — UNMATCHED TOGGLE
+// FORMS UNMATCHED TOGGLE
 // ══════════════════════════════════════════════
-function toggleUnmatched(){
-  var body=document.getElementById('f-unmatched-body');
-  var toggle=document.getElementById('f-unmatched-toggle');
-  body.classList.toggle('open');
-  toggle.textContent=body.classList.contains('open')?'Hide ↑':'Show ↓';
-}
+function toggleUnmatched(){var body=document.getElementById('f-unmatched-body');var toggle=document.getElementById('f-unmatched-toggle');body.classList.toggle('open');toggle.textContent=body.classList.contains('open')?'Hide ↑':'Show ↓';}
 
 // ══════════════════════════════════════════════
-// RUN VMOCK
+// RUN VMOCK — multi-report consolidation
 // ══════════════════════════════════════════════
 function runVmock(){
-  var wb=getIntakeWb('v'),sheet=getIntakeSheet('v');
-  var idCol=colIdx(document.getElementById('v-cfg-id-col').value||'A');
-  var stCol=colIdx(document.getElementById('v-cfg-status-col').value||'J');
-  var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
-  var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
-  document.getElementById('v-log').innerHTML='';document.getElementById('v-results-section').style.display='block';
+  var wb=getIntakeWb('v'), sheet=getIntakeSheet('v');
+  var idCol     = colIdx(document.getElementById('v-cfg-id-col').value||'A');
+  var stCol     = colIdx(document.getElementById('v-cfg-status-col').value||'J');
+  var scOutCol  = colIdx(document.getElementById('v-cfg-score-out-col').value||'K');
+  var eH        = document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
+  var sH        = document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
+  var scH       = document.getElementById('v-cfg-vmock-score').value.trim()||'Highest Attempt Level';
+
+  document.getElementById('v-log').innerHTML='';
+  document.getElementById('v-results-section').style.display='block';
   setTimeout(function(){document.getElementById('v-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
-  var ws=wb.Sheets[sheet];if(!ws){flog('v-log','Sheet "'+sheet+'" not found.','err');return;}
+
+  var ws=wb.Sheets[sheet];
+  if(!ws){flog('v-log','Sheet "'+sheet+'" not found.','err');return;}
   flog('v-log','Intake sheet loaded: "'+sheet+'"','info');
-  var rows=XLSX.utils.sheet_to_json(S.v.wb2.Sheets[S.v.wb2.SheetNames[0]],{defval:''});
-  flog('v-log','VMOCK report: '+rows.length+' rows','info');
-  var map={},skip=0;
-  rows.forEach(function(r){var em=String(r[eH]||'').trim();var id=em.includes('@')?em.split('@')[0].trim():'';var st=String(r[sH]||'').trim();if(id)map[id]=st;else skip++;});
-  flog('v-log','Parsed '+Object.keys(map).length+' student IDs from emails'+(skip?' ('+skip+' rows had no email)':''),'ok');
-  var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
-  var existHdr=cellVal(ws,hr,stCol),isFirst=!existHdr.toLowerCase().includes('status'),sCo=stCol;
-  if(isFirst){sCo=range.e.c+1;writeCell(ws,hr,sCo,'Status');range.e.c=sCo;ws['!ref']=XLSX.utils.encode_range(range);flog('v-log','No Status column found — creating one (first-time mode)','warn');}
-  else{flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');}
-  var cSub=0,cAtt=0,cYta=0,cMiss=0,cUpdated=0,cKept=0;
-  for(var R=hr+1;R<=range.e.r;R++){
-    var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;
-    var oldStatus=cellVal(ws,R,sCo),newStatus=map[iid]||'';
-    if(isFirst){if(newStatus){writeCell(ws,R,sCo,newStatus);cUpdated++;}else{writeCell(ws,R,sCo,'Not Found');cMiss++;}}
-    else{if(!newStatus){if(!oldStatus||oldStatus==='Not Found')cMiss++;}else{var oldR=statusRank(oldStatus),newR=statusRank(newStatus);if(newR>oldR){writeCell(ws,R,sCo,newStatus);cUpdated++;}else{cKept++;}}}
+
+  // ── STEP 1: Build consolidated map across ALL reports ──
+  // map[studentId] = { status: 'Submitted'|'Attempted'|'Yet to Attempt', score: number|null }
+  // Rules: keep highest status rank; keep highest score (even if from different report)
+  var map = {};  // { id: { status, score } }
+  var totalRowsRead = 0;
+
+  S.v.wb2List.forEach(function(entry, rIdx){
+    var reportRows = XLSX.utils.sheet_to_json(entry.wb.Sheets[entry.wb.SheetNames[0]], {defval:''});
+    var rCount = 0, rSkip = 0;
+    reportRows.forEach(function(r){
+      var em  = String(r[eH]||'').trim();
+      var id  = em.includes('@') ? em.split('@')[0].trim() : '';
+      var st  = String(r[sH]||'').trim();
+      var scRaw = r[scH];
+      var sc  = (scRaw !== '' && scRaw !== undefined && scRaw !== null) ? parseFloat(scRaw) : NaN;
+
+      if(!id){rSkip++;return;}
+      rCount++;
+
+      if(!map[id]){
+        map[id] = {status: st, score: isNaN(sc)?null:sc};
+      } else {
+        // status: keep higher rank
+        if(statusRank(st) > statusRank(map[id].status)){
+          map[id].status = st;
+        }
+        // score: keep higher numeric value
+        if(!isNaN(sc)){
+          if(map[id].score === null || sc > map[id].score){
+            map[id].score = sc;
+          }
+        }
+      }
+    });
+    totalRowsRead += rCount;
+    flog('v-log','Report '+(rIdx+1)+' ("'+entry.name+'"): '+rCount+' student IDs parsed'+(rSkip?' · '+rSkip+' rows skipped (no email)':''),'info');
+  });
+
+  flog('v-log','Consolidated: '+Object.keys(map).length+' unique student IDs across '+S.v.wb2List.length+' report(s)','ok');
+
+  // ── STEP 2: Check if Status column already exists ──
+  var range    = XLSX.utils.decode_range(ws['!ref']);
+  var hr       = range.s.r;
+  var existHdr = cellVal(ws, hr, stCol);
+  var isFirst  = !existHdr.toLowerCase().includes('status');
+  var sCo      = stCol;
+  var scoCo    = scOutCol;
+
+  if(isFirst){
+    // Expand range for new columns
+    var newEnd = Math.max(range.e.c, stCol, scOutCol);
+    writeCell(ws, hr, stCol,   'Status');
+    writeCell(ws, hr, scOutCol,'Highest Attempt Level');
+    range.e.c = newEnd;
+    ws['!ref'] = XLSX.utils.encode_range(range);
+    flog('v-log','No Status column found — creating Status (col '+colLetter(stCol)+') and Score (col '+colLetter(scOutCol)+') — first-time mode','warn');
+  } else {
+    // Status col exists; check score col header
+    var existScHdr = cellVal(ws, hr, scOutCol);
+    if(!existScHdr){
+      writeCell(ws, hr, scOutCol, 'Highest Attempt Level');
+      if(scOutCol > range.e.c){range.e.c = scOutCol; ws['!ref'] = XLSX.utils.encode_range(range);}
+    }
+    flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');
   }
+
+  // ── STEP 3: Walk intake rows and write status + score ──
+  var cSub=0,cAtt=0,cYta=0,cMiss=0,cUpdated=0,cKept=0;
+
+  for(var R=hr+1; R<=range.e.r; R++){
+    var iid = cellVal(ws, R, idCol).replace(/\s/g,'');
+    if(!iid) continue;
+
+    var entry = map[iid] || null;
+
+    if(isFirst){
+      if(entry){
+        writeCell(ws, R, sCo, entry.status||'Yet to Attempt');
+        if(entry.score !== null && !isNaN(entry.score)){
+          writeCellNum(ws, R, scoCo, entry.score);
+        } else {
+          writeCell(ws, R, scoCo, '');
+        }
+        cUpdated++;
+      } else {
+        writeCell(ws, R, sCo,  'Not Found');
+        writeCell(ws, R, scoCo,'');
+        cMiss++;
+      }
+    } else {
+      if(!entry){
+        // no data in any report — leave existing status, blank score if none
+        var curSt = cellVal(ws, R, sCo);
+        if(!curSt || curSt==='Not Found') cMiss++;
+      } else {
+        var oldStatus = cellVal(ws, R, sCo);
+        var oldRank   = statusRank(oldStatus);
+        var newRank   = statusRank(entry.status||'');
+
+        // Status: overwrite if new rank is higher OR equal (always overwrite per requirement)
+        if(newRank >= oldRank){
+          writeCell(ws, R, sCo, entry.status||'Yet to Attempt');
+          if(newRank > oldRank) cUpdated++; else cKept++;
+        } else {
+          cKept++;
+        }
+
+        // Score: read existing, keep highest
+        var curScCell = ws[XLSX.utils.encode_cell({r:R,c:scoCo})];
+        var curSc = curScCell ? parseFloat(curScCell.v) : NaN;
+        if(entry.score !== null && !isNaN(entry.score)){
+          if(isNaN(curSc) || entry.score > curSc){
+            writeCellNum(ws, R, scoCo, entry.score);
+          }
+        }
+      }
+    }
+  }
+
+  // ── STEP 4: Count final statuses ──
   cSub=0;cAtt=0;cYta=0;cMiss=0;
-  for(var R2=hr+1;R2<=range.e.r;R2++){var fs=cellVal(ws,R2,sCo);if(fs==='Submitted')cSub++;else if(fs==='Attempted')cAtt++;else if(fs==='Yet to Attempt')cYta++;else if(fs==='Not Found'||(!fs&&cellVal(ws,R2,idCol).replace(/\s/g,'')))cMiss++;}
-  document.getElementById('v-s-sub').textContent=cSub;document.getElementById('v-s-att').textContent=cAtt;document.getElementById('v-s-new').textContent=cUpdated;document.getElementById('v-s-pend').textContent=cYta;document.getElementById('v-s-miss').textContent=cMiss;
+  for(var R2=hr+1;R2<=range.e.r;R2++){
+    var fs=cellVal(ws,R2,sCo);
+    var rid=cellVal(ws,R2,idCol).replace(/\s/g,'');
+    if(!rid) continue;
+    if(fs==='Submitted')cSub++;
+    else if(fs==='Attempted')cAtt++;
+    else if(fs==='Yet to Attempt')cYta++;
+    else if(fs==='Not Found'||!fs) cMiss++;
+  }
+
+  document.getElementById('v-s-reports').textContent = S.v.wb2List.length;
+  document.getElementById('v-s-sub').textContent=cSub;
+  document.getElementById('v-s-att').textContent=cAtt;
+  document.getElementById('v-s-new').textContent=cUpdated;
+  document.getElementById('v-s-pend').textContent=cYta;
+  document.getElementById('v-s-miss').textContent=cMiss;
+
   var pill=document.getElementById('v-mode-pill');
   if(isFirst){pill.textContent='🆕 First-time Setup';pill.style.cssText='background:var(--gold-lt);color:var(--warn);border:1px solid #E8D09A;';}
   else{pill.textContent='🔄 Update Run';pill.style.cssText='background:var(--success-lt);color:var(--success);border:1px solid #A8D5BE;';}
-  if(isFirst){flog('v-log',cUpdated+' students filled from VMOCK report','ok');flog('v-log',cMiss+' not found — marked "Not Found"','warn');}
-  else{flog('v-log',cUpdated+' students updated (higher-ranked status applied)','ok');flog('v-log',cKept+' students unchanged (existing status was equal or higher)','ok');flog('v-log','Final: '+cSub+' Submitted · '+cAtt+' Attempted · '+cYta+' Yet to Attempt · '+cMiss+' Not Found','info');}
+
+  flog('v-log','Status written to col '+colLetter(stCol)+' · Score written to col '+colLetter(scOutCol),'ok');
+  if(isFirst){flog('v-log',cUpdated+' students filled from consolidated reports','ok');flog('v-log',cMiss+' not found — marked "Not Found"','warn');}
+  else{flog('v-log',cUpdated+' students updated with higher-ranked status','ok');flog('v-log',cKept+' students kept (equal or existing higher status)','info');flog('v-log','Scores: highest value across all reports written','ok');flog('v-log','Final: '+cSub+' Submitted · '+cAtt+' Attempted · '+cYta+' Yet to Attempt · '+cMiss+' Not Found','info');}
+
   var ts=fmtTs();var total=cSub+cAtt+cYta+cMiss;
-  document.getElementById('v-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+total+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
+  document.getElementById('v-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+total+' students &nbsp;·&nbsp; '+S.v.wb2List.length+' report(s) consolidated &nbsp;·&nbsp; sheet: "'+sheet+'"';
   flog('v-log','File ready to download','ok');
   S.v.resultWb=wb;setProgStep('v',4);document.getElementById('tdot-vmock').classList.add('show');
-  summaryData.vmock={sub:cSub,att:cAtt,yta:cYta,miss:cMiss,updated:cUpdated,total:total,file:sheet,time:ts,mode:isFirst?'First-time':'Update'};
+  summaryData.vmock={sub:cSub,att:cAtt,yta:cYta,miss:cMiss,updated:cUpdated,total:total,file:sheet,time:ts,mode:isFirst?'First-time':'Update',reports:S.v.wb2List.length};
   document.getElementById('tdot-summary').classList.add('show');
 }
 
@@ -1245,10 +1514,7 @@ function runForms(){
   writeCell(ws,hr,newCol,colName);range.e.c=newCol;ws['!ref']=XLSX.utils.encode_range(range);
   flog('f-log','New column "'+colName+'" appended','info');
   var intakeIds={};
-  for(var R0=hr+1;R0<=range.e.r;R0++){
-    var iid0=cellVal(ws,R0,idCol).replace(/\s/g,'');
-    if(iid0)intakeIds[iid0]=true;
-  }
+  for(var R0=hr+1;R0<=range.e.r;R0++){var iid0=cellVal(ws,R0,idCol).replace(/\s/g,'');if(iid0)intakeIds[iid0]=true;}
   var cR=0,cNo=0,cT=0;
   for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,'Responded');cR++;}else{writeCell(ws,R,newCol,'Not Responded');cNo++;}}
   var unmatched=Object.keys(responded).filter(function(id){return !intakeIds[id];}).sort();
@@ -1256,21 +1522,10 @@ function runForms(){
   var ts=fmtTs();
   document.getElementById('f-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+cT+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
   flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');
-  var panel=document.getElementById('f-unmatched-panel');
-  var grid=document.getElementById('f-unmatched-grid');
-  document.getElementById('f-unmatched-count').textContent=unmatched.length;
-  grid.innerHTML='';
-  if(unmatched.length>0){
-    panel.style.display='block';
-    unmatched.forEach(function(id){
-      var chip=document.createElement('div');chip.className='unmatched-id-chip';chip.textContent=id;grid.appendChild(chip);
-    });
-    flog('f-log',unmatched.length+' IDs in Forms export had no match in intake list — see panel above','warn');
-  } else {
-    panel.style.display='block';
-    grid.innerHTML='<div class="unmatched-empty">✅ All IDs in the Forms export matched students in the intake list.</div>';
-    flog('f-log','All Forms IDs matched intake list — no unmatched entries','ok');
-  }
+  var panel=document.getElementById('f-unmatched-panel');var grid=document.getElementById('f-unmatched-grid');
+  document.getElementById('f-unmatched-count').textContent=unmatched.length;grid.innerHTML='';
+  if(unmatched.length>0){panel.style.display='block';unmatched.forEach(function(id){var chip=document.createElement('div');chip.className='unmatched-id-chip';chip.textContent=id;grid.appendChild(chip);});flog('f-log',unmatched.length+' IDs in Forms export had no match in intake list — see panel above','warn');}
+  else{panel.style.display='block';grid.innerHTML='<div class="unmatched-empty">✅ All IDs in the Forms export matched students in the intake list.</div>';flog('f-log','All Forms IDs matched intake list — no unmatched entries','ok');}
   flog('f-log','File ready to download','ok');
   S.f.resultWb=wb;setProgStep('f',4);document.getElementById('tdot-forms').classList.add('show');
   summaryData.forms={resp:cR,noresp:cNo,total:cT,colName:colName,file:sheet,time:ts,unmatched:unmatched.length};
@@ -1278,127 +1533,49 @@ function runForms(){
 }
 
 // ══════════════════════════════════════════════
-// RUN ASSIGNMENT — pillar-first, minimal mixing
+// RUN ASSIGNMENT
 // ══════════════════════════════════════════════
 function runAssign(){
   var ws=S.a.wb1.Sheets[S.a.sheet];if(!ws){flog('a-log','Sheet not found.','err');return;}
-  document.getElementById('a-log').innerHTML='';
-  document.getElementById('a-results-section').style.display='block';
+  document.getElementById('a-log').innerHTML='';document.getElementById('a-results-section').style.display='block';
   setTimeout(function(){document.getElementById('a-results-section').scrollIntoView({behavior:'smooth',block:'start'});},100);
-
   var idC  = aCols.id>=0    ? aCols.id    : colIdx(document.getElementById('a-cfg-id').value||'A');
   var nmC  = aCols.name>=0  ? aCols.name  : colIdx(document.getElementById('a-cfg-name').value||'B');
   var plC  = aCols.pillar>=0 ? aCols.pillar: colIdx(document.getElementById('a-cfg-pillar').value||'C');
   var scColOverride = document.getElementById('a-cfg-score-col').value.trim();
   var scC  = scColOverride ? colIdx(scColOverride) : (aCols.score>=0 ? aCols.score : colIdx('D'));
   var threshold = parseFloat(document.getElementById('a-cfg-threshold').value)||70;
-
-  flog('a-log','Sheet: "'+S.a.sheet+'"','info');
-  flog('a-log','Score column: '+colLetter(scC)+' · Threshold: < '+threshold,'info');
-
+  flog('a-log','Sheet: "'+S.a.sheet+'"','info');flog('a-log','Score column: '+colLetter(scC)+' · Threshold: < '+threshold,'info');
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r;
   var eligible=[],ineligible=[],totalRead=0;
   for(var R=hr+1;R<=range.e.r;R++){
-    var id=cellVal(ws,R,idC).replace(/\s/g,'');if(!id)continue;
-    totalRead++;
-    var sc=parseFloat(cellVal(ws,R,scC));
-    if(isNaN(sc))sc=0;
+    var id=cellVal(ws,R,idC).replace(/\s/g,'');if(!id)continue;totalRead++;
+    var sc=parseFloat(cellVal(ws,R,scC));if(isNaN(sc))sc=0;
     var student={id:id,name:cellVal(ws,R,nmC),pillar:cellVal(ws,R,plC).trim(),score:sc,row:R};
-    if(sc<threshold)eligible.push(student);
-    else ineligible.push(student);
+    if(sc<threshold)eligible.push(student);else ineligible.push(student);
   }
   flog('a-log',totalRead+' students read — '+eligible.length+' eligible (score < '+threshold+'), '+ineligible.length+' ineligible','info');
-
-  var rooms=roomDefs.map(function(r){
-    return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,isShared:r.isShared||!r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};
-  });
-
+  var rooms=roomDefs.map(function(r){return {id:r.id,name:r.name,venue:r.venue,date:r.date,time:r.time||'',cap:r.cap,pillar:r.pillar,isShared:r.isShared||!r.pillar,students:[],shortName:r.name.replace(/[^a-zA-Z0-9\-_]/g,'').slice(0,28)||('Room'+r.id)};});
   var byPillar={};
-  eligible.forEach(function(s){
-    var p=s.pillar||'(none)';
-    if(!byPillar[p])byPillar[p]=[];
-    byPillar[p].push(s);
-  });
-  Object.keys(byPillar).forEach(function(p){
-    byPillar[p].sort(function(a,b){return a.name.localeCompare(b.name);});
-  });
-
-  var unassigned=[];
-  var sharedRooms=rooms.filter(function(r){return r.isShared;});
-  var dedicatedRooms=rooms.filter(function(r){return !r.isShared;});
-
+  eligible.forEach(function(s){var p=s.pillar||'(none)';if(!byPillar[p])byPillar[p]=[];byPillar[p].push(s);});
+  Object.keys(byPillar).forEach(function(p){byPillar[p].sort(function(a,b){return a.name.localeCompare(b.name);});});
+  var unassigned=[];var sharedRooms=rooms.filter(function(r){return r.isShared;});var dedicatedRooms=rooms.filter(function(r){return !r.isShared;});
   function roomRemaining(r){return r.cap-r.students.length;}
-
-  function bestOverflowRoom(){
-    var best=null,bestR=-1;
-    sharedRooms.forEach(function(r){
-      var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
-    });
-    if(best)return best;
-    dedicatedRooms.forEach(function(r){
-      var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}
-    });
-    return best;
-  }
-
+  function bestOverflowRoom(){var best=null,bestR=-1;sharedRooms.forEach(function(r){var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}});if(best)return best;dedicatedRooms.forEach(function(r){var rem=roomRemaining(r);if(rem>0&&rem>bestR){bestR=rem;best=r;}});return best;}
   Object.keys(byPillar).sort().forEach(function(pillar){
-    var pool=byPillar[pillar].slice();
-    var homeRooms=dedicatedRooms.filter(function(r){return r.pillar===pillar;});
-    var placed=0;
-
-    if(homeRooms.length){
-      homeRooms.forEach(function(room){
-        while(pool.length&&roomRemaining(room)>0){
-          var s=pool.shift();s.assignedRoom=room.name;s.assignedVenue=room.venue;s.assignedDate=room.date;
-          room.students.push(s);placed++;
-        }
-      });
-    }
-
-    var overflowed=pool.length;
-    pool.forEach(function(s){
-      var r=bestOverflowRoom();
-      if(r){s.assignedRoom=r.name;s.assignedVenue=r.venue;s.assignedDate=r.date;r.students.push(s);}
-      else{s.assignedRoom='Unassigned';unassigned.push(s);}
-    });
-
+    var pool=byPillar[pillar].slice();var homeRooms=dedicatedRooms.filter(function(r){return r.pillar===pillar;});var placed=0;
+    if(homeRooms.length){homeRooms.forEach(function(room){while(pool.length&&roomRemaining(room)>0){var s=pool.shift();s.assignedRoom=room.name;s.assignedVenue=room.venue;s.assignedDate=room.date;room.students.push(s);placed++;}});}
+    var overflowed=pool.length;pool.forEach(function(s){var r=bestOverflowRoom();if(r){s.assignedRoom=r.name;s.assignedVenue=r.venue;s.assignedDate=r.date;r.students.push(s);}else{s.assignedRoom='Unassigned';unassigned.push(s);}});
     flog('a-log','Pillar "'+pillar+'": '+byPillar[pillar].length+' eligible'+(homeRooms.length?' — '+placed+' in home rooms'+(overflowed?' · '+overflowed+' overflow to buffer/shared':''):'— no home room, all to shared/overflow'),'info');
   });
-
   var totalAssigned=eligible.length-unassigned.length;
   flog('a-log',totalAssigned+' students assigned across '+rooms.filter(function(r){return r.students.length>0;}).length+' rooms','ok');
   if(unassigned.length)flog('a-log',unassigned.length+' students unassigned — all rooms full','warn');
-
-  document.getElementById('a-s-eligible').textContent=eligible.length;
-  document.getElementById('a-s-students').textContent=totalAssigned;
-  document.getElementById('a-s-rooms').textContent=rooms.filter(function(r){return r.students.length>0;}).length;
-  document.getElementById('a-s-ineligible').textContent=ineligible.length;
-  document.getElementById('a-s-overflow').textContent=unassigned.length;
-
-  var ts=fmtTs();
-  document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+eligible.length+' eligible students &nbsp;·&nbsp; score threshold: &lt;'+threshold;
-
+  document.getElementById('a-s-eligible').textContent=eligible.length;document.getElementById('a-s-students').textContent=totalAssigned;document.getElementById('a-s-rooms').textContent=rooms.filter(function(r){return r.students.length>0;}).length;document.getElementById('a-s-ineligible').textContent=ineligible.length;document.getElementById('a-s-overflow').textContent=unassigned.length;
+  var ts=fmtTs();document.getElementById('a-result-meta').innerHTML='<strong>Assigned at '+ts+'</strong> &nbsp;·&nbsp; '+eligible.length+' eligible students &nbsp;·&nbsp; score threshold: &lt;'+threshold;
   var grid=document.getElementById('a-room-results-grid');grid.innerHTML='';
-  rooms.forEach(function(rm){
-    if(!rm.students.length)return;
-    var pct=Math.round(rm.students.length/rm.cap*100);
-    var pillarsInRoom={};rm.students.forEach(function(s){if(s.pillar)pillarsInRoom[s.pillar]=true;});
-    var pillarList=Object.keys(pillarsInRoom).join(', ')||'—';
-    var card=document.createElement('div');card.className='room-result-card';
-    card.innerHTML=
-      '<div class="room-result-name">'+escHtml(rm.name)+'</div>'+
-      '<div class="room-result-pillar">'+escHtml(pillarList)+(rm.date?' · '+rm.date:'')+'</div>'+
-      '<div class="room-result-bar"><div class="room-result-fill" style="width:'+pct+'%"></div></div>'+
-      '<div class="room-result-nums"><span>'+rm.students.length+' students</span><span>'+rm.cap+' cap ('+pct+'%)</span></div>';
-    grid.appendChild(card);
-  });
-  if(unassigned.length){
-    var uc=document.createElement('div');uc.className='room-result-card';
-    uc.style.borderColor='var(--danger)';uc.style.background='var(--danger-lt)';
-    uc.innerHTML='<div class="room-result-name" style="color:var(--danger)">⚠ Unassigned</div><div class="room-result-pillar">All rooms were full</div><div class="room-result-nums"><span style="color:var(--danger);font-weight:700">'+unassigned.length+' students</span><span>in download</span></div>';
-    grid.appendChild(uc);
-  }
-
+  rooms.forEach(function(rm){if(!rm.students.length)return;var pct=Math.round(rm.students.length/rm.cap*100);var pillarsInRoom={};rm.students.forEach(function(s){if(s.pillar)pillarsInRoom[s.pillar]=true;});var pillarList=Object.keys(pillarsInRoom).join(', ')||'—';var card=document.createElement('div');card.className='room-result-card';card.innerHTML='<div class="room-result-name">'+escHtml(rm.name)+'</div><div class="room-result-pillar">'+escHtml(pillarList)+(rm.date?' · '+rm.date:'')+'</div><div class="room-result-bar"><div class="room-result-fill" style="width:'+pct+'%"></div></div><div class="room-result-nums"><span>'+rm.students.length+' students</span><span>'+rm.cap+' cap ('+pct+'%)</span></div>';grid.appendChild(card);});
+  if(unassigned.length){var uc=document.createElement('div');uc.className='room-result-card';uc.style.borderColor='var(--danger)';uc.style.background='var(--danger-lt)';uc.innerHTML='<div class="room-result-name" style="color:var(--danger)">⚠ Unassigned</div><div class="room-result-pillar">All rooms were full</div><div class="room-result-nums"><span style="color:var(--danger);font-weight:700">'+unassigned.length+' students</span><span>in download</span></div>';grid.appendChild(uc);}
   flog('a-log','File ready — one attendance sheet per room','ok');
   assignmentData={rooms:rooms,unassigned:unassigned,threshold:threshold,eligible:eligible.length,ineligible:ineligible.length};
   setProgStep('a',4);document.getElementById('tdot-assign').classList.add('show');
@@ -1412,74 +1589,28 @@ function runAssign(){
 function downloadResult(p){var wb=S[p].resultWb;if(!wb)return;XLSX.writeFile(wb,'UPOP_Intake_'+(p==='v'?'VMOCK':'Forms')+'_'+fmtDate()+'.xlsx');}
 
 function downloadAssignment(){
-  if(!assignmentData) return;
-  var wb = XLSX.utils.book_new();
-
-  function sc(ws, ref, bold, sz, bgRGB, fgRGB, hAlign, bdrStyle){
-    if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-    var bdr = bdrStyle !== false ? {bottom:{style:'thin', color:{rgb:'CCCCCC'}},right:{style:'thin', color:{rgb:'CCCCCC'}}} : {};
-    ws[ref].s = {font:{bold:!!bold, sz:sz||11, name:'Arial', color:{rgb:fgRGB||'000000'}},fill:bgRGB ? {patternType:'solid', fgColor:{rgb:bgRGB}} : {patternType:'none'},alignment:{horizontal:hAlign||'left', vertical:'center'},border:bdr};
-  }
-
+  if(!assignmentData)return;
+  var wb=XLSX.utils.book_new();
+  function sc(ws,ref,bold,sz,bgRGB,fgRGB,hAlign,bdrStyle){if(!ws[ref])ws[ref]={v:'',t:'s',w:''};var bdr=bdrStyle!==false?{bottom:{style:'thin',color:{rgb:'CCCCCC'}},right:{style:'thin',color:{rgb:'CCCCCC'}}}:{};ws[ref].s={font:{bold:!!bold,sz:sz||11,name:'Arial',color:{rgb:fgRGB||'000000'}},fill:bgRGB?{patternType:'solid',fgColor:{rgb:bgRGB}}:{patternType:'none'},alignment:{horizontal:hAlign||'left',vertical:'center'},border:bdr};}
   function makeAttendanceSheet(rm){
-    var pillarLabel = rm.pillar || 'UPOP';
-    var aoa = [
-      [pillarLabel, '', '', ''],
-      ['Date',  '', rm.date  || '', ''],
-      ['Time',  '', rm.time  || '', ''],
-      ['Venue', '', rm.venue || '', ''],
-      ['', '', '', ''],
-      ['', '', '', ''],
-      ['ID', 'Official Name', 'Acad Plan', 'Sign']
-    ];
-    rm.students.forEach(function(s){ aoa.push([s.id, s.name, s.pillar || pillarLabel, '']); });
-    var ws = XLSX.utils.aoa_to_sheet(aoa);
-    ws['!cols'] = [{wch:14}, {wch:36}, {wch:14}, {wch:14}];
-    var rh = [];
-    for(var i = 0; i < aoa.length; i++) rh.push({hpt: i===0 ? 26 : i < 6 ? 18 : 22});
-    ws['!rows'] = rh;
-    sc(ws,'A1', true, 13, null, '1B4332', 'left', false);
-    ['A2','A3','A4'].forEach(function(ref){ sc(ws, ref, true, 11, null, '555555', 'left', false); });
-    ['C2','C3','C4'].forEach(function(ref){ sc(ws, ref, false, 11, null, '111111', 'left', false); });
-    ['A7','B7','C7','D7'].forEach(function(ref){
-      if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-      ws[ref].s = {font:{bold:true, sz:11, name:'Arial', color:{rgb:'FFFFFF'}},fill:{patternType:'solid', fgColor:{rgb:'808080'}},alignment:{horizontal:'center', vertical:'center'},border:{bottom:{style:'medium', color:{rgb:'555555'}}, right:{style:'thin', color:{rgb:'999999'}}}};
-    });
-    for(var i = 0; i < rm.students.length; i++){
-      var exR = 8 + i;
-      var bg  = (i % 2 === 0) ? 'FFFFFF' : 'F2F2F2';
-      ['A','B','C','D'].forEach(function(col){
-        var ref = col + exR;
-        if(!ws[ref]) ws[ref] = {v:'', t:'s', w:''};
-        ws[ref].s = {font:{sz:11, name:'Arial', color:{rgb:'1A1A1A'}},fill:{patternType:'solid', fgColor:{rgb:bg}},alignment:{horizontal:'left', vertical:'center'},border:{bottom:{style:'thin', color:{rgb:'DDDDDD'}}, right:{style:'thin', color:{rgb:'DDDDDD'}}}};
-      });
-    }
+    var pillarLabel=rm.pillar||'UPOP';
+    var aoa=[[pillarLabel,'','',''],['Date','',rm.date||'',''],['Time','',rm.time||'',''],['Venue','',rm.venue||'',''],['','','',''],['','','',''],['ID','Official Name','Acad Plan','Sign']];
+    rm.students.forEach(function(s){aoa.push([s.id,s.name,s.pillar||pillarLabel,'']);});
+    var ws=XLSX.utils.aoa_to_sheet(aoa);ws['!cols']=[{wch:14},{wch:36},{wch:14},{wch:14}];
+    var rh=[];for(var i=0;i<aoa.length;i++)rh.push({hpt:i===0?26:i<6?18:22});ws['!rows']=rh;
+    sc(ws,'A1',true,13,null,'1B4332','left',false);['A2','A3','A4'].forEach(function(ref){sc(ws,ref,true,11,null,'555555','left',false);});['C2','C3','C4'].forEach(function(ref){sc(ws,ref,false,11,null,'111111','left',false);});
+    ['A7','B7','C7','D7'].forEach(function(ref){if(!ws[ref])ws[ref]={v:'',t:'s',w:''};ws[ref].s={font:{bold:true,sz:11,name:'Arial',color:{rgb:'FFFFFF'}},fill:{patternType:'solid',fgColor:{rgb:'808080'}},alignment:{horizontal:'center',vertical:'center'},border:{bottom:{style:'medium',color:{rgb:'555555'}},right:{style:'thin',color:{rgb:'999999'}}}};});
+    for(var i=0;i<rm.students.length;i++){var exR=8+i;var bg=(i%2===0)?'FFFFFF':'F2F2F2';['A','B','C','D'].forEach(function(col){var ref=col+exR;if(!ws[ref])ws[ref]={v:'',t:'s',w:''};ws[ref].s={font:{sz:11,name:'Arial',color:{rgb:'1A1A1A'}},fill:{patternType:'solid',fgColor:{rgb:bg}},alignment:{horizontal:'left',vertical:'center'},border:{bottom:{style:'thin',color:{rgb:'DDDDDD'}},right:{style:'thin',color:{rgb:'DDDDDD'}}}};});}
     return ws;
   }
-
-  var sheetN = 0;
-  assignmentData.rooms.forEach(function(rm){
-    if(!rm.students.length) return;
-    sheetN++;
-    var ws = makeAttendanceSheet(rm);
-    var safe = rm.name.replace(/[\\\/\?\*\[\]:]/g, '').trim().slice(0,31) || ('Room'+sheetN);
-    XLSX.utils.book_append_sheet(wb, ws, safe);
-  });
-
-  if(assignmentData.unassigned && assignmentData.unassigned.length){
-    var udata = [['Student ID','Official Name','Acad Plan','Score','Note']];
-    assignmentData.unassigned.forEach(function(s){ udata.push([s.id, s.name, s.pillar, s.score, 'All rooms full']); });
-    var uws = XLSX.utils.aoa_to_sheet(udata);
-    uws['!cols'] = [{wch:14},{wch:36},{wch:14},{wch:8},{wch:30}];
-    XLSX.utils.book_append_sheet(wb, uws, 'Unassigned');
-  }
-
-  var sdata = [['UPOP Class Assignment — ' + fmtDate()],['Score threshold: < ' + assignmentData.threshold],[],['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']];
-  assignmentData.rooms.forEach(function(r){ sdata.push([r.name, r.venue||'', r.date||'', r.time||'', r.pillar||'(shared)', r.cap, r.students.length, r.cap - r.students.length]); });
-  var sws = XLSX.utils.aoa_to_sheet(sdata);
-  sws['!cols'] = [{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
-  XLSX.utils.book_append_sheet(wb, sws, '_Summary');
-  XLSX.writeFile(wb, 'UPOP_AttendanceSheets_' + fmtDate() + '.xlsx');
+  var sheetN=0;
+  assignmentData.rooms.forEach(function(rm){if(!rm.students.length)return;sheetN++;var ws=makeAttendanceSheet(rm);var safe=rm.name.replace(/[\\\/\?\*\[\]:]/g,'').trim().slice(0,31)||('Room'+sheetN);XLSX.utils.book_append_sheet(wb,ws,safe);});
+  if(assignmentData.unassigned&&assignmentData.unassigned.length){var udata=[['Student ID','Official Name','Acad Plan','Score','Note']];assignmentData.unassigned.forEach(function(s){udata.push([s.id,s.name,s.pillar,s.score,'All rooms full']);});var uws=XLSX.utils.aoa_to_sheet(udata);uws['!cols']=[{wch:14},{wch:36},{wch:14},{wch:8},{wch:30}];XLSX.utils.book_append_sheet(wb,uws,'Unassigned');}
+  var sdata=[['UPOP Class Assignment — '+fmtDate()],['Score threshold: < '+assignmentData.threshold],[],['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']];
+  assignmentData.rooms.forEach(function(r){sdata.push([r.name,r.venue||'',r.date||'',r.time||'',r.pillar||'(shared)',r.cap,r.students.length,r.cap-r.students.length]);});
+  var sws=XLSX.utils.aoa_to_sheet(sdata);sws['!cols']=[{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
+  XLSX.utils.book_append_sheet(wb,sws,'_Summary');
+  XLSX.writeFile(wb,'UPOP_AttendanceSheets_'+fmtDate()+'.xlsx');
 }
 
 // ══════════════════════════════════════════════
@@ -1494,7 +1625,7 @@ function refreshSummary(){
   var vm=summaryData.vmock;
   document.getElementById('sum-vmock-module').style.display=vm?'block':'none';
   if(vm){
-    document.getElementById('sum-vmock-file').textContent='Sheet: '+vm.file+' · '+vm.mode+' run';
+    document.getElementById('sum-vmock-file').textContent='Sheet: '+vm.file+' · '+vm.mode+' run · '+(vm.reports||1)+' report(s) consolidated';
     document.getElementById('sum-vmock-time').textContent=vm.time;
     var total=vm.total||1,pct=Math.round(vm.sub/total*100);
     document.getElementById('sum-vmock-stats').innerHTML='<div class="summary-stat s-sub"><span class="summary-stat-num">'+vm.sub+'</span><span class="summary-stat-lbl">Submitted</span></div><div class="summary-stat s-att"><span class="summary-stat-num">'+vm.att+'</span><span class="summary-stat-lbl">Attempted</span></div><div class="summary-stat s-pend"><span class="summary-stat-num">'+vm.yta+'</span><span class="summary-stat-lbl">Yet to Attempt</span></div><div class="summary-stat s-miss"><span class="summary-stat-num">'+vm.miss+'</span><span class="summary-stat-lbl">Not Found</span></div><div class="summary-stat s-total"><span class="summary-stat-num">'+vm.total+'</span><span class="summary-stat-lbl">Total</span></div>';
@@ -1519,44 +1650,20 @@ function refreshSummary(){
   if(am){
     document.getElementById('sum-assign-file').textContent='Sheet: '+am.file+' · score < '+am.threshold+(am.overflow?' · ⚠ '+am.overflow+' unassigned':'');
     document.getElementById('sum-assign-time').textContent=am.time;
-    document.getElementById('sum-assign-stats').innerHTML=
-      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.eligible+'</span><span class="summary-stat-lbl">Eligible</span></div>'+
-      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.students+'</span><span class="summary-stat-lbl">Assigned</span></div>'+
-      '<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.rooms+'</span><span class="summary-stat-lbl">Rooms</span></div>'+
-      '<div class="summary-stat s-pend"><span class="summary-stat-num">'+am.ineligible+'</span><span class="summary-stat-lbl">Ineligible</span></div>'+
-      (am.overflow?'<div class="summary-stat s-overflow"><span class="summary-stat-num">'+am.overflow+'</span><span class="summary-stat-lbl">Unassigned</span></div>':'');
+    document.getElementById('sum-assign-stats').innerHTML='<div class="summary-stat s-purple"><span class="summary-stat-num">'+am.eligible+'</span><span class="summary-stat-lbl">Eligible</span></div><div class="summary-stat s-purple"><span class="summary-stat-num">'+am.students+'</span><span class="summary-stat-lbl">Assigned</span></div><div class="summary-stat s-purple"><span class="summary-stat-num">'+am.rooms+'</span><span class="summary-stat-lbl">Rooms</span></div><div class="summary-stat s-pend"><span class="summary-stat-num">'+am.ineligible+'</span><span class="summary-stat-lbl">Ineligible</span></div>'+(am.overflow?'<div class="summary-stat s-overflow"><span class="summary-stat-num">'+am.overflow+'</span><span class="summary-stat-lbl">Unassigned</span></div>':'');
     var tbl='<table class="summary-table"><thead><tr><th>Room</th><th>Venue</th><th>Date</th><th>Time</th><th>Home Pillar</th><th>Cap</th><th>Assigned</th></tr></thead><tbody>';
     am.roomList.forEach(function(r){if(!r.students.length)return;tbl+='<tr><td><strong>'+escHtml(r.name)+'</strong></td><td>'+escHtml(r.venue||'—')+'</td><td>'+(r.date||'—')+'</td><td>'+(r.time||'—')+'</td><td>'+(r.pillar||'<em>shared</em>')+'</td><td>'+r.cap+'</td><td>'+r.students.length+'</td></tr>';});
-    tbl+='</tbody></table>';
-    document.getElementById('sum-assign-table-wrap').innerHTML=tbl;
+    tbl+='</tbody></table>';document.getElementById('sum-assign-table-wrap').innerHTML=tbl;
   }
 }
 
 function exportSummaryReport(){
-  var wb=XLSX.utils.book_new();
-  var od=[['UPOP Session Summary — '+fmtDate()],[]];
-  var vm=summaryData.vmock;
-  if(vm){od.push(['VMOCK Assessment — '+vm.mode+' run']);od.push(['Submitted','Attempted','Yet to Attempt','Not Found','Total']);od.push([vm.sub,vm.att,vm.yta,vm.miss,vm.total]);od.push([]);}
-  var fm=summaryData.forms;
-  if(fm){od.push(['Microsoft Forms — '+fm.colName]);od.push(['Responded','Not Responded','Total','Unmatched IDs in export']);od.push([fm.resp,fm.noresp,fm.total,fm.unmatched||0]);od.push([]);}
-  var am=summaryData.assign;
-  if(am){
-    od.push(['Class Assignment — score < '+am.threshold]);
-    od.push(['Eligible','Assigned','Ineligible','Unassigned','Rooms']);
-    od.push([am.eligible,am.students,am.ineligible,am.overflow,am.rooms]);
-    od.push([]);od.push(['Room','Venue','Date','Time','Home Pillar','Cap','Assigned']);
-    am.roomList.forEach(function(r){od.push([r.name,r.venue||'',r.date||'',r.time||'',r.pillar||'(shared)',r.cap,r.students.length]);});
-  }
-  var ows=XLSX.utils.aoa_to_sheet(od);ows['!cols']=[{wch:28},{wch:12},{wch:12},{wch:20},{wch:10}];
-  XLSX.utils.book_append_sheet(wb,ows,'Summary');
-  if(am&&am.roomList)am.roomList.forEach(function(rm){
-    if(!rm.students.length)return;
-    var data=[['Student ID','Official Name','Acad Plan','Score','Room','Venue','Date','Time']];
-    rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.score,s.assignedRoom,s.assignedVenue||'',s.assignedDate||'',rm.time||'']);});
-    var ws=XLSX.utils.aoa_to_sheet(data);
-    var safe=(rm.shortName||rm.name).replace(/[\\\/\?\*\[\]:]/g,'').slice(0,31);
-    XLSX.utils.book_append_sheet(wb,ws,safe);
-  });
+  var wb=XLSX.utils.book_new();var od=[['UPOP Session Summary — '+fmtDate()],[]];
+  var vm=summaryData.vmock;if(vm){od.push(['VMOCK Assessment — '+vm.mode+' run ('+( vm.reports||1)+' reports consolidated)']);od.push(['Submitted','Attempted','Yet to Attempt','Not Found','Total']);od.push([vm.sub,vm.att,vm.yta,vm.miss,vm.total]);od.push([]);}
+  var fm=summaryData.forms;if(fm){od.push(['Microsoft Forms — '+fm.colName]);od.push(['Responded','Not Responded','Total','Unmatched IDs in export']);od.push([fm.resp,fm.noresp,fm.total,fm.unmatched||0]);od.push([]);}
+  var am=summaryData.assign;if(am){od.push(['Class Assignment — score < '+am.threshold]);od.push(['Eligible','Assigned','Ineligible','Unassigned','Rooms']);od.push([am.eligible,am.students,am.ineligible,am.overflow,am.rooms]);od.push([]);od.push(['Room','Venue','Date','Time','Home Pillar','Cap','Assigned']);am.roomList.forEach(function(r){od.push([r.name,r.venue||'',r.date||'',r.time||'',r.pillar||'(shared)',r.cap,r.students.length]);});}
+  var ows=XLSX.utils.aoa_to_sheet(od);ows['!cols']=[{wch:28},{wch:12},{wch:12},{wch:20},{wch:10}];XLSX.utils.book_append_sheet(wb,ows,'Summary');
+  if(am&&am.roomList)am.roomList.forEach(function(rm){if(!rm.students.length)return;var data=[['Student ID','Official Name','Acad Plan','Score','Room','Venue','Date','Time']];rm.students.forEach(function(s){data.push([s.id,s.name,s.pillar,s.score,s.assignedRoom,s.assignedVenue||'',s.assignedDate||'',rm.time||'']);});var ws=XLSX.utils.aoa_to_sheet(data);var safe=(rm.shortName||rm.name).replace(/[\\\/\?\*\[\]:]/g,'').slice(0,31);XLSX.utils.book_append_sheet(wb,ws,safe);});
   XLSX.writeFile(wb,'UPOP_SummaryReport_'+fmtDate()+'.xlsx');
 }
 
@@ -1564,7 +1671,7 @@ function exportSummaryReport(){
 // RESET
 // ══════════════════════════════════════════════
 function resetPage(p){
-  if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2?3:S.v.wb2?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
+  if(p==='v'){document.getElementById('v-results-section').style.display='none';document.getElementById('v-log').innerHTML='';setProgStep('v',getIntakeWb('v')&&S.v.wb2List.length>0?3:S.v.wb2List.length>0?2:1);document.getElementById('tdot-vmock').classList.remove('show');}
   if(p==='f'){document.getElementById('f-results-section').style.display='none';document.getElementById('f-log').innerHTML='';document.getElementById('f-unmatched-panel').style.display='none';setProgStep('f',getIntakeWb('f')&&S.f.wb2?3:S.f.wb2?2:1);document.getElementById('tdot-forms').classList.remove('show');}
   if(p==='a'){document.getElementById('a-results-section').style.display='none';document.getElementById('a-log').innerHTML='';setProgStep('a',S.a.wb1?2:1);document.getElementById('tdot-assign').classList.remove('show');assignmentData=null;document.getElementById('a-room-results-grid').innerHTML='';}
   window.scrollTo({top:0,behavior:'smooth'});
