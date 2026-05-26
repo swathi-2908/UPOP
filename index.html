@@ -244,22 +244,6 @@
     .unmatched-id-chip{font-family:'Menlo','Consolas',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--surface);border:1px solid #E8D09A;color:#7A3B10;white-space:nowrap}
     .unmatched-empty{font-size:12px;color:var(--success);font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 0}
 
-    /* ── PILLAR QUICK SETUP ── */
-    .pillar-quick-setup{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:10px;padding:16px 18px;margin-bottom:18px}
-    .pqs-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-    .pqs-sub{font-size:12px;color:var(--purple);opacity:.7;margin-bottom:12px}
-    .pillar-chips-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-    .pillar-chip{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;background:var(--surface);border:1.5px solid #C39BD3;color:var(--purple);cursor:pointer;transition:all .15s;user-select:none}
-    .pillar-chip:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
-    .pillar-chip.selected{background:var(--purple);color:#fff;border-color:var(--purple)}
-    .pillar-chip .pc-count{opacity:.7;font-size:11px}
-    .pqs-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .pqs-cap-field{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--purple);font-weight:600}
-    .pqs-cap-input{width:60px;height:30px;border-radius:6px;border:1px solid #C39BD3;background:var(--surface);text-align:center;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--purple);outline:none}
-    .pqs-generate-btn{display:flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:none;background:var(--purple);color:#fff;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
-    .pqs-generate-btn:hover{background:#5B2C6F;transform:translateY(-1px)}
-    .pqs-note{font-size:11px;color:var(--purple);opacity:.65;margin-top:8px}
-
     /* ── IMPROVED ROOM BUILDER ── */
     .room-builder-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .room-builder-toolbar-left{font-size:13px;font-weight:600;color:var(--text)}
@@ -269,7 +253,6 @@
 
     .room-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 
-    /* Compact room row — the default view */
     .room-row{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s,box-shadow .15s}
     .room-row.expanded{border-color:#C39BD3;box-shadow:0 0 0 3px rgba(108,52,131,.06)}
     .room-row-head{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;transition:background .15s}
@@ -288,7 +271,6 @@
     .room-delete-compact{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .room-delete-compact:hover{background:var(--danger-lt);border-color:#E8A09A;color:var(--danger)}
 
-    /* Expanded body */
     .room-row-body{display:none;padding:14px;border-top:1px solid var(--border);background:var(--surface2)}
     .room-row.expanded .room-row-body{display:block}
     .room-fields-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
@@ -595,8 +577,6 @@
           <div class="stat s-total"><span class="stat-num" id="f-s-total">0</span><span class="stat-lbl">Total Students</span></div>
         </div>
         <div class="result-meta" id="f-result-meta"></div>
-
-        <!-- UNMATCHED PANEL — IDs in Forms export not found in intake -->
         <div class="unmatched-panel" id="f-unmatched-panel" style="display:none">
           <div class="unmatched-panel-head" onclick="toggleUnmatched()">
             <div class="unmatched-panel-icon">⚠️</div>
@@ -609,7 +589,6 @@
             <div class="unmatched-grid" id="f-unmatched-grid"></div>
           </div>
         </div>
-
         <div style="margin-top:16px"></div>
         <div class="flog" id="f-log"></div>
         <div class="result-actions">
@@ -623,12 +602,12 @@
 
 
 <!-- ══════════════════════════════════════════════
-     PAGE 3 — CLASS ASSIGNMENT (IMPROVED UX)
+     PAGE 3 — CLASS ASSIGNMENT
 ══════════════════════════════════════════════ -->
 <div class="page" id="page-assign">
   <div class="page-header">
     <h1>Class Assignment</h1>
-    <p>Upload your student list — pillars are detected automatically. Pick rooms and caps, then assign.</p>
+    <p>Upload your student list — pillars are detected automatically. Define rooms and caps, then assign.</p>
   </div>
   <div class="progress-bar">
     <div class="prog-step"><div class="prog-dot active" id="a-pd1" style="color:var(--purple)">1</div><span class="prog-label active" id="a-pl1">Student List</span></div>
@@ -674,7 +653,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: SCORE THRESHOLD — compact inline -->
+  <!-- STEP 2: SCORE THRESHOLD -->
   <div class="section-label">Step 2 — Score Threshold</div>
   <div class="card" id="a-card2">
     <div class="card-header"><div class="step-badge" id="a-badge2">2</div><div class="card-title">Only assign students <em>below</em> this score</div><div class="card-pill" id="a-pill2">Required</div></div>
@@ -702,31 +681,18 @@
     </div>
   </div>
 
-  <!-- STEP 3: ROOMS — improved UX -->
+  <!-- STEP 3: ROOMS -->
   <div class="section-label">Step 3 — Room Setup</div>
   <div class="card" id="a-card3">
     <div class="card-header"><div class="step-badge" id="a-badge3">3</div><div class="card-title">Define Rooms</div><div class="card-pill" id="a-pill3">Required</div></div>
     <div class="card-body">
-
-      <!-- PILLAR QUICK SETUP -->
-      <div class="pillar-quick-setup" id="pqs-box" style="display:none">
-        <div class="pqs-title">⚡ Quick Setup — click pillars to assign dedicated rooms</div>
-        <div class="pqs-sub">Each selected pillar gets its own room(s). You can edit details after generating.</div>
-        <div class="pillar-chips-row" id="pqs-pillar-chips"></div>
-        <div class="pqs-actions">
-          <span class="pqs-cap-field">Cap per room: <input class="pqs-cap-input" id="pqs-cap" type="number" value="30" min="1"/></span>
-          <button class="pqs-generate-btn" onclick="generateRoomsFromPillars()">✦ Generate rooms</button>
-          <button class="pqs-generate-btn" style="background:var(--gold)" onclick="addSharedRoom()">＋ Add shared room</button>
-        </div>
-        <div class="pqs-note">Tip: A shared room absorbs overflow from any pillar — add at least one as a buffer.</div>
-      </div>
 
       <div class="room-builder-toolbar">
         <div>
           <div class="room-builder-toolbar-left">All Rooms <span id="room-count-label" style="font-size:12px;color:var(--muted);font-weight:400"></span></div>
           <div class="room-builder-sub">Click any room to expand and edit details · each room = one attendance sheet</div>
         </div>
-        <button class="add-room-btn" onclick="addRoom()">＋ Add blank room</button>
+        <button class="add-room-btn" onclick="addRoom()">＋ Add room</button>
       </div>
 
       <div class="room-list" id="room-list"></div>
@@ -857,8 +823,6 @@ var assignmentData=null;
 var roomDefs = [];
 var roomIdCounter = 0;
 var summaryData={vmock:null,forms:null,assign:null};
-var detectedPillars=[];
-var selectedPillarChips={};
 var expandedRooms={};
 
 // ══════════════════════════════════════════════
@@ -1059,60 +1023,9 @@ function autoDetectAssign(ws){
     chip.innerHTML='<span class="chip-label">'+f.l+'</span><span class="chip-val">'+(found?'col '+colLetter(aCols[f.k]):'not found')+'</span>';wrap.appendChild(chip);
   });
   document.getElementById('a-detect-card').style.display='block';
-  detectPillarsFromSheet(ws, hr, range);
   updateScorePreview();
   updateRoomCapacitySummary();
   validateAssign();
-}
-
-function detectPillarsFromSheet(ws, hr, range){
-  var plC=aCols.pillar>=0?aCols.pillar:colIdx(document.getElementById('a-cfg-pillar').value||'C');
-  var counts={};
-  for(var R=hr+1;R<=range.e.r;R++){var p=cellVal(ws,R,plC).trim();if(p)counts[p]=(counts[p]||0)+1;}
-  detectedPillars=Object.keys(counts).sort().map(function(n){return {name:n,count:counts[n]};});
-  selectedPillarChips={};
-  renderPillarQuickSetup();
-}
-
-function renderPillarQuickSetup(){
-  var box=document.getElementById('pqs-box');
-  if(!detectedPillars.length){box.style.display='none';return;}
-  box.style.display='block';
-  var chipsEl=document.getElementById('pqs-pillar-chips');chipsEl.innerHTML='';
-  detectedPillars.forEach(function(p){
-    var chip=document.createElement('div');
-    chip.className='pillar-chip'+(selectedPillarChips[p.name]?' selected':'');
-    chip.innerHTML=escHtml(p.name)+' <span class="pc-count">('+p.count+')</span>';
-    chip.onclick=function(){
-      selectedPillarChips[p.name]=!selectedPillarChips[p.name];
-      chip.classList.toggle('selected',!!selectedPillarChips[p.name]);
-    };
-    chipsEl.appendChild(chip);
-  });
-}
-
-function generateRoomsFromPillars(){
-  var cap=parseInt(document.getElementById('pqs-cap').value)||30;
-  var selected=detectedPillars.filter(function(p){return selectedPillarChips[p.name];});
-  if(!selected.length){showToast('Select at least one pillar first');return;}
-  selected.forEach(function(p){
-    var needed=Math.ceil(p.count/cap);
-    for(var i=0;i<needed;i++){
-      var id=++roomIdCounter;
-      var roomName=needed>1?p.name+' '+(i+1):p.name;
-      roomDefs.push({id:id,name:roomName,venue:'',date:'',time:'',cap:cap,pillar:p.name,isShared:false});
-    }
-  });
-  renderRoomList();
-  validateAssign();
-  updateRoomCapacitySummary();
-  showToast('Rooms generated — expand to add venue/date details');
-}
-
-function addSharedRoom(){
-  var id=++roomIdCounter;
-  roomDefs.push({id:id,name:'Shared / Overflow',venue:'',date:'',time:'',cap:30,pillar:'',isShared:true});
-  renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
 // ══════════════════════════════════════════════
@@ -1130,13 +1043,13 @@ function updateScorePreview(){
 // ROOM BUILDER — COMPACT/EXPANDABLE
 // ══════════════════════════════════════════════
 function getPillarOptions(){
-  return detectedPillars.map(function(p){return p.name;});
+  return [];
 }
 
 function addRoom(){
   var id=++roomIdCounter;
   roomDefs.push({id:id,name:'Room '+id,venue:'',date:'',time:'',cap:30,pillar:'',isShared:false});
-  expandedRooms[id]=true; // auto-expand new blank rooms
+  expandedRooms[id]=true;
   renderRoomList();validateAssign();updateRoomCapacitySummary();
 }
 
@@ -1161,7 +1074,6 @@ function onRoomChange(id){
   r.cap=parseInt(document.getElementById('rcap-'+id).value)||0;
   r.pillar=(document.getElementById('rpillar-'+id).value||'').trim();
   r.isShared=!r.pillar;
-  // Update compact summary tags without re-rendering the whole list
   var nameEl=document.getElementById('rcard-name-'+id);if(nameEl)nameEl.textContent=r.name||'Room '+id;
   var ptEl=document.getElementById('rpillar-tag-'+id);if(ptEl){ptEl.textContent=r.pillar||'Shared';ptEl.className='room-tag '+(r.isShared?'shared':'pillar');}
   var capEl=document.getElementById('rcap-tag-'+id);if(capEl)capEl.textContent='Cap: '+r.cap;
@@ -1179,7 +1091,7 @@ function renderRoomList(){
   if(countLabel) countLabel.textContent=roomDefs.length?'('+roomDefs.length+')':'';
 
   if(!roomDefs.length){
-    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — use Quick Setup above or click <strong>+ Add blank room</strong></div>';
+    list.innerHTML='<div style="text-align:center;padding:28px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:8px">No rooms yet — click <strong>+ Add room</strong> to get started</div>';
     return;
   }
 
@@ -1221,7 +1133,7 @@ function renderRoomList(){
         '</div>'+
         '<div class="field-group" style="margin-top:10px">'+
           '<label class="field-label">Home Pillar <span>students from this pillar fill here first; leave blank = shared buffer</span></label>'+
-          '<select class="field-input" id="rpillar-'+r.id+'" onchange="onRoomChange('+r.id+')">'+pillarOpts+'</select>'+
+          '<input class="field-input" id="rpillar-'+r.id+'" value="'+escHtml(r.pillar)+'" placeholder="e.g. EPD, ASD, ESD …" oninput="onRoomChange('+r.id+')"/>'+
         '</div>'+
       '</div>';
     list.appendChild(div);
@@ -1313,7 +1225,7 @@ function runVmock(){
 }
 
 // ══════════════════════════════════════════════
-// RUN FORMS — with unmatched ID display
+// RUN FORMS
 // ══════════════════════════════════════════════
 function runForms(){
   var wb=getIntakeWb('f'),sheet=getIntakeSheet('f');
@@ -1332,26 +1244,18 @@ function runForms(){
   var range=XLSX.utils.decode_range(ws['!ref']),hr=range.s.r,newCol=range.e.c+1;
   writeCell(ws,hr,newCol,colName);range.e.c=newCol;ws['!ref']=XLSX.utils.encode_range(range);
   flog('f-log','New column "'+colName+'" appended','info');
-
-  // Build intake ID set to find unmatched
   var intakeIds={};
   for(var R0=hr+1;R0<=range.e.r;R0++){
     var iid0=cellVal(ws,R0,idCol).replace(/\s/g,'');
     if(iid0)intakeIds[iid0]=true;
   }
-
   var cR=0,cNo=0,cT=0;
   for(var R=hr+1;R<=range.e.r;R++){var iid=cellVal(ws,R,idCol).replace(/\s/g,'');if(!iid)continue;cT++;if(responded[iid]){writeCell(ws,R,newCol,'Responded');cR++;}else{writeCell(ws,R,newCol,'Not Responded');cNo++;}}
-
-  // Find IDs in forms export that weren't in intake
   var unmatched=Object.keys(responded).filter(function(id){return !intakeIds[id];}).sort();
-
   document.getElementById('f-s-resp').textContent=cR;document.getElementById('f-s-noresp').textContent=cNo;document.getElementById('f-s-total').textContent=cT;
   var ts=fmtTs();
   document.getElementById('f-result-meta').innerHTML='<strong>Processed at '+ts+'</strong> &nbsp;·&nbsp; '+cT+' students &nbsp;·&nbsp; sheet: "'+sheet+'"';
   flog('f-log',cR+' students marked Responded','ok');flog('f-log',cNo+' students marked Not Responded','warn');
-
-  // Render unmatched panel
   var panel=document.getElementById('f-unmatched-panel');
   var grid=document.getElementById('f-unmatched-grid');
   document.getElementById('f-unmatched-count').textContent=unmatched.length;
@@ -1367,7 +1271,6 @@ function runForms(){
     grid.innerHTML='<div class="unmatched-empty">✅ All IDs in the Forms export matched students in the intake list.</div>';
     flog('f-log','All Forms IDs matched intake list — no unmatched entries','ok');
   }
-
   flog('f-log','File ready to download','ok');
   S.f.resultWb=wb;setProgStep('f',4);document.getElementById('tdot-forms').classList.add('show');
   summaryData.forms={resp:cR,noresp:cNo,total:cT,colName:colName,file:sheet,time:ts,unmatched:unmatched.length};
