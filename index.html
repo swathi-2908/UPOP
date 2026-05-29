@@ -95,7 +95,6 @@
     .card.is-done .card-pill{background:var(--success-lt);border-color:#A8D5BE;color:var(--success)}
     .card-body{padding:20px}
 
-    /* ── MULTI-REPORT UPLOAD AREA ── */
     .multi-dz-wrapper{position:relative}
     .dropzone{position:relative;border:1.5px dashed var(--border2);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
     .dropzone:hover,.dropzone.drag-over{border-color:var(--accent2);background:var(--accent-lt)}
@@ -105,7 +104,6 @@
     .dz-sub{font-size:12px;color:var(--muted)}
     .dz-sub span{color:var(--accent2);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 
-    /* ── REPORT LIST ── */
     .report-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
     .report-pill{display:flex;align-items:center;gap:10px;background:var(--success-lt);border:1px solid #A8D5BE;border-radius:8px;padding:9px 12px}
     .report-pill-icon{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff}
@@ -248,7 +246,6 @@
     .detect-col-chip.found .chip-val{color:var(--success);font-family:'Menlo','Consolas',monospace;font-size:11px}
     .detect-col-chip.missing .chip-val{color:var(--warn);font-size:11px}
 
-    /* ── FORMS UNMATCHED PANEL ── */
     .unmatched-panel{margin-top:16px;border:1.5px solid #E8D09A;border-radius:10px;background:var(--gold-lt);overflow:hidden}
     .unmatched-panel-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;transition:background .15s}
     .unmatched-panel-head:hover{background:rgba(181,136,58,.08)}
@@ -263,7 +260,6 @@
     .unmatched-id-chip{font-family:'Menlo','Consolas',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--surface);border:1px solid #E8D09A;color:#7A3B10;white-space:nowrap}
     .unmatched-empty{font-size:12px;color:var(--success);font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 0}
 
-    /* ── IMPROVED ROOM BUILDER ── */
     .room-builder-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .room-builder-toolbar-left{font-size:13px;font-weight:600;color:var(--text)}
     .room-builder-sub{font-size:12px;color:var(--muted);margin-top:2px}
@@ -295,7 +291,6 @@
     .room-fields-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
     .room-fields-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-    /* ── SCORE FILTER ── */
     .score-filter-box{background:var(--purple-lt);border:1px solid #C39BD3;border-radius:8px;padding:14px 16px;margin-bottom:18px}
     .score-filter-title{font-size:12px;font-weight:600;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:7px}
     .score-filter-grid{display:grid;grid-template-columns:1fr 1fr 120px;gap:12px;align-items:end}
@@ -446,14 +441,12 @@
   <div class="card" id="v-card2">
     <div class="card-header"><div class="step-badge" id="v-badge2">2</div><div class="card-title">Upload VMOCK Assessment Reports <span id="v-report-count-badge" style="display:none;font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--info-lt);border:1px solid #A9CCE3;color:var(--info);margin-left:6px"></span></div><div class="card-pill" id="v-pill2">Waiting</div></div>
     <div class="card-body">
-      <!-- drop zone always visible to add more -->
       <div class="dropzone" id="v-dz2">
         <input type="file" id="v-file2" accept=".xlsx,.xls,.csv" multiple/>
         <div class="dz-icon">📊</div>
         <div class="dz-title">Drop VMOCK report(s) here</div>
         <div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; .xlsx, .xls or .csv &nbsp;·&nbsp; <strong>multiple files supported</strong></div>
       </div>
-      <!-- loaded reports list -->
       <div id="v-reports-list" style="margin-top:2px"></div>
     </div>
   </div>
@@ -468,7 +461,6 @@
         <div id="v-no-sheet-hint" style="font-size:12px;color:var(--muted);margin-top:5px">Upload intake file first.</div>
       </div>
 
-      <!-- Intake output columns -->
       <div class="config-grid-3" style="margin-bottom:16px">
         <div class="field-group">
           <label class="field-label">Student ID Column <span id="v-id-col-badge" style="display:none" class="auto-badge">✓ auto</span></label>
@@ -856,7 +848,7 @@
 // ══════════════════════════════════════════════
 var sharedWb=null, sharedSheet='';
 var S={
-  v:{wb2List:[],resultWb:null,sheet:''},  // wb2List = array of loaded VMOCK workbooks
+  v:{wb2List:[],resultWb:null,sheet:''},
   f:{wb2:null,resultWb:null,sheet:''},
   a:{wb1:null,resultWb:null,sheet:''}
 };
@@ -979,13 +971,7 @@ function autoDetectVF(ws,p){
   if(p==='v'){
     setInp('v-cfg-id-col','v-id-col-badge',dId);
     setInp('v-cfg-status-col','v-status-col-badge',dSt);
-    // next col after status for score output, or K default
-    if(dSt>=0){
-      var scoreOut=document.getElementById('v-cfg-score-out-col');
-      if(scoreOut&&!scoreOut.classList.contains('auto-detected')){
-        scoreOut.value=colLetter(dSt+1);
-      }
-    }
+    if(dSt>=0){var scoreOut=document.getElementById('v-cfg-score-out-col');if(scoreOut&&!scoreOut.classList.contains('auto-detected')){scoreOut.value=colLetter(dSt+1);}}
   }
   if(p==='f'){setInp('f-cfg-id-col','f-id-col-badge',dId);}
 }
@@ -1039,12 +1025,9 @@ function renderVmockReportList(){
   var list=document.getElementById('v-reports-list');
   var badge=document.getElementById('v-report-count-badge');
   var n=S.v.wb2List.length;
-
   if(!n){list.innerHTML='';badge.style.display='none';return;}
-
   badge.style.display='inline-flex';
   badge.textContent=n+' report'+(n>1?'s':'')+' loaded';
-
   var html='<div class="reports-summary-bar"><div class="rsum-count">✅ <strong>'+n+'</strong> VMOCK report'+(n>1?'s':'')+' loaded — will be consolidated before matching</div><button class="reports-clear-all" onclick="clearAllReports()">Clear all</button></div>';
   html+='<div class="report-list">';
   S.v.wb2List.forEach(function(entry,idx){
@@ -1058,8 +1041,6 @@ function renderVmockReportList(){
   });
   html+='</div>';
   list.innerHTML=html;
-
-  // mark step 2 done
   markDone('v',2);
   checkReady('v');
   scanVmock();
@@ -1095,8 +1076,6 @@ function scanVmock(){
   var eH=document.getElementById('v-cfg-vmock-email').value.trim()||'Email';
   var sH=document.getElementById('v-cfg-vmock-status').value.trim()||'Status';
   var scH=document.getElementById('v-cfg-vmock-score').value.trim()||'Highest Attempt Level';
-
-  // show sample from first report
   var firstWb=S.v.wb2List[0].wb;
   var rows=XLSX.utils.sheet_to_json(firstWb.Sheets[firstWb.SheetNames[0]],{defval:''});
   var ex=rows.find(function(r){return String(r[eH]||'').includes('@');});
@@ -1108,16 +1087,12 @@ function scanVmock(){
     document.getElementById('v-ex-score').textContent=String(ex[scH]||'—');
     document.getElementById('v-example-row').style.display='block';
   }
-
-  // update mapping badges based on first report
   var has=rows.length&&sH in rows[0];
   document.getElementById('v-map-status-col').textContent=sH+' column';
   var sb=document.getElementById('v-map-status-badge');sb.textContent=has?'found':'not found';sb.className='map-badge '+(has?'badge-ok':'badge-warn');
-
   var hasSc=rows.length&&scH in rows[0];
   document.getElementById('v-map-score-col').textContent=scH+' column';
   var scb=document.getElementById('v-map-score-badge');scb.textContent=hasSc?'found':'not found';scb.className='map-badge '+(hasSc?'badge-ok':'badge-warn');
-
   validateVmock();
 }
 
@@ -1129,11 +1104,9 @@ function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb
 (function(){
   var inp=document.getElementById('v-file2');
   var dz=document.getElementById('v-dz2');
-
   function handleFiles(files){
     var pending=files.length,done=0;
     Array.from(files).forEach(function(f){
-      // avoid duplicates by name
       var already=S.v.wb2List.some(function(e){return e.name===f.name;});
       if(already){pending--;if(++done>=pending)renderVmockReportList();return;}
       readWb(f,function(wb){
@@ -1142,17 +1115,12 @@ function scanForms(){if(!S.f.wb2)return;var rows=XLSX.utils.sheet_to_json(S.f.wb
       });
     });
     if(!files.length)return;
-    // reset the input so same file can be re-added after remove
     inp.value='';
   }
-
   inp.addEventListener('change',function(){handleFiles(this.files);});
   dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});
   dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
-  dz.addEventListener('drop',function(e){
-    e.preventDefault();dz.classList.remove('drag-over');
-    handleFiles(e.dataTransfer.files);
-  });
+  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');handleFiles(e.dataTransfer.files);});
 })();
 
 // ══════════════════════════════════════════════
@@ -1320,7 +1288,7 @@ document.getElementById('a-cfg-score-col').addEventListener('input',function(){u
 function toggleUnmatched(){var body=document.getElementById('f-unmatched-body');var toggle=document.getElementById('f-unmatched-toggle');body.classList.toggle('open');toggle.textContent=body.classList.contains('open')?'Hide ↑':'Show ↓';}
 
 // ══════════════════════════════════════════════
-// RUN VMOCK — multi-report consolidation
+// RUN VMOCK
 // ══════════════════════════════════════════════
 function runVmock(){
   var wb=getIntakeWb('v'), sheet=getIntakeSheet('v');
@@ -1339,10 +1307,7 @@ function runVmock(){
   if(!ws){flog('v-log','Sheet "'+sheet+'" not found.','err');return;}
   flog('v-log','Intake sheet loaded: "'+sheet+'"','info');
 
-  // ── STEP 1: Build consolidated map across ALL reports ──
-  // map[studentId] = { status: 'Submitted'|'Attempted'|'Yet to Attempt', score: number|null }
-  // Rules: keep highest status rank; keep highest score (even if from different report)
-  var map = {};  // { id: { status, score } }
+  var map = {};
   var totalRowsRead = 0;
 
   S.v.wb2List.forEach(function(entry, rIdx){
@@ -1354,23 +1319,13 @@ function runVmock(){
       var st  = String(r[sH]||'').trim();
       var scRaw = r[scH];
       var sc  = (scRaw !== '' && scRaw !== undefined && scRaw !== null) ? parseFloat(scRaw) : NaN;
-
       if(!id){rSkip++;return;}
       rCount++;
-
       if(!map[id]){
         map[id] = {status: st, score: isNaN(sc)?null:sc};
       } else {
-        // status: keep higher rank
-        if(statusRank(st) > statusRank(map[id].status)){
-          map[id].status = st;
-        }
-        // score: keep higher numeric value
-        if(!isNaN(sc)){
-          if(map[id].score === null || sc > map[id].score){
-            map[id].score = sc;
-          }
-        }
+        if(statusRank(st) > statusRank(map[id].status)){map[id].status = st;}
+        if(!isNaN(sc)){if(map[id].score === null || sc > map[id].score){map[id].score = sc;}}
       }
     });
     totalRowsRead += rCount;
@@ -1379,7 +1334,6 @@ function runVmock(){
 
   flog('v-log','Consolidated: '+Object.keys(map).length+' unique student IDs across '+S.v.wb2List.length+' report(s)','ok');
 
-  // ── STEP 2: Check if Status column already exists ──
   var range    = XLSX.utils.decode_range(ws['!ref']);
   var hr       = range.s.r;
   var existHdr = cellVal(ws, hr, stCol);
@@ -1388,7 +1342,6 @@ function runVmock(){
   var scoCo    = scOutCol;
 
   if(isFirst){
-    // Expand range for new columns
     var newEnd = Math.max(range.e.c, stCol, scOutCol);
     writeCell(ws, hr, stCol,   'Status');
     writeCell(ws, hr, scOutCol,'Highest Attempt Level');
@@ -1396,7 +1349,6 @@ function runVmock(){
     ws['!ref'] = XLSX.utils.encode_range(range);
     flog('v-log','No Status column found — creating Status (col '+colLetter(stCol)+') and Score (col '+colLetter(scOutCol)+') — first-time mode','warn');
   } else {
-    // Status col exists; check score col header
     var existScHdr = cellVal(ws, hr, scOutCol);
     if(!existScHdr){
       writeCell(ws, hr, scOutCol, 'Highest Attempt Level');
@@ -1405,23 +1357,17 @@ function runVmock(){
     flog('v-log','Status column found at col '+colLetter(stCol)+' — update mode','info');
   }
 
-  // ── STEP 3: Walk intake rows and write status + score ──
   var cSub=0,cAtt=0,cYta=0,cMiss=0,cUpdated=0,cKept=0;
 
   for(var R=hr+1; R<=range.e.r; R++){
     var iid = cellVal(ws, R, idCol).replace(/\s/g,'');
     if(!iid) continue;
-
     var entry = map[iid] || null;
-
     if(isFirst){
       if(entry){
         writeCell(ws, R, sCo, entry.status||'Yet to Attempt');
-        if(entry.score !== null && !isNaN(entry.score)){
-          writeCellNum(ws, R, scoCo, entry.score);
-        } else {
-          writeCell(ws, R, scoCo, '');
-        }
+        if(entry.score !== null && !isNaN(entry.score)){writeCellNum(ws, R, scoCo, entry.score);}
+        else{writeCell(ws, R, scoCo, '');}
         cUpdated++;
       } else {
         writeCell(ws, R, sCo,  'Not Found');
@@ -1430,44 +1376,29 @@ function runVmock(){
       }
     } else {
       if(!entry){
-        // no data in any report — leave existing status, blank score if none
         var curSt = cellVal(ws, R, sCo);
         if(!curSt || curSt==='Not Found') cMiss++;
       } else {
         var oldStatus = cellVal(ws, R, sCo);
         var oldRank   = statusRank(oldStatus);
         var newRank   = statusRank(entry.status||'');
-
-        // Status: overwrite if new rank is higher OR equal (always overwrite per requirement)
         if(newRank >= oldRank){
           writeCell(ws, R, sCo, entry.status||'Yet to Attempt');
           if(newRank > oldRank) cUpdated++; else cKept++;
-        } else {
-          cKept++;
-        }
-
-        // Score: read existing, keep highest
+        } else {cKept++;}
         var curScCell = ws[XLSX.utils.encode_cell({r:R,c:scoCo})];
         var curSc = curScCell ? parseFloat(curScCell.v) : NaN;
         if(entry.score !== null && !isNaN(entry.score)){
-          if(isNaN(curSc) || entry.score > curSc){
-            writeCellNum(ws, R, scoCo, entry.score);
-          }
+          if(isNaN(curSc) || entry.score > curSc){writeCellNum(ws, R, scoCo, entry.score);}
         }
       }
     }
   }
 
-  // ── STEP 4: Count final statuses ──
   cSub=0;cAtt=0;cYta=0;cMiss=0;
   for(var R2=hr+1;R2<=range.e.r;R2++){
-    var fs=cellVal(ws,R2,sCo);
-    var rid=cellVal(ws,R2,idCol).replace(/\s/g,'');
-    if(!rid) continue;
-    if(fs==='Submitted')cSub++;
-    else if(fs==='Attempted')cAtt++;
-    else if(fs==='Yet to Attempt')cYta++;
-    else if(fs==='Not Found'||!fs) cMiss++;
+    var fs=cellVal(ws,R2,sCo);var rid=cellVal(ws,R2,idCol).replace(/\s/g,'');if(!rid) continue;
+    if(fs==='Submitted')cSub++;else if(fs==='Attempted')cAtt++;else if(fs==='Yet to Attempt')cYta++;else if(fs==='Not Found'||!fs) cMiss++;
   }
 
   document.getElementById('v-s-reports').textContent = S.v.wb2List.length;
@@ -1576,7 +1507,7 @@ function runAssign(){
   var grid=document.getElementById('a-room-results-grid');grid.innerHTML='';
   rooms.forEach(function(rm){if(!rm.students.length)return;var pct=Math.round(rm.students.length/rm.cap*100);var pillarsInRoom={};rm.students.forEach(function(s){if(s.pillar)pillarsInRoom[s.pillar]=true;});var pillarList=Object.keys(pillarsInRoom).join(', ')||'—';var card=document.createElement('div');card.className='room-result-card';card.innerHTML='<div class="room-result-name">'+escHtml(rm.name)+'</div><div class="room-result-pillar">'+escHtml(pillarList)+(rm.date?' · '+rm.date:'')+'</div><div class="room-result-bar"><div class="room-result-fill" style="width:'+pct+'%"></div></div><div class="room-result-nums"><span>'+rm.students.length+' students</span><span>'+rm.cap+' cap ('+pct+'%)</span></div>';grid.appendChild(card);});
   if(unassigned.length){var uc=document.createElement('div');uc.className='room-result-card';uc.style.borderColor='var(--danger)';uc.style.background='var(--danger-lt)';uc.innerHTML='<div class="room-result-name" style="color:var(--danger)">⚠ Unassigned</div><div class="room-result-pillar">All rooms were full</div><div class="room-result-nums"><span style="color:var(--danger);font-weight:700">'+unassigned.length+' students</span><span>in download</span></div>';grid.appendChild(uc);}
-  flog('a-log','File ready — one attendance sheet per room','ok');
+  flog('a-log','File ready — one attendance sheet per room + Masterlist','ok');
   assignmentData={rooms:rooms,unassigned:unassigned,threshold:threshold,eligible:eligible.length,ineligible:ineligible.length};
   setProgStep('a',4);document.getElementById('tdot-assign').classList.add('show');
   summaryData.assign={students:totalAssigned,rooms:rooms.filter(function(r){return r.students.length>0;}).length,eligible:eligible.length,ineligible:ineligible.length,overflow:unassigned.length,roomList:rooms,file:S.a.sheet,time:ts,threshold:threshold};
@@ -1591,6 +1522,8 @@ function downloadResult(p){var wb=S[p].resultWb;if(!wb)return;XLSX.writeFile(wb,
 function downloadAssignment(){
   if(!assignmentData)return;
   var wb=XLSX.utils.book_new();
+
+  // ── Style helpers for attendance sheets ──
   function sc(ws,ref,bold,sz,bgRGB,fgRGB,hAlign,bdrStyle){if(!ws[ref])ws[ref]={v:'',t:'s',w:''};var bdr=bdrStyle!==false?{bottom:{style:'thin',color:{rgb:'CCCCCC'}},right:{style:'thin',color:{rgb:'CCCCCC'}}}:{};ws[ref].s={font:{bold:!!bold,sz:sz||11,name:'Arial',color:{rgb:fgRGB||'000000'}},fill:bgRGB?{patternType:'solid',fgColor:{rgb:bgRGB}}:{patternType:'none'},alignment:{horizontal:hAlign||'left',vertical:'center'},border:bdr};}
   function makeAttendanceSheet(rm){
     var pillarLabel=rm.pillar||'UPOP';
@@ -1603,13 +1536,162 @@ function downloadAssignment(){
     for(var i=0;i<rm.students.length;i++){var exR=8+i;var bg=(i%2===0)?'FFFFFF':'F2F2F2';['A','B','C','D'].forEach(function(col){var ref=col+exR;if(!ws[ref])ws[ref]={v:'',t:'s',w:''};ws[ref].s={font:{sz:11,name:'Arial',color:{rgb:'1A1A1A'}},fill:{patternType:'solid',fgColor:{rgb:bg}},alignment:{horizontal:'left',vertical:'center'},border:{bottom:{style:'thin',color:{rgb:'DDDDDD'}},right:{style:'thin',color:{rgb:'DDDDDD'}}}};});}
     return ws;
   }
+
+  // ── Write per-room attendance sheets ──
   var sheetN=0;
-  assignmentData.rooms.forEach(function(rm){if(!rm.students.length)return;sheetN++;var ws=makeAttendanceSheet(rm);var safe=rm.name.replace(/[\\\/\?\*\[\]:]/g,'').trim().slice(0,31)||('Room'+sheetN);XLSX.utils.book_append_sheet(wb,ws,safe);});
-  if(assignmentData.unassigned&&assignmentData.unassigned.length){var udata=[['Student ID','Official Name','Acad Plan','Score','Note']];assignmentData.unassigned.forEach(function(s){udata.push([s.id,s.name,s.pillar,s.score,'All rooms full']);});var uws=XLSX.utils.aoa_to_sheet(udata);uws['!cols']=[{wch:14},{wch:36},{wch:14},{wch:8},{wch:30}];XLSX.utils.book_append_sheet(wb,uws,'Unassigned');}
+  assignmentData.rooms.forEach(function(rm){
+    if(!rm.students.length)return;
+    sheetN++;
+    var ws=makeAttendanceSheet(rm);
+    var safe=rm.name.replace(/[\\\/\?\*\[\]:]/g,'').trim().slice(0,31)||('Room'+sheetN);
+    XLSX.utils.book_append_sheet(wb,ws,safe);
+  });
+
+  // ══════════════════════════════════════════
+  // ── MASTERLIST SHEET (NEW) ──
+  // ══════════════════════════════════════════
+  (function(){
+    var cols=['A','B','C','D','E','F','G','H'];
+
+    // Style definitions
+    var titleStyle={font:{bold:true,sz:15,name:'Arial',color:{rgb:'1B4332'}},alignment:{horizontal:'left',vertical:'center'}};
+    var metaStyle={font:{sz:11,name:'Arial',color:{rgb:'666666'}},alignment:{horizontal:'left',vertical:'center'}};
+    var hdrStyle={
+      font:{bold:true,sz:11,name:'Arial',color:{rgb:'FFFFFF'}},
+      fill:{patternType:'solid',fgColor:{rgb:'1B4332'}},
+      alignment:{horizontal:'center',vertical:'center'},
+      border:{bottom:{style:'medium',color:{rgb:'0D2B1F'}},right:{style:'thin',color:{rgb:'4A7C5E'}}}
+    };
+    var evenStyle={
+      font:{sz:11,name:'Arial',color:{rgb:'1A1A1A'}},
+      fill:{patternType:'solid',fgColor:{rgb:'FFFFFF'}},
+      alignment:{horizontal:'left',vertical:'center'},
+      border:{bottom:{style:'thin',color:{rgb:'DDDDDD'}},right:{style:'thin',color:{rgb:'DDDDDD'}}}
+    };
+    var oddStyle={
+      font:{sz:11,name:'Arial',color:{rgb:'1A1A1A'}},
+      fill:{patternType:'solid',fgColor:{rgb:'EEF6F1'}},
+      alignment:{horizontal:'left',vertical:'center'},
+      border:{bottom:{style:'thin',color:{rgb:'DDDDDD'}},right:{style:'thin',color:{rgb:'DDDDDD'}}}
+    };
+    var roomBandStyle={
+      font:{bold:true,sz:11,name:'Arial',color:{rgb:'2D6A4F'}},
+      fill:{patternType:'solid',fgColor:{rgb:'D8EAE0'}},
+      alignment:{horizontal:'left',vertical:'center'},
+      border:{bottom:{style:'thin',color:{rgb:'A8D5BE'}},right:{style:'thin',color:{rgb:'A8D5BE'}}}
+    };
+
+    // Count total assigned students
+    var totalAssignedCount=0;
+    assignmentData.rooms.forEach(function(rm){totalAssignedCount+=rm.students.length;});
+
+    // Build AOA — rows 1-4 are title block, row 5 is header, rows 6+ are data
+    var aoa=[];
+    // Row 1: Title
+    aoa.push(['UPOP Class Assignment — Masterlist','','','','','','','']);
+    // Row 2: Meta info
+    aoa.push([totalAssignedCount+' students assigned  ·  Score threshold: < '+assignmentData.threshold+'  ·  Generated: '+new Date().toLocaleString(),'','','','','','','']);
+    // Row 3: blank spacer
+    aoa.push(['','','','','','','','']);
+    // Row 4: Column headers
+    aoa.push(['Student ID','Official Name','Acad Plan / Pillar','Score','Assigned Room','Venue','Date','Time']);
+
+    // Data rows — grouped by room with a room-band row before each group
+    var dataRowCount=0;
+    var roomBandRows=[];  // track which aoa indices are room-band rows (for styling)
+
+    assignmentData.rooms.forEach(function(rm){
+      if(!rm.students.length)return;
+      // Room band row
+      var bandIdx=aoa.length;
+      roomBandRows.push(bandIdx);
+      aoa.push([
+        '▸  '+rm.name+(rm.venue?'   |   '+rm.venue:'')+(rm.date?'   |   '+rm.date:'')+(rm.time?'   '+rm.time:'')+'   ('+rm.students.length+' students)',
+        '','','','','','',''
+      ]);
+      // Student rows
+      rm.students.forEach(function(s){
+        aoa.push([s.id, s.name, s.pillar||'', s.score, rm.name, rm.venue||'', rm.date||'', rm.time||'']);
+        dataRowCount++;
+      });
+    });
+
+    var mlws=XLSX.utils.aoa_to_sheet(aoa);
+
+    // Column widths
+    mlws['!cols']=[{wch:14},{wch:36},{wch:18},{wch:8},{wch:22},{wch:24},{wch:14},{wch:12}];
+
+    // Row heights
+    var rh=[];
+    for(var ri=0;ri<aoa.length;ri++){
+      if(ri===0)rh.push({hpt:30});        // title
+      else if(ri===1)rh.push({hpt:18});   // meta
+      else if(ri===2)rh.push({hpt:8});    // spacer
+      else if(ri===3)rh.push({hpt:22});   // header
+      else rh.push({hpt:20});             // data + band rows
+    }
+    mlws['!rows']=rh;
+
+    // Apply styles row by row
+    function applyRowStyle(rowIdx, sty){
+      cols.forEach(function(col){
+        var ref=col+(rowIdx+1);
+        if(!mlws[ref])mlws[ref]={v:'',t:'s',w:''};
+        mlws[ref].s=sty;
+      });
+    }
+
+    // Title row (row index 0 → Excel row 1)
+    if(mlws['A1'])mlws['A1'].s=titleStyle;
+    // Meta row (row index 1 → Excel row 2)
+    if(mlws['A2'])mlws['A2'].s=metaStyle;
+    // Header row (row index 3 → Excel row 4)
+    cols.forEach(function(col){var ref=col+'4';if(!mlws[ref])mlws[ref]={v:'',t:'s',w:''};mlws[ref].s=hdrStyle;});
+
+    // Data and band rows start at aoa index 4 (Excel row 5)
+    var roomBandSet={};
+    roomBandRows.forEach(function(idx){roomBandSet[idx]=true;});
+
+    var dataStripeIdx=0;  // separate counter for alternating data rows
+    for(var ri=4;ri<aoa.length;ri++){
+      var excelRow=ri+1;  // 1-based
+      if(roomBandSet[ri]){
+        // Room band: merge-style by applying same style to all cols
+        cols.forEach(function(col){
+          var ref=col+excelRow;
+          if(!mlws[ref])mlws[ref]={v:'',t:'s',w:''};
+          mlws[ref].s=roomBandStyle;
+        });
+        dataStripeIdx=0;  // reset stripe when new room starts
+      } else {
+        var sty=dataStripeIdx%2===0?evenStyle:oddStyle;
+        applyRowStyle(ri,sty);
+        dataStripeIdx++;
+      }
+    }
+
+    XLSX.utils.book_append_sheet(wb,mlws,'Masterlist');
+  })();
+  // ══════════════════════════════════════════
+  // ── END MASTERLIST ──
+  // ══════════════════════════════════════════
+
+  // ── Unassigned sheet ──
+  if(assignmentData.unassigned&&assignmentData.unassigned.length){
+    var udata=[['Student ID','Official Name','Acad Plan','Score','Note']];
+    assignmentData.unassigned.forEach(function(s){udata.push([s.id,s.name,s.pillar,s.score,'All rooms full']);});
+    var uws=XLSX.utils.aoa_to_sheet(udata);
+    uws['!cols']=[{wch:14},{wch:36},{wch:14},{wch:8},{wch:30}];
+    XLSX.utils.book_append_sheet(wb,uws,'Unassigned');
+  }
+
+  // ── Summary sheet ──
   var sdata=[['UPOP Class Assignment — '+fmtDate()],['Score threshold: < '+assignmentData.threshold],[],['Room','Venue','Date','Time','Home Pillar','Cap','Assigned','Remaining']];
   assignmentData.rooms.forEach(function(r){sdata.push([r.name,r.venue||'',r.date||'',r.time||'',r.pillar||'(shared)',r.cap,r.students.length,r.cap-r.students.length]);});
-  var sws=XLSX.utils.aoa_to_sheet(sdata);sws['!cols']=[{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
+  var sws=XLSX.utils.aoa_to_sheet(sdata);
+  sws['!cols']=[{wch:16},{wch:22},{wch:14},{wch:12},{wch:14},{wch:6},{wch:10},{wch:10}];
   XLSX.utils.book_append_sheet(wb,sws,'_Summary');
+
   XLSX.writeFile(wb,'UPOP_AttendanceSheets_'+fmtDate()+'.xlsx');
 }
 
